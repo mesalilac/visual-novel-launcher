@@ -1,5 +1,6 @@
 mod commands;
 mod database;
+mod models;
 mod services;
 
 use tauri::Manager;
