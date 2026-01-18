@@ -1,12 +1,9 @@
-use crate::schema::*;
-use diesel::deserialize::{self, FromSql, FromSqlRow};
-use diesel::expression::AsExpression;
-use diesel::prelude::*;
-use diesel::serialize::{self, Output, ToSql};
-use diesel::sql_types::Text;
+use super::prelude::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq, AsExpression, FromSqlRow, serde::Serialize, serde::Deserialize)]
+#[derive(TS, Debug, PartialEq, AsExpression, FromSqlRow, serde::Serialize, serde::Deserialize)]
 #[diesel(sql_type = Text)]
+#[ts(export)]
 pub enum VisualNovelStatus {
     Backlog,
     Playing,
@@ -63,31 +60,4 @@ pub struct VisualNovel {
     pub executable_path: String,
     pub launch_options: Option<String>,
     pub created_at: i64,
-}
-
-#[derive(Queryable, Selectable, Insertable, Identifiable, Debug)]
-#[diesel(table_name = tags)]
-pub struct Tag {
-    pub id: String,
-    pub name: String,
-    pub created_at: i64,
-}
-
-#[derive(Queryable, Selectable, Insertable, Identifiable, Associations, Debug)]
-#[diesel(belongs_to(VisualNovel))]
-#[diesel(belongs_to(Tag))]
-#[diesel(table_name = visual_novels_tags)]
-#[diesel(primary_key(visual_novel_id, tag_id))]
-pub struct VisualNovelTag {
-    pub visual_novel_id: String,
-    pub tag_id: String,
-}
-
-#[derive(Queryable, Selectable, Insertable, Identifiable, Debug)]
-#[diesel(table_name = settings)]
-pub struct Setting {
-    pub id: i32,
-    pub library_path: Option<String>,
-    pub locale_emulator_executable_path: Option<String>,
-    pub locale_emulator_launch_options: Option<String>,
 }
