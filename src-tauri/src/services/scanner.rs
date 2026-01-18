@@ -1,7 +1,3 @@
-// logic for finding visual novels in library
-
-use std::path::Path;
-
 use crate::database::entities::{VisualNovel, VisualNovelStatus};
 use diesel::SqliteConnection;
 use walkdir::WalkDir;
