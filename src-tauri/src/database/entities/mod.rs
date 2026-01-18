@@ -1,1 +1,0 @@
-// seaORM generated models
