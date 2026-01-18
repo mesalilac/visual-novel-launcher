@@ -38,6 +38,7 @@ diesel::table! {
         dir_path -> Text,
         executable_path -> Text,
         launch_options -> Nullable<Text>,
+        is_missing -> Bool,
         created_at -> BigInt,
     }
 }

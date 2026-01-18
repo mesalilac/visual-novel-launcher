@@ -59,5 +59,6 @@ pub struct VisualNovel {
     pub dir_path: String,
     pub executable_path: String,
     pub launch_options: Option<String>,
+    pub is_missing: bool,
     pub created_at: i64,
 }

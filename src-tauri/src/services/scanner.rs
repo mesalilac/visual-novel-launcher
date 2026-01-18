@@ -55,6 +55,7 @@ pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<Vi
             dir_path: entry.path().to_string_lossy().to_string(),
             executable_path: exe_path.path().to_string_lossy().to_string(),
             launch_options: None,
+            is_missing: false,
             created_at: created_at.as_secs() as i64,
         };
 
