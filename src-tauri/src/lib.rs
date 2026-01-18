@@ -43,6 +43,7 @@ pub fn run() {
             Err(e) => panic!("Failed to run migrations: {e}"),
         }
     }
+
     tauri::Builder::default()
         .manage(database::connection::DbPoolWrapper { pool })
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
