@@ -1,7 +1,9 @@
 use super::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(TS, Debug, PartialEq, AsExpression, FromSqlRow, serde::Serialize, serde::Deserialize)]
+#[derive(
+    TS, Debug, Clone, PartialEq, AsExpression, FromSqlRow, serde::Serialize, serde::Deserialize,
+)]
 #[diesel(sql_type = Text)]
 #[ts(export)]
 pub enum VisualNovelStatus {
@@ -46,9 +48,9 @@ where
     }
 }
 
-#[derive(Queryable, Selectable, Insertable, Identifiable, Debug)]
+#[derive(TS, Serialize, Deserialize, Queryable, Selectable, Insertable, Identifiable, Debug)]
 #[diesel(table_name = visual_novels)]
-pub struct VisualNovel {
+pub struct VisualNovelEntity {
     pub id: String,
     pub title: String,
     pub description: Option<String>,

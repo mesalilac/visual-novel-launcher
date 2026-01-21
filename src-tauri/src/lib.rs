@@ -1,7 +1,7 @@
+mod bridge;
 mod cli;
 mod commands;
 mod database;
-mod models;
 mod schema;
 mod services;
 mod utils;
@@ -41,7 +41,16 @@ pub fn run() {
         match conn.run_pending_migrations(MIGRATIONS) {
             Ok(_) => {}
             Err(e) => panic!("Failed to run migrations: {e}"),
-        }
+        };
+        // let new_visual_novels =
+        //     services::scanner::scan_library(&mut conn, r"C:\Games\Eroge".into());
+        //     TODO: get settings from database
+        //           if library_path exists run scan, and push new visual novels
+        //
+        //     TODO: run library sync
+        //           check if dir_path exists if not mark as is_missing true
+        //           check if path exists mark as is_missing false
+        //           later show tag if visual novel is missing
     }
 
     tauri::Builder::default()

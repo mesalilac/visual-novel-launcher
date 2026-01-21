@@ -1,4 +1,4 @@
-use crate::database::entities::{VisualNovel, VisualNovelStatus};
+use crate::database::entities::{VisualNovelEntity, VisualNovelStatus};
 use diesel::SqliteConnection;
 use walkdir::WalkDir;
 
@@ -13,8 +13,8 @@ fn visual_novel_exists(conn: &mut SqliteConnection, target_path: &String) -> boo
     is_exists.unwrap_or(false)
 }
 
-pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<VisualNovel> {
-    let mut visual_novels: Vec<VisualNovel> = Vec::new();
+pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<VisualNovelEntity> {
+    let mut visual_novels: Vec<VisualNovelEntity> = Vec::new();
 
     let entries = WalkDir::new(library_path)
         .min_depth(1)
@@ -40,7 +40,7 @@ pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<Vi
             std::process::exit(1);
         };
 
-        let vn = VisualNovel {
+        let vn = VisualNovelEntity {
             id: nanoid::nanoid!(),
             title: entry.file_name().to_string_lossy().into_owned(),
             description: None,
