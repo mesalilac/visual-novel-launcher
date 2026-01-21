@@ -1,14 +1,15 @@
 use crate::database::entities::{VisualNovelEntity, VisualNovelStatus};
+use crate::schema::visual_novels::dsl as vn_dsl;
+use diesel::dsl::{exists, select};
+use diesel::prelude::*;
 use diesel::SqliteConnection;
 use walkdir::WalkDir;
 
 fn visual_novel_exists(conn: &mut SqliteConnection, target_path: &String) -> bool {
-    use crate::schema::visual_novels::dsl::*;
-    use diesel::dsl::{exists, select};
-    use diesel::prelude::*;
-
-    let is_exists =
-        select(exists(visual_novels.filter(dir_path.eq(target_path)))).get_result::<bool>(conn);
+    let is_exists = select(exists(
+        vn_dsl::visual_novels.filter(vn_dsl::dir_path.eq(target_path)),
+    ))
+    .get_result::<bool>(conn);
 
     is_exists.unwrap_or(false)
 }
@@ -56,7 +57,13 @@ pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<Vi
         };
 
         if !visual_novel_exists(conn, &vn.dir_path) {
-            visual_novels.push(vn);
+            if let Ok(new_vn) = diesel::insert_into(vn_dsl::visual_novels)
+                .values(vn)
+                .returning(VisualNovelEntity::as_returning())
+                .get_result(conn)
+            {
+                visual_novels.push(new_vn);
+            }
         }
     }
 
