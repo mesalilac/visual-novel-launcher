@@ -14,6 +14,7 @@ use tauri::Manager;
 
 const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 const APP_NAME: &str = "visual-novel-launcher";
+const APP_SETTINGS_ID: i32 = 1;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
@@ -42,15 +43,33 @@ pub fn run() {
             Ok(_) => {}
             Err(e) => panic!("Failed to run migrations: {e}"),
         };
-        // let new_visual_novels =
-        //     services::scanner::scan_library(&mut conn, r"C:\Games\Eroge".into());
-        //     TODO: get settings from database
-        //           if library_path exists run scan, and push new visual novels
-        //
-        //     TODO: run library sync
-        //           check if dir_path exists if not mark as is_missing true
-        //           check if path exists mark as is_missing false
-        //           later show tag if visual novel is missing
+
+        use database::entities::SettingEntity;
+        use diesel::prelude::*;
+        use schema::settings::dsl as settings_dsl;
+
+        match settings_dsl::settings
+            .filter(settings_dsl::id.eq(APP_SETTINGS_ID))
+            .get_result::<SettingEntity>(&mut conn)
+        {
+            Ok(settings) => match settings.library_path {
+                Some(library_path) => {
+                    let vns = services::scanner::scan_library(&mut conn, library_path.clone());
+
+                    log::info!(
+                        "Startup library scan: Found {} new visual novels at {:?}",
+                        vns.len(),
+                        library_path
+                    );
+                }
+                None => {
+                    log::warn!("Startup scan: No library path configured yet");
+                }
+            },
+            Err(db_err) => log::error!("Database error during startup scan: {db_err}"),
+        }
+
+        _ = services::scanner::sync_library(&mut conn);
     }
 
     tauri::Builder::default()

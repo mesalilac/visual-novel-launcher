@@ -3,6 +3,7 @@ use crate::schema::visual_novels::dsl as vn_dsl;
 use diesel::dsl::{exists, select};
 use diesel::prelude::*;
 use diesel::SqliteConnection;
+use std::path::{self, Path};
 use walkdir::WalkDir;
 
 fn visual_novel_exists(conn: &mut SqliteConnection, target_path: &String) -> bool {
@@ -68,4 +69,48 @@ pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<Vi
     }
 
     visual_novels
+}
+
+pub fn sync_library(conn: &mut SqliteConnection) -> Result<(), diesel::result::Error> {
+    let vns = vn_dsl::visual_novels.load::<VisualNovelEntity>(conn)?;
+
+    conn.transaction(|conn| {
+        for vn in vns {
+            let path_exists = Path::new(&vn.dir_path).exists();
+
+            if path_exists != !vn.is_missing {
+                let new_missing_status = !path_exists;
+
+                let result = diesel::update(vn_dsl::visual_novels.find(&vn.id))
+                    .set(vn_dsl::is_missing.eq(new_missing_status))
+                    .execute(conn);
+
+                match result {
+                    Ok(_) => {
+                        if new_missing_status {
+                            log::warn!(
+                            "library sync: visual novel is marked as missing, id: {:?}, path: {:?}",
+                            vn.id,
+                            vn.dir_path
+                        )
+                        } else {
+                            log::info!(
+                            "library sync: visual novel is marked as found, id: {:?}, path: {:?}",
+                            vn.id,
+                            vn.dir_path
+                        )
+                        }
+                    }
+                    Err(e) => {
+                        log::error!(
+                            "library sync: Failed to update visual novel 'is_missing' vn {:?}: {e}",
+                            vn.title,
+                        )
+                    }
+                }
+            }
+        }
+
+        Ok(())
+    })
 }
