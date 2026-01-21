@@ -2,5 +2,3 @@
 
 pub mod dto;
 pub mod requests;
-
-pub type CommandResult<T> = Result<T, String>;
