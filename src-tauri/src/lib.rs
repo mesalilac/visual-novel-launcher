@@ -10,7 +10,7 @@ use clap::Parser;
 use cli::Cli;
 use commands::*;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
-use specta_typescript::{formatter, BigIntExportBehavior, Typescript};
+use specta_typescript::{BigIntExportBehavior, Typescript};
 use tauri::Manager;
 use tauri_helper::{auto_collect_command, specta_collect_commands};
 use tauri_specta::Builder;
@@ -82,9 +82,7 @@ pub fn run() {
     #[cfg(debug_assertions)]
     specta_builder
         .export(
-            Typescript::default()
-                .bigint(BigIntExportBehavior::Number)
-                .formatter(formatter::biome),
+            Typescript::default().bigint(BigIntExportBehavior::Number),
             "../src/bindings.ts",
         )
         .expect("Failed to export typescript bindings");
