@@ -1,4 +1,7 @@
-use crate::database::entities::{VisualNovelEntity, VisualNovelStatus};
+use crate::database::{
+    entities::VisualNovelEntity,
+    types::{Timestamp, VisualNovelStatus},
+};
 use crate::schema::visual_novels::dsl as vn_dsl;
 use diesel::dsl::{exists, select};
 use diesel::prelude::*;
@@ -36,12 +39,6 @@ pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<Vi
             continue;
         };
 
-        let Ok(created_at) = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH)
-        else {
-            log::error!("Failed to get current time");
-            std::process::exit(1);
-        };
-
         let vn = VisualNovelEntity {
             id: nanoid::nanoid!(),
             title: entry.file_name().to_string_lossy().into_owned(),
@@ -54,7 +51,7 @@ pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<Vi
             executable_path: exe_path.path().to_string_lossy().to_string(),
             launch_options: None,
             is_missing: false,
-            created_at: created_at.as_secs() as i64,
+            created_at: Timestamp::now(),
         };
 
         if !visual_novel_exists(conn, &vn.dir_path) {

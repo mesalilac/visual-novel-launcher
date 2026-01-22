@@ -1,4 +1,7 @@
-use crate::database::entities::{SettingEntity, TagEntity, VisualNovelEntity, VisualNovelStatus};
+use crate::database::{
+    entities::{SettingEntity, TagEntity, VisualNovelEntity},
+    types::{Timestamp, VisualNovelStatus},
+};
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
@@ -8,7 +11,7 @@ use ts_rs::TS;
 pub struct Tag {
     pub id: String,
     pub name: String,
-    pub created_at: i64,
+    pub created_at: Timestamp,
 }
 
 impl Tag {
@@ -54,13 +57,13 @@ pub struct VisualNovel {
     pub description: Option<String>,
     pub cover_path: Option<String>,
     pub playtime: i64,
-    pub last_time_played_at: Option<i64>,
+    pub last_time_played_at: Option<Timestamp>,
     pub status: VisualNovelStatus,
     pub dir_path: String,
     pub executable_path: String,
     pub launch_options: Option<String>,
     pub is_missing: bool,
-    pub created_at: i64,
+    pub created_at: Timestamp,
     pub tags: Vec<Tag>,
 }
 
@@ -109,7 +112,7 @@ impl Setting {
 #[ts(export)]
 #[serde(rename_all = "camelCase")]
 pub struct GeneralStats {
-    pub last_played_at: Option<i64>,
+    pub last_played_at: Option<Timestamp>,
     pub total_playtime: i64,
 
     pub visual_novel_count: i64,

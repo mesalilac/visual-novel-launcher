@@ -6,5 +6,5 @@ use serde::{Deserialize, Serialize};
 pub struct TagEntity {
     pub id: String,
     pub name: String,
-    pub created_at: i64,
+    pub created_at: Timestamp,
 }

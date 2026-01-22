@@ -1,4 +1,4 @@
-use crate::{bridge::dto::Tag, database::entities::VisualNovelStatus};
+use crate::{bridge::dto::Tag, database::types::VisualNovelStatus};
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 

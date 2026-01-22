@@ -2,7 +2,7 @@
 
 diesel::table! {
     use diesel::sql_types::*;
-    use crate::database::entities::*;
+    use crate::database::types::*;
 
     settings (id) {
         id -> Integer,
@@ -14,7 +14,7 @@ diesel::table! {
 
 diesel::table! {
     use diesel::sql_types::*;
-    use crate::database::entities::*;
+    use crate::database::types::*;
 
     tags (id) {
         id -> Text,
@@ -25,7 +25,7 @@ diesel::table! {
 
 diesel::table! {
     use diesel::sql_types::*;
-    use crate::database::entities::*;
+    use crate::database::types::*;
 
     visual_novels (id) {
         id -> Text,
@@ -45,7 +45,7 @@ diesel::table! {
 
 diesel::table! {
     use diesel::sql_types::*;
-    use crate::database::entities::*;
+    use crate::database::types::*;
 
     visual_novels_tags (visual_novel_id, tag_id) {
         visual_novel_id -> Text,
