@@ -1,8 +1,7 @@
 use super::prelude::*;
 use serde::{Deserialize, Serialize};
-use ts_rs::TS;
 
-#[derive(TS, Serialize, Deserialize, Queryable, Selectable, Insertable, Identifiable, Debug)]
+#[derive(Serialize, Deserialize, Queryable, Selectable, Insertable, Identifiable, Debug)]
 #[diesel(table_name = settings)]
 pub struct SettingEntity {
     pub id: i32,

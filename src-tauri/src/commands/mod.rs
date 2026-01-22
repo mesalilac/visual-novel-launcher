@@ -1,8 +1,6 @@
 use serde::Serialize;
-use ts_rs::TS;
 
-#[derive(TS, Serialize, thiserror::Error, Debug)]
-#[ts(export)]
+#[derive(specta::Type, Serialize, thiserror::Error, Debug)]
 #[serde(tag = "kind", content = "message")]
 pub enum CommandError {
     #[error("Database error: {0}")]
@@ -55,7 +53,7 @@ pub mod prelude {
     pub use diesel::prelude::*;
     pub use serde::{Deserialize, Serialize};
     use tauri::State;
-    pub use ts_rs::TS;
+    pub use tauri_helper::auto_collect_command;
 
     pub mod schema {
         pub use crate::schema::*;
@@ -64,8 +62,14 @@ pub mod prelude {
     pub type DbState<'a> = State<'a, DbPoolWrapper>;
 }
 
-pub mod create;
-pub mod get;
-pub mod remove;
-pub mod update;
-pub mod util;
+mod create;
+mod get;
+mod remove;
+mod update;
+mod util;
+
+pub use create::*;
+pub use get::*;
+pub use remove::*;
+pub use update::*;
+pub use util::*;

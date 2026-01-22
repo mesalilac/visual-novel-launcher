@@ -2,7 +2,6 @@ pub mod prelude {
     pub use crate::database::types::*;
     pub use crate::schema::*;
     pub use diesel::prelude::*;
-    pub use ts_rs::TS;
 }
 
 mod setting;

@@ -1,16 +1,22 @@
 use super::prelude::*;
 
 #[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 pub async fn remove_visual_novel_by_id(state: DbState<'_>, id: String) -> CommandResult<()> {
     todo!()
 }
 
 #[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 pub async fn remove_tag_by_id(state: DbState<'_>, id: String) -> CommandResult<()> {
     todo!()
 }
 
 #[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 pub async fn remove_tag_from_visual_novel_by_id(
     state: DbState<'_>,
     visual_novel_id: String,
@@ -20,16 +26,22 @@ pub async fn remove_tag_from_visual_novel_by_id(
 }
 
 #[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 pub async fn remove_all_visual_novels(state: DbState<'_>) -> CommandResult<Vec<VisualNovel>> {
     todo!()
 }
 
 #[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 pub async fn remove_tags(state: DbState<'_>) -> CommandResult<Vec<Tag>> {
     todo!()
 }
 
 // #[tauri::command]
+// #[auto_collect_command]
+// #[specta::specta]
 // pub async fn remove_(state: DbState<'_>) -> CommandResult<()> {
 //     todo!()
 // }

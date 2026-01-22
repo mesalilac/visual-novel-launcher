@@ -3,10 +3,8 @@ use crate::database::{
     types::{Timestamp, VisualNovelStatus},
 };
 use serde::{Deserialize, Serialize};
-use ts_rs::TS;
 
-#[derive(TS, Serialize, Deserialize, Debug, Clone)]
-#[ts(export)]
+#[derive(specta::Type, Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Tag {
     pub id: String,
@@ -24,8 +22,7 @@ impl Tag {
     }
 }
 
-#[derive(TS, Serialize, Deserialize, Debug, Clone)]
-#[ts(export)]
+#[derive(specta::Type, Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct TagWithVisualNovels {
     #[serde(flatten)]
@@ -48,8 +45,7 @@ impl TagWithVisualNovels {
     }
 }
 
-#[derive(TS, Serialize, Deserialize, Debug, Clone)]
-#[ts(export)]
+#[derive(specta::Type, Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct VisualNovel {
     pub id: String,
@@ -87,8 +83,7 @@ impl VisualNovel {
     }
 }
 
-#[derive(TS, Serialize, Deserialize, Debug, Clone)]
-#[ts(export)]
+#[derive(specta::Type, Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Setting {
     pub id: i32,
@@ -108,8 +103,7 @@ impl Setting {
     }
 }
 
-#[derive(TS, Serialize, Deserialize, Debug, Clone)]
-#[ts(export)]
+#[derive(specta::Type, Serialize, Deserialize, Debug, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct GeneralStats {
     pub last_played_at: Option<Timestamp>,

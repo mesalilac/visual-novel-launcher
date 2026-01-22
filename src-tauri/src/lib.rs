@@ -8,9 +8,12 @@ mod utils;
 
 use clap::Parser;
 use cli::Cli;
+use commands::*;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
-
+use specta_typescript::{formatter, BigIntExportBehavior, Typescript};
 use tauri::Manager;
+use tauri_helper::{auto_collect_command, specta_collect_commands};
+use tauri_specta::Builder;
 
 const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 const APP_NAME: &str = "visual-novel-launcher";
@@ -18,6 +21,8 @@ const APP_SETTINGS_ID: i32 = 1;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
@@ -26,15 +31,15 @@ fn greet(name: &str) -> String {
 pub fn run() {
     let cli = Cli::parse();
 
-    let mut builder = env_logger::Builder::new();
+    let mut env_builder = env_logger::Builder::new();
 
-    builder.filter_level(log::LevelFilter::Info);
+    env_builder.filter_level(log::LevelFilter::Info);
 
     if cli.verbose {
-        builder.filter_level(log::LevelFilter::Trace);
+        env_builder.filter_level(log::LevelFilter::Trace);
     }
 
-    builder.init();
+    env_builder.init();
 
     let pool = database::connection::get_connection_pool();
 
@@ -72,6 +77,18 @@ pub fn run() {
         _ = services::scanner::sync_library(&mut conn);
     }
 
+    let specta_builder = Builder::<tauri::Wry>::new().commands(specta_collect_commands!());
+
+    #[cfg(debug_assertions)]
+    specta_builder
+        .export(
+            Typescript::default()
+                .bigint(BigIntExportBehavior::Number)
+                .formatter(formatter::biome),
+            "../src/bindings.ts",
+        )
+        .expect("Failed to export typescript bindings");
+
     tauri::Builder::default()
         .manage(database::connection::DbPoolWrapper { pool })
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
@@ -81,7 +98,12 @@ pub fn run() {
                 .set_focus();
         }))
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(specta_builder.invoke_handler())
+        .setup(move |app| {
+            specta_builder.mount_events(app);
+
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

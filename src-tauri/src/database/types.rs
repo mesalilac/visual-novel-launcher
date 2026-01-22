@@ -4,10 +4,10 @@ use diesel::expression::AsExpression;
 use diesel::serialize::{self, Output, ToSql};
 use diesel::sql_types::{BigInt, Text};
 use serde::{Deserialize, Serialize};
-use ts_rs::TS;
 
-#[derive(TS, Serialize, Deserialize, Debug, Clone, Copy, PartialEq, AsExpression, FromSqlRow)]
-#[ts(export)]
+#[derive(
+    specta::Type, Serialize, Deserialize, Debug, Clone, Copy, PartialEq, AsExpression, FromSqlRow,
+)]
 #[serde(transparent)]
 #[diesel(sql_type = BigInt)]
 pub struct Timestamp(pub i64);
@@ -44,10 +44,16 @@ where
 }
 
 #[derive(
-    TS, Debug, Clone, PartialEq, AsExpression, FromSqlRow, serde::Serialize, serde::Deserialize,
+    specta::Type,
+    Debug,
+    Clone,
+    PartialEq,
+    AsExpression,
+    FromSqlRow,
+    serde::Serialize,
+    serde::Deserialize,
 )]
 #[diesel(sql_type = Text)]
-#[ts(export)]
 pub enum VisualNovelStatus {
     Backlog,
     Playing,

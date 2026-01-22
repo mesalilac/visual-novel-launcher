@@ -1,9 +1,7 @@
 use crate::{bridge::dto::Tag, database::types::VisualNovelStatus};
 use serde::{Deserialize, Serialize};
-use ts_rs::TS;
 
-#[derive(TS, Debug, Clone, Deserialize, Serialize)]
-#[ts(export)]
+#[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateVisualNovelRequest {
     pub id: String,
@@ -17,16 +15,14 @@ pub struct UpdateVisualNovelRequest {
     pub tag_ids: Vec<String>,
 }
 
-#[derive(TS, Debug, Clone, Deserialize, Serialize)]
-#[ts(export)]
+#[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateTagRequest {
     id: String,
     name: String,
 }
 
-#[derive(TS, Debug, Clone, Deserialize, Serialize)]
-#[ts(export)]
+#[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateSettingsRequest {
     pub library_path: Option<String>,
@@ -34,8 +30,7 @@ pub struct UpdateSettingsRequest {
     pub locale_emulator_launch_options: Option<String>,
 }
 
-#[derive(TS, Debug, Clone, Deserialize, Serialize)]
-#[ts(export)]
+#[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CreateVisualNovelRequest {
     pub title: String,
@@ -49,8 +44,7 @@ pub struct CreateVisualNovelRequest {
     pub tags: Vec<Tag>,
 }
 
-#[derive(TS, Debug, Clone, Deserialize, Serialize)]
-#[ts(export)]
+#[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CreateTagRequest {
     pub name: String,
