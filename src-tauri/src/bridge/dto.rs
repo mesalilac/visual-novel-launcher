@@ -104,3 +104,19 @@ impl Setting {
         }
     }
 }
+
+#[derive(TS, Serialize, Deserialize, Debug, Clone)]
+#[ts(export)]
+#[serde(rename_all = "camelCase")]
+pub struct GeneralStats {
+    pub last_played_at: Option<i64>,
+    pub total_playtime: i64,
+
+    pub visual_novel_count: i64,
+    pub tag_count: i64,
+    pub unplayed_count: i64,
+    pub playing_count: i64,
+    pub finished_count: i64,
+    pub backlog_count: i64,
+    pub dropped_count: i64,
+}

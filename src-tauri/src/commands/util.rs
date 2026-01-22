@@ -1,0 +1,47 @@
+use super::prelude::*;
+
+#[tauri::command]
+pub async fn util_scan_library(state: DbState<'_>) -> CommandResult<Vec<VisualNovel>> {
+    todo!()
+}
+
+#[tauri::command]
+pub async fn util_sync_library(state: DbState<'_>) -> CommandResult<Vec<VisualNovel>> {
+    todo!()
+}
+
+#[tauri::command]
+pub async fn util_launch_visual_novel(state: DbState<'_>, id: String) -> CommandResult<()> {
+    todo!()
+}
+
+#[tauri::command]
+pub async fn util_close_visual_novel(state: DbState<'_>, id: String) -> CommandResult<()> {
+    todo!()
+}
+
+#[tauri::command]
+pub async fn util_open_folder(state: DbState<'_>, dir_path: String) -> CommandResult<()> {
+    todo!()
+}
+
+#[tauri::command]
+pub async fn util_pick_visual_novel_dir(
+    state: DbState<'_>,
+    starting_path: Option<String>,
+) -> CommandResult<String> {
+    todo!()
+}
+
+#[tauri::command]
+pub async fn util_pick_executable(
+    state: DbState<'_>,
+    starting_path: Option<String>,
+) -> CommandResult<String> {
+    todo!()
+}
+
+// #[tauri::command]
+// pub async fn util_(state: DbState<'_>) -> CommandResult<()> {
+//     todo!()
+// }

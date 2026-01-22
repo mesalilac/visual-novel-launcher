@@ -46,3 +46,26 @@ impl From<anyhow::Error> for CommandError {
 }
 
 pub type CommandResult<T> = Result<T, CommandError>;
+
+pub mod prelude {
+    pub use crate::bridge::{dto::*, requests::*};
+    pub use crate::commands::{CommandError, CommandResult};
+    use crate::database::connection::DbPoolWrapper;
+    pub use crate::database::entities::*;
+    pub use diesel::prelude::*;
+    pub use serde::{Deserialize, Serialize};
+    use tauri::State;
+    pub use ts_rs::TS;
+
+    pub mod schema {
+        pub use crate::schema::*;
+    }
+
+    pub type DbState<'a> = State<'a, DbPoolWrapper>;
+}
+
+pub mod create;
+pub mod get;
+pub mod remove;
+pub mod update;
+pub mod util;
