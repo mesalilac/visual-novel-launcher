@@ -31,6 +31,14 @@ impl From<diesel::result::Error> for CommandError {
     }
 }
 
+impl From<diesel::r2d2::PoolError> for CommandError {
+    fn from(error: diesel::r2d2::PoolError) -> Self {
+        match error {
+            _ => CommandError::Database(error.to_string()),
+        }
+    }
+}
+
 impl From<std::io::Error> for CommandError {
     fn from(error: std::io::Error) -> Self {
         CommandError::Io(error.to_string())
