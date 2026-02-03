@@ -62,11 +62,11 @@ pub async fn get_tags(state: DbState<'_>) -> CommandResult<Vec<Tag>> {
 
     let mut conn = state.pool.get()?;
 
-    let data = tag_dsl::tags.load::<TagEntity>(&mut conn)?;
+    let tags = tag_dsl::tags.load::<TagEntity>(&mut conn)?;
 
-    let tags = data.into_iter().map(Tag::from_db).collect();
+    let data = tags.into_iter().map(Tag::from_db).collect();
 
-    Ok(tags)
+    Ok(data)
 }
 
 #[tauri::command]
