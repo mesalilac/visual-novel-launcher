@@ -106,3 +106,9 @@ where
         }
     }
 }
+
+impl Default for VisualNovelStatus {
+    fn default() -> Self {
+        Self::Backlog
+    }
+}
