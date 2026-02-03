@@ -9,6 +9,7 @@ pub async fn create_visual_novel(
     state: DbState<'_>,
     payload: CreateVisualNovelRequest,
 ) -> CommandResult<VisualNovel> {
+    use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
     use schema::visual_novels_tags::dsl as vn_tag_dsl;
 
@@ -50,7 +51,14 @@ pub async fn create_visual_novel(
         }
     }
 
-    todo!()
+    let tags = VisualNovelTagEntity::belonging_to(&new_vn)
+        .inner_join(tag_dsl::tags)
+        .select(TagEntity::as_select())
+        .load::<TagEntity>(&mut conn)?;
+
+    let vn = VisualNovel::from_db(new_vn, tags);
+
+    Ok(vn)
 }
 
 #[tauri::command]
@@ -78,7 +86,7 @@ pub async fn create_tag(state: DbState<'_>, payload: CreateTagRequest) -> Comman
             .execute(&mut conn)?;
     }
 
-    todo!()
+    Ok(Tag::from_db(new_tag))
 }
 
 // #[tauri::command]
