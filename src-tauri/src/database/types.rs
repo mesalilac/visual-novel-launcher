@@ -6,7 +6,18 @@ use diesel::sql_types::{BigInt, Text};
 use serde::{Deserialize, Serialize};
 
 #[derive(
-    specta::Type, Serialize, Deserialize, Debug, Clone, Copy, PartialEq, AsExpression, FromSqlRow,
+    specta::Type,
+    Serialize,
+    Deserialize,
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    PartialOrd,
+    Ord,
+    AsExpression,
+    FromSqlRow,
 )]
 #[serde(transparent)]
 #[diesel(sql_type = BigInt)]
