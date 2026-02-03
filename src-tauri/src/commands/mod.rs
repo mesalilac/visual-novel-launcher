@@ -58,6 +58,7 @@ pub mod prelude {
     pub use crate::commands::{CommandError, CommandResult};
     use crate::database::connection::DbPoolWrapper;
     pub use crate::database::entities::*;
+    pub use crate::database::types::{Timestamp, VisualNovelStatus};
     pub use diesel::prelude::*;
     pub use serde::{Deserialize, Serialize};
     use tauri::State;
