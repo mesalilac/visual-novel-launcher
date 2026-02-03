@@ -1,7 +1,7 @@
 use super::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Queryable, Selectable, Insertable, Identifiable, Debug)]
+#[derive(Serialize, Deserialize, Queryable, Selectable, Insertable, Identifiable, Debug, Clone)]
 #[diesel(table_name = visual_novels)]
 pub struct VisualNovelEntity {
     pub id: String,
