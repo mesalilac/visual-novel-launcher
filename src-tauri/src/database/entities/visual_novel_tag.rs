@@ -1,7 +1,7 @@
 use super::prelude::*;
 use super::{TagEntity, VisualNovelEntity};
 
-#[derive(Queryable, Selectable, Insertable, Identifiable, Associations, Debug)]
+#[derive(Queryable, Selectable, Insertable, Identifiable, Associations, Debug, Clone)]
 #[diesel(belongs_to(VisualNovelEntity, foreign_key = visual_novel_id))]
 #[diesel(belongs_to(TagEntity, foreign_key = tag_id))]
 #[diesel(table_name = visual_novels_tags)]
