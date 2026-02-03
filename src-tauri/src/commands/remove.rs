@@ -5,9 +5,7 @@ use diesel::delete;
 #[auto_collect_command]
 #[specta::specta]
 pub async fn remove_visual_novel_by_id(state: DbState<'_>, id: String) -> CommandResult<()> {
-    use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
-    use schema::visual_novels_tags::dsl as vn_tag_dsl;
 
     let mut conn = state.pool.get()?;
 
@@ -21,8 +19,6 @@ pub async fn remove_visual_novel_by_id(state: DbState<'_>, id: String) -> Comman
 #[specta::specta]
 pub async fn remove_tag_by_id(state: DbState<'_>, id: String) -> CommandResult<()> {
     use schema::tags::dsl as tag_dsl;
-    use schema::visual_novels::dsl as vn_dsl;
-    use schema::visual_novels_tags::dsl as vn_tag_dsl;
 
     let mut conn = state.pool.get()?;
 
@@ -39,8 +35,6 @@ pub async fn remove_tag_from_visual_novel_by_id(
     visual_novel_id: String,
     tag_id: String,
 ) -> CommandResult<()> {
-    use schema::tags::dsl as tag_dsl;
-    use schema::visual_novels::dsl as vn_dsl;
     use schema::visual_novels_tags::dsl as vn_tag_dsl;
 
     let mut conn = state.pool.get()?;
@@ -61,7 +55,6 @@ pub async fn remove_tag_from_visual_novel_by_id(
 pub async fn remove_all_visual_novels(state: DbState<'_>) -> CommandResult<Vec<VisualNovel>> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
-    use schema::visual_novels_tags::dsl as vn_tag_dsl;
 
     let mut conn = state.pool.get()?;
 
@@ -89,8 +82,6 @@ pub async fn remove_all_visual_novels(state: DbState<'_>) -> CommandResult<Vec<V
 #[specta::specta]
 pub async fn remove_tags(state: DbState<'_>) -> CommandResult<Vec<Tag>> {
     use schema::tags::dsl as tag_dsl;
-    use schema::visual_novels::dsl as vn_dsl;
-    use schema::visual_novels_tags::dsl as vn_tag_dsl;
 
     let mut conn = state.pool.get()?;
 
