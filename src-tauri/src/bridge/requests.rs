@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateVisualNovelRequest {
-    pub id: String,
     pub title: Option<String>,
     pub description: Option<String>,
     pub cover_path: Option<String>,
@@ -18,8 +17,7 @@ pub struct UpdateVisualNovelRequest {
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateTagRequest {
-    id: String,
-    name: String,
+    pub name: String,
 }
 
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
