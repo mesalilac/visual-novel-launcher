@@ -6,19 +6,13 @@ use crate::schema::visual_novels::dsl as vn_dsl;
 use diesel::dsl::{exists, select};
 use diesel::prelude::*;
 use diesel::SqliteConnection;
-use std::path::{self, Path};
+use std::path::Path;
 use walkdir::WalkDir;
 
-fn visual_novel_exists(conn: &mut SqliteConnection, target_path: &String) -> bool {
-    let is_exists = select(exists(
-        vn_dsl::visual_novels.filter(vn_dsl::dir_path.eq(target_path)),
-    ))
-    .get_result::<bool>(conn);
-
-    is_exists.unwrap_or(false)
-}
-
-pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<VisualNovelEntity> {
+pub fn scan_library(
+    conn: &mut SqliteConnection,
+    library_path: String,
+) -> Result<Vec<VisualNovelEntity>, diesel::result::Error> {
     let mut visual_novels: Vec<VisualNovelEntity> = Vec::new();
 
     let entries = WalkDir::new(library_path)
@@ -54,18 +48,22 @@ pub fn scan_library(conn: &mut SqliteConnection, library_path: String) -> Vec<Vi
             created_at: Timestamp::now(),
         };
 
-        if !visual_novel_exists(conn, &vn.dir_path) {
-            if let Ok(new_vn) = diesel::insert_into(vn_dsl::visual_novels)
+        let vn_exists = select(exists(
+            vn_dsl::visual_novels.filter(vn_dsl::dir_path.eq(&vn.dir_path)),
+        ))
+        .get_result::<bool>(conn)?;
+
+        if !vn_exists {
+            let new_vn = diesel::insert_into(vn_dsl::visual_novels)
                 .values(vn)
                 .returning(VisualNovelEntity::as_returning())
-                .get_result(conn)
-            {
-                visual_novels.push(new_vn);
-            }
+                .get_result(conn)?;
+
+            visual_novels.push(new_vn);
         }
     }
 
-    visual_novels
+    Ok(visual_novels)
 }
 
 pub fn sync_library(conn: &mut SqliteConnection) -> Result<(), diesel::result::Error> {

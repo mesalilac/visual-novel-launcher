@@ -59,13 +59,18 @@ pub fn run() {
         {
             Ok(settings) => match settings.library_path {
                 Some(library_path) => {
-                    let vns = services::scanner::scan_library(&mut conn, library_path.clone());
-
-                    log::info!(
-                        "Startup library scan: Found {} new visual novels at {:?}",
-                        vns.len(),
-                        library_path
-                    );
+                    match services::scanner::scan_library(&mut conn, library_path.clone()) {
+                        Ok(vns) => {
+                            log::info!(
+                                "Startup library scan: Found {} new visual novels at {:?}",
+                                vns.len(),
+                                library_path
+                            );
+                        }
+                        Err(err) => {
+                            log::error!("Startup library scan: Failed to scan library: {err}");
+                        }
+                    };
                 }
                 None => {
                     log::warn!("Startup scan: No library path configured yet");
