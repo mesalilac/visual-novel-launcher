@@ -87,7 +87,9 @@ pub fn run() {
     #[cfg(debug_assertions)]
     specta_builder
         .export(
-            Typescript::default().bigint(BigIntExportBehavior::Number),
+            Typescript::default()
+                .bigint(BigIntExportBehavior::Number)
+                .header("// biome-ignore-all lint: Auto generate\n// biome-ignore-all assist/source/organizeImports: Auto generate"),
             "../src/bindings.ts",
         )
         .expect("Failed to export typescript bindings");
