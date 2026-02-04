@@ -1,5 +1,8 @@
 use super::prelude::*;
-use diesel::insert_into;
+use diesel::{
+    dsl::{exists, select},
+    insert_into,
+};
 use nanoid::nanoid;
 
 #[tauri::command]
@@ -35,16 +38,16 @@ pub async fn create_visual_novel(
         .execute(&mut conn)?;
 
     for tag in payload.tags {
-        let junction_exists = vn_tag_dsl::visual_novels_tags
-            .filter(
+        let junction_exists = select(exists(
+            vn_tag_dsl::visual_novels_tags.filter(
                 vn_tag_dsl::visual_novel_id
                     .eq(&new_vn.id)
                     .and(vn_tag_dsl::tag_id.eq(&tag.id)),
-            )
-            .count()
-            .get_result::<i64>(&mut conn)?;
+            ),
+        ))
+        .get_result::<bool>(&mut conn)?;
 
-        if junction_exists == 0 {
+        if !junction_exists {
             insert_into(vn_tag_dsl::visual_novels_tags)
                 .values((
                     vn_tag_dsl::visual_novel_id.eq(&new_vn.id),
@@ -78,12 +81,12 @@ pub async fn create_tag(state: DbState<'_>, payload: CreateTagRequest) -> Comman
         created_at: Timestamp::now(),
     };
 
-    let tag_exists = tag_dsl::tags
-        .filter(tag_dsl::name.eq(&new_tag.name))
-        .count()
-        .get_result::<i64>(&mut conn)?;
+    let tag_exists = select(exists(
+        tag_dsl::tags.filter(tag_dsl::name.eq(&new_tag.name)),
+    ))
+    .get_result::<bool>(&mut conn)?;
 
-    if tag_exists == 0 {
+    if !tag_exists {
         insert_into(tag_dsl::tags)
             .values(&new_tag)
             .execute(&mut conn)?;

@@ -1,6 +1,9 @@
 use super::prelude::*;
 use crate::APP_SETTINGS_ID;
-use diesel::{insert_into, update};
+use diesel::{
+    dsl::{exists, select},
+    insert_into, update,
+};
 
 #[derive(Debug, Clone, Serialize, AsChangeset)]
 #[diesel(table_name = schema::visual_novels)]
@@ -43,16 +46,16 @@ pub async fn update_visual_novel(
         .get_result::<VisualNovelEntity>(&mut conn)?;
 
     for tag in payload.tag_ids {
-        let tag_exists = vn_tag_dsl::visual_novels_tags
-            .filter(
+        let tag_exists = select(exists(
+            vn_tag_dsl::visual_novels_tags.filter(
                 vn_tag_dsl::visual_novel_id
                     .eq(&id)
                     .and(vn_tag_dsl::tag_id.eq(&tag)),
-            )
-            .count()
-            .get_result::<i64>(&mut conn)?;
+            ),
+        ))
+        .get_result::<bool>(&mut conn)?;
 
-        if tag_exists > 0 {
+        if tag_exists {
             continue;
         }
 
