@@ -12,6 +12,9 @@ pub enum CommandError {
     #[error("Filesystem error: {0}")]
     Io(String),
 
+    #[error("Failed to scan library: {0}")]
+    ScanFailure(String),
+
     #[error("Failed to launch game: {0}")]
     LaunchFailure(String),
 
