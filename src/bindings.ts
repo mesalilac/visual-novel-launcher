@@ -5,11 +5,30 @@
 /** user-defined commands **/
 
 export const commands = {
-    async utilScanLibrary(): Promise<Result<VisualNovel[], CommandError>> {
+    async getTagsWithVisualNovels(): Promise<
+        Result<TagWithVisualNovels[], CommandError>
+    > {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('util_scan_library'),
+                data: await TAURI_INVOKE('get_tags_with_visual_novels'),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async updateVisualNovel(
+        id: string,
+        payload: UpdateVisualNovelRequest,
+    ): Promise<Result<VisualNovel, CommandError>> {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('update_visual_novel', {
+                    id,
+                    payload,
+                }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
@@ -29,25 +48,6 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async removeTagById(id: string): Promise<Result<null, CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('remove_tag_by_id', { id }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async removeTags(): Promise<Result<Tag[], CommandError>> {
-        try {
-            return { status: 'ok', data: await TAURI_INVOKE('remove_tags') };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
     async utilCloseVisualNovel(
         id: string,
     ): Promise<Result<null, CommandError>> {
@@ -61,32 +61,73 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async getTagsWithVisualNovels(): Promise<
-        Result<TagWithVisualNovels[], CommandError>
-    > {
+    async removeTagFromVisualNovelById(
+        visualNovelId: string,
+        tagId: string,
+    ): Promise<Result<null, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('get_tags_with_visual_novels'),
+                data: await TAURI_INVOKE('remove_tag_from_visual_novel_by_id', {
+                    visualNovelId,
+                    tagId,
+                }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
         }
     },
-    async updateTag(
-        id: string,
-        payload: UpdateTagRequest,
-    ): Promise<Result<Tag, CommandError>> {
+    async getStats(): Promise<Result<GeneralStats, CommandError>> {
+        try {
+            return { status: 'ok', data: await TAURI_INVOKE('get_stats') };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async removeTags(): Promise<Result<Tag[], CommandError>> {
+        try {
+            return { status: 'ok', data: await TAURI_INVOKE('remove_tags') };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async getSettings(): Promise<Result<Setting, CommandError>> {
+        try {
+            return { status: 'ok', data: await TAURI_INVOKE('get_settings') };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async utilScanLibrary(): Promise<Result<VisualNovel[], CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('update_tag', { id, payload }),
+                data: await TAURI_INVOKE('util_scan_library'),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
         }
+    },
+    async removeAllVisualNovels(): Promise<
+        Result<VisualNovel[], CommandError>
+    > {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('remove_all_visual_novels'),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async greet(name: string): Promise<string> {
+        return await TAURI_INVOKE('greet', { name });
     },
     async getTags(): Promise<Result<Tag[], CommandError>> {
         try {
@@ -96,9 +137,12 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async getStats(): Promise<Result<GeneralStats, CommandError>> {
+    async removeTagById(id: string): Promise<Result<null, CommandError>> {
         try {
-            return { status: 'ok', data: await TAURI_INVOKE('get_stats') };
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('remove_tag_by_id', { id }),
+            };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
@@ -117,13 +161,25 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async removeVisualNovelById(
-        id: string,
-    ): Promise<Result<null, CommandError>> {
+    async utilSyncLibrary(): Promise<Result<VisualNovel[], CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('remove_visual_novel_by_id', { id }),
+                data: await TAURI_INVOKE('util_sync_library'),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async updateTag(
+        id: string,
+        payload: UpdateTagRequest,
+    ): Promise<Result<Tag, CommandError>> {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('update_tag', { id, payload }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
@@ -156,38 +212,13 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async getSettings(): Promise<Result<Setting, CommandError>> {
-        try {
-            return { status: 'ok', data: await TAURI_INVOKE('get_settings') };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async removeTagFromVisualNovelById(
-        visualNovelId: string,
-        tagId: string,
-    ): Promise<Result<null, CommandError>> {
+    async createTag(
+        payload: CreateTagRequest,
+    ): Promise<Result<Tag, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('remove_tag_from_visual_novel_by_id', {
-                    visualNovelId,
-                    tagId,
-                }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async removeAllVisualNovels(): Promise<
-        Result<VisualNovel[], CommandError>
-    > {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('remove_all_visual_novels'),
+                data: await TAURI_INVOKE('create_tag', { payload }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
@@ -205,44 +236,13 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async utilSyncLibrary(): Promise<Result<VisualNovel[], CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('util_sync_library'),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async greet(name: string): Promise<string> {
-        return await TAURI_INVOKE('greet', { name });
-    },
-    async createTag(
-        payload: CreateTagRequest,
-    ): Promise<Result<Tag, CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('create_tag', { payload }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async updateVisualNovel(
+    async removeVisualNovelById(
         id: string,
-        payload: UpdateVisualNovelRequest,
-    ): Promise<Result<VisualNovel, CommandError>> {
+    ): Promise<Result<null, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('update_visual_novel', {
-                    id,
-                    payload,
-                }),
+                data: await TAURI_INVOKE('remove_visual_novel_by_id', { id }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
