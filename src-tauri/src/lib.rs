@@ -6,11 +6,15 @@ mod schema;
 mod services;
 mod utils;
 
+use std::path::Path;
+
 use clap::Parser;
 use cli::Cli;
 use commands::*;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use specta_typescript::{BigIntExportBehavior, Typescript};
+use std::io;
+use std::process::Command;
 use tauri::Manager;
 use tauri_helper::{auto_collect_command, specta_collect_commands};
 use tauri_specta::Builder;
@@ -25,6 +29,45 @@ const APP_SETTINGS_ID: i32 = 1;
 #[specta::specta]
 fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
+}
+
+pub fn biome(file: &Path) -> io::Result<()> {
+    let biome_bin = if cfg!(windows) {
+        "../node_modules/.bin/biome.cmd"
+    } else {
+        "../node_modules/.bin/biome"
+    };
+
+    let process = Command::new(biome_bin)
+        .arg("format")
+        .arg("--write")
+        .arg(file)
+        .output();
+
+    let output = match process {
+        Ok(out) => out,
+        Err(e) => {
+            println!("Error: Failed to run pnpm: {e}");
+
+            return Err(e);
+        }
+    };
+
+    if !output.status.success() {
+        let error_message = String::from_utf8_lossy(&output.stderr);
+        let out_message = String::from_utf8_lossy(&output.stdout);
+        println!("--- Biomejs Error ---");
+        println!("Status: {}", output.status);
+        println!("Stdout: {}", out_message);
+        println!("Stderr: {}", error_message);
+
+        return Err(io::Error::new(
+            io::ErrorKind::Other,
+            format!("Biomejs failed: {}", error_message),
+        ));
+    }
+
+    Ok(())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -89,7 +132,8 @@ pub fn run() {
         .export(
             Typescript::default()
                 .bigint(BigIntExportBehavior::Number)
-                .header("// biome-ignore-all lint: Auto generate\n// biome-ignore-all assist/source/organizeImports: Auto generate"),
+                .header("// biome-ignore-all lint: Auto generate\n// biome-ignore-all assist/source/organizeImports: Auto generate")
+                .formatter(biome),
             "../src/bindings.ts",
         )
         .expect("Failed to export typescript bindings");
