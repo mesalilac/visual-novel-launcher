@@ -40,9 +40,11 @@ pub async fn remove_tag_from_visual_novel_by_id(
     let mut conn = state.pool.get()?;
 
     delete(
-        vn_tag_dsl::visual_novels_tags
-            .filter(vn_tag_dsl::tag_id.eq(&tag_id))
-            .filter(vn_tag_dsl::visual_novel_id.eq(&visual_novel_id)),
+        vn_tag_dsl::visual_novels_tags.filter(
+            vn_tag_dsl::tag_id
+                .eq(&tag_id)
+                .and(vn_tag_dsl::visual_novel_id.eq(&visual_novel_id)),
+        ),
     )
     .execute(&mut conn)?;
 

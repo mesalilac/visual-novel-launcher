@@ -52,7 +52,7 @@ pub async fn update_visual_novel(
             .count()
             .get_result::<i64>(&mut conn)?;
 
-        if tag_exists != 0 {
+        if tag_exists > 0 {
             continue;
         }
 

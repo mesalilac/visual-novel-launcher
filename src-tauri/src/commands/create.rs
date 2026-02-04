@@ -36,8 +36,11 @@ pub async fn create_visual_novel(
 
     for tag in payload.tags {
         let junction_exists = vn_tag_dsl::visual_novels_tags
-            .filter(vn_tag_dsl::visual_novel_id.eq(&new_vn.id))
-            .filter(vn_tag_dsl::tag_id.eq(&tag.id))
+            .filter(
+                vn_tag_dsl::visual_novel_id
+                    .eq(&new_vn.id)
+                    .and(vn_tag_dsl::tag_id.eq(&tag.id)),
+            )
             .count()
             .get_result::<i64>(&mut conn)?;
 
