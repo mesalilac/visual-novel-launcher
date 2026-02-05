@@ -6,7 +6,7 @@ use crate::schema::visual_novels::dsl as vn_dsl;
 use diesel::dsl::{exists, select};
 use diesel::prelude::*;
 use diesel::SqliteConnection;
-use std::path::Path;
+use std::{collections::HashSet, path::Path};
 use walkdir::WalkDir;
 
 pub fn scan_library(
@@ -14,6 +14,8 @@ pub fn scan_library(
     library_path: String,
 ) -> Result<Vec<VisualNovelEntity>, diesel::result::Error> {
     let mut visual_novels: Vec<VisualNovelEntity> = Vec::new();
+
+    let image_extensions: HashSet<&str> = ["png", "jpg", "jpeg", "webp"].iter().cloned().collect();
 
     let entries = WalkDir::new(library_path)
         .min_depth(1)
@@ -28,16 +30,35 @@ pub fn scan_library(
             .max_depth(1)
             .into_iter()
             .filter_map(|e| e.ok())
-            .find(|e| e.path().extension().map_or(false, |ext| ext == "exe"))
+            .find(|e| {
+                e.path()
+                    .extension()
+                    .and_then(|s| s.to_str())
+                    .map_or(false, |ext| ext.to_lowercase().as_str() == "exe")
+            })
         else {
             continue;
         };
+
+        let cover_image_path = WalkDir::new(entry.path())
+            .min_depth(1)
+            .max_depth(1)
+            .into_iter()
+            .filter_map(|e| e.ok())
+            .find(|e| {
+                e.path()
+                    .extension()
+                    .and_then(|s| s.to_str())
+                    .map_or(false, |ext| {
+                        image_extensions.contains(ext.to_lowercase().as_str())
+                    })
+            });
 
         let vn = VisualNovelEntity {
             id: nanoid::nanoid!(),
             title: entry.file_name().to_string_lossy().into_owned(),
             description: None,
-            cover_path: None,
+            cover_path: cover_image_path.map(|p| p.path().to_string_lossy().to_string()),
             playtime: 0,
             last_time_played_at: None,
             status: VisualNovelStatus::Backlog,
