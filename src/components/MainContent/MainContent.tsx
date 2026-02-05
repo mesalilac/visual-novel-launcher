@@ -8,20 +8,37 @@ export const MainContent = () => {
 
     return (
         <main>
-            <Switch>
-                <Match when={vns.get.loading}>loading...</Match>
-                <Match when={vns.get.state === 'errored'}>
-                    {vns.get.error}
+            <button onClick={() => vns.refetch()} type='button'>
+                Refresh
+            </button>
+            <Switch fallback={<span>Failed to display visual novels</span>}>
+                <Match when={vns.get.state === 'pending'}>
+                    <span>loading...</span>
                 </Match>
-                <Match when={vns.get.state === 'ready'}>
-                    {vns.get.loading && <span>Refreshing</span>}
-                    {vns.get()?.length === 0 && (
-                        <span>
-                            No Visual Novels found. Try adding a library in
-                            settings!
-                        </span>
+                <Match when={vns.get.state === 'refreshing'}>
+                    <span>Refreshing...</span>
+                </Match>
+                <Match when={vns.get.state === 'errored'}>
+                    <span>{vns.get.error}</span>
+                </Match>
+                <Match when={vns.get.state === 'ready' && vns.get()}>
+                    {(vns) => (
+                        <Switch>
+                            <Match when={vns().length === 0}>
+                                <span>
+                                    No Visual Novels found. Try adding a library
+                                    in settings!
+                                </span>
+                            </Match>
+                            <Match when={vns().length > 0}>
+                                <div class='cards-container'>
+                                    <For each={vns()}>
+                                        {(vn) => <div>{vn.title}</div>}
+                                    </For>
+                                </div>
+                            </Match>
+                        </Switch>
                     )}
-                    <For each={vns.get()}>{(vn) => <div>{vn.title}</div>}</For>
                 </Match>
             </Switch>
         </main>
