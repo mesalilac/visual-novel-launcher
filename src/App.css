@@ -1,22 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap");
-
 * {
     min-width: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-:root {
-    --size-section-width: 350px;
-    --size-section-height: var(--size-section-width);
+/* :root {
+} */
 
-    line-height: 1.5;
-    background-color: var(--color-app-bg);
+body {
     color: var(--color-app-fg);
-    font-family: Inconsolata, monospace;
-    font-optical-sizing: auto;
-    font-weight: normal;
-    font-style: normal;
+    background-color: var(--color-app-bg);
+    font-family: "Ioskeley Mono", monospace;
+    line-height: 1.5;
 }
 
 input,
