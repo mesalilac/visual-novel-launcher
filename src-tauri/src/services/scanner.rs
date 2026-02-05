@@ -25,45 +25,48 @@ pub fn scan_library(
         .filter(|e| e.path().is_dir());
 
     for entry in entries {
-        let Some(exe_path) = WalkDir::new(entry.path())
+        let mut exe_path: Option<String> = None;
+        let mut cover_image_path: Option<String> = None;
+
+        for e in WalkDir::new(entry.path())
             .min_depth(1)
             .max_depth(1)
             .into_iter()
             .filter_map(|e| e.ok())
-            .find(|e| {
-                e.path()
-                    .extension()
-                    .and_then(|s| s.to_str())
-                    .map_or(false, |ext| ext.to_lowercase().as_str() == "exe")
-            })
-        else {
+        {
+            if let Some(ext) = e.path().extension().and_then(|s| s.to_str()) {
+                let ext_lower = ext.to_lowercase();
+
+                let file_path_string = e.path().to_string_lossy().to_string();
+
+                if exe_path.is_none() && ext_lower == "exe" {
+                    exe_path = Some(file_path_string);
+                } else if cover_image_path.is_none()
+                    && image_extensions.contains(ext_lower.as_str())
+                {
+                    cover_image_path = Some(file_path_string);
+                }
+            }
+
+            if exe_path.is_some() && cover_image_path.is_some() {
+                break;
+            }
+        }
+
+        let Some(exe_entry) = exe_path else {
             continue;
         };
-
-        let cover_image_path = WalkDir::new(entry.path())
-            .min_depth(1)
-            .max_depth(1)
-            .into_iter()
-            .filter_map(|e| e.ok())
-            .find(|e| {
-                e.path()
-                    .extension()
-                    .and_then(|s| s.to_str())
-                    .map_or(false, |ext| {
-                        image_extensions.contains(ext.to_lowercase().as_str())
-                    })
-            });
 
         let vn = VisualNovelEntity {
             id: nanoid::nanoid!(),
             title: entry.file_name().to_string_lossy().into_owned(),
             description: None,
-            cover_path: cover_image_path.map(|p| p.path().to_string_lossy().to_string()),
+            cover_path: cover_image_path,
             playtime: 0,
             last_time_played_at: None,
             status: VisualNovelStatus::Backlog,
             dir_path: entry.path().to_string_lossy().to_string(),
-            executable_path: exe_path.path().to_string_lossy().to_string(),
+            executable_path: exe_entry,
             launch_options: None,
             is_missing: false,
             created_at: Timestamp::now(),
