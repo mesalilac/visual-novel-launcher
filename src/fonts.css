@@ -12,121 +12,135 @@
 /* Light */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Light.woff2")
-        format("woff2");
     font-weight: 300;
     font-style: normal;
+
     font-display: swap;
+
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Light.woff2")
+        format("woff2");
 }
 
 /* LightItalic */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-LightItalic.woff2")
-        format("woff2");
     font-weight: 300;
     font-style: italic;
+
     font-display: swap;
+
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-LightItalic.woff2")
+        format("woff2");
 }
 
 /* Regular */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Regular.woff2")
-        format("woff2");
     font-weight: 400;
     font-style: normal;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Regular.woff2")
+        format("woff2");
 }
 
 /* Italic */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Italic.woff2")
-        format("woff2");
     font-weight: 400;
     font-style: italic;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Italic.woff2")
+        format("woff2");
 }
 
 /* Medium */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Medium.woff2")
-        format("woff2");
     font-weight: 500;
     font-style: normal;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Medium.woff2")
+        format("woff2");
 }
 
 /* MediumItalic */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-MediumItalic.woff2")
-        format("woff2");
     font-weight: 500;
     font-style: italic;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-MediumItalic.woff2")
+        format("woff2");
 }
 
 /* SemiBold */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-SemiBold.woff2")
-        format("woff2");
     font-weight: 600;
     font-style: normal;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-SemiBold.woff2")
+        format("woff2");
 }
 
 /* SemiBoldItalic */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-SemiBoldItalic.woff2")
-        format("woff2");
     font-weight: 600;
     font-style: italic;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-SemiBoldItalic.woff2")
+        format("woff2");
 }
 
 /* Bold */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Bold.woff2")
-        format("woff2");
     font-weight: 700;
     font-style: normal;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-Bold.woff2")
+        format("woff2");
 }
 
 /* BoldItalic */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-BoldItalic.woff2")
-        format("woff2");
     font-weight: 700;
     font-style: italic;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-BoldItalic.woff2")
+        format("woff2");
 }
 
 /* ExtraBold */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-ExtraBold.woff2")
-        format("woff2");
     font-weight: 800;
     font-style: normal;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-ExtraBold.woff2")
+        format("woff2");
 }
 
 /* ExtraBoldItalic */
 @font-face {
     font-family: "Ioskeley Mono";
-    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-ExtraBoldItalic.woff2")
-        format("woff2");
     font-weight: 800;
     font-style: italic;
+
     font-display: swap;
+    src: url("/fonts/IoskeleyMono-WOFF2/IoskeleyMono-ExtraBoldItalic.woff2")
+        format("woff2");
 }
 
 /* ------------------------------ Fonts */

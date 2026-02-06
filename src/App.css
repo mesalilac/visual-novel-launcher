@@ -1,17 +1,17 @@
 * {
+    box-sizing: border-box;
     min-width: 0;
     margin: 0;
-    box-sizing: border-box;
 }
 
 /* :root {
 } */
 
 body {
-    color: var(--color-app-fg);
-    background-color: var(--color-app-bg);
     font-family: "Ioskeley Mono", monospace;
     line-height: 1.5;
+    color: var(--color-app-fg);
+    background-color: var(--color-app-bg);
 }
 
 input,
@@ -46,12 +46,14 @@ h6 {
 
 input,
 textarea {
-    border: var(--size-border-medium) solid var(--color-input-border);
-    outline: none;
-    background-color: var(--color-input-bg);
-    color: var(--color-input-fg);
-    border-radius: var(--size-radius-input);
     padding: var(--size-padding-2xs) var(--size-padding-md);
+    border: var(--size-border-medium) solid var(--color-input-border);
+    border-radius: var(--size-radius-input);
+
+    color: var(--color-input-fg);
+
+    background-color: var(--color-input-bg);
+    outline: none;
 }
 
 input:hover,
@@ -70,83 +72,96 @@ textarea::placeholder {
 }
 
 .input-error {
-    color: var(--color-input-error-fg);
     border-color: var(--color-input-error-border);
+    color: var(--color-input-error-fg);
 }
 
 .input-warning {
-    color: var(--color-input-warning-fg);
     border-color: var(--color-input-warning-border);
+    color: var(--color-input-warning-fg);
 }
 
 button {
+    cursor: pointer;
+
     display: flex;
+    gap: var(--size-gap-sm);
     align-items: center;
     justify-content: center;
-    gap: var(--size-gap-sm);
-    cursor: pointer;
-    border: none;
-    background-color: var(--color-button-bg);
-    color: var(--color-button-fg);
-    border-radius: var(--size-radius-button);
+
     padding: var(--size-padding-2xs) var(--size-padding-md);
-}
+    border: none;
+    border-radius: var(--size-radius-button);
 
-button:hover {
-    background-color: var(--color-button-bg-hover);
-}
+    color: var(--color-button-fg);
 
-button:active {
-    background-color: var(--color-button-bg-active);
+    background-color: var(--color-button-bg);
+
+    &:hover {
+        background-color: var(--color-button-bg-hover);
+    }
+
+    &:active {
+        background-color: var(--color-button-bg-active);
+    }
 }
 
 .button-primary {
     cursor: pointer;
-    border: none;
-    background-color: var(--color-button-primary);
-    color: var(--color-button-fg);
-    border-radius: var(--size-radius-button);
+
     padding: var(--size-padding-2xs) var(--size-padding-md);
-}
+    border: none;
+    border-radius: var(--size-radius-button);
 
-.button-primary:hover {
-    background-color: var(--color-button-primary-hover);
-}
+    color: var(--color-button-fg);
 
-.button-primary:active {
-    background-color: var(--color-button-primary-active);
+    background-color: var(--color-button-primary);
+
+    &:hover {
+        background-color: var(--color-button-primary-hover);
+    }
+
+    &:active {
+        background-color: var(--color-button-primary-active);
+    }
 }
 
 .button-secondary {
     cursor: pointer;
-    border: none;
-    background-color: var(--color-button-secondary);
-    color: var(--color-button-fg);
-    border-radius: var(--size-radius-button);
+
     padding: var(--size-padding-2xs) var(--size-padding-md);
-}
+    border: none;
+    border-radius: var(--size-radius-button);
 
-.button-secondary:hover {
-    background-color: var(--color-button-secondary-hover);
-}
+    color: var(--color-button-fg);
 
-.button-secondary:active {
-    background-color: var(--color-button-secondary-active);
+    background-color: var(--color-button-secondary);
+
+    &:hover {
+        background-color: var(--color-button-secondary-hover);
+    }
+
+    &:active {
+        background-color: var(--color-button-secondary-active);
+    }
 }
 
 .drag-handler {
     cursor: grab;
-    background-color: hsl(from var(--color-button-bg) h s l / 20%);
-    color: var(--color-button-fg);
-    border-radius: var(--size-radius-button);
+
     padding: var(--size-padding-2xs) var(--size-padding-xs);
+    border-radius: var(--size-radius-button);
+
+    color: var(--color-button-fg);
+
+    background-color: hsl(from var(--color-button-bg) h s l / 20%);
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
-    margin: var(--size-margin-lg);
     gap: var(--size-gap-lg);
+    margin: var(--size-margin-lg);
 }
 
 .divider {
@@ -156,6 +171,6 @@ button:active {
 }
 
 .icon {
-    color: var(--color-icon-muted);
     cursor: pointer;
+    color: var(--color-icon-muted);
 }

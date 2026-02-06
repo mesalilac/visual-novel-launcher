@@ -21,7 +21,13 @@
         "@biomejs/biome": "^2.3.11",
         "@tauri-apps/cli": "^2",
         "stylelint": "^17.1.0",
+        "stylelint-config-clean-order": "^8.0.0",
         "stylelint-config-standard": "^40.0.0",
+        "stylelint-declaration-block-no-ignored-properties": "^3.0.0",
+        "stylelint-high-performance-animation": "^2.0.0",
+        "stylelint-order": "^7.0.1",
+        "stylelint-selector-bem-pattern": "^4.0.1",
+        "stylelint-use-nesting": "^6.0.1",
         "typescript": "~5.6.2",
         "vite": "^6.0.3",
         "vite-plugin-solid": "^2.11.0"
