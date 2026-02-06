@@ -145,6 +145,6 @@ pub async fn update_settings(
 // #[tauri::command]
 // #[auto_collect_command]
 // #[specta::specta]
-// pub async fn update_(state: DbState<'_>) -> CommandResult<()> {
+// pub async fn update_(state: AppState<'_>) -> CommandResult<()> {
 //     todo!()
 // }

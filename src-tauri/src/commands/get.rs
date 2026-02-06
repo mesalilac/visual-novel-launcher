@@ -196,6 +196,6 @@ pub async fn get_stats(state: AppState<'_>) -> CommandResult<GeneralStats> {
 // #[tauri::command]
 // #[auto_collect_command]
 // #[specta::specta]
-// pub async fn get_(state: DbState<'_>) -> CommandResult<()> {
+// pub async fn get_(state: AppState<'_>) -> CommandResult<()> {
 //     todo!()
 // }

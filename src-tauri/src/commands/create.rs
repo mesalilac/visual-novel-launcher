@@ -98,6 +98,6 @@ pub async fn create_tag(state: AppState<'_>, payload: CreateTagRequest) -> Comma
 // #[tauri::command]
 // #[auto_collect_command]
 // #[specta::specta]
-// pub async fn create_(state: DbState<'_>) -> CommandResult<()> {
+// pub async fn create_(state: AppState<'_>) -> CommandResult<()> {
 //     todo!()
 // }

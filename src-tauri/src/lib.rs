@@ -23,6 +23,12 @@ const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 const APP_NAME: &str = "com.mesalilac.visual-novel-launcher";
 const APP_SETTINGS_ID: i32 = 1;
 
+pub type DbPool = diesel::r2d2::Pool<diesel::r2d2::ConnectionManager<diesel::SqliteConnection>>;
+
+pub struct AppState {
+    pub pool: DbPool,
+}
+
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
 #[auto_collect_command]
@@ -139,7 +145,7 @@ pub fn run() {
         .expect("Failed to export typescript bindings");
 
     tauri::Builder::default()
-        .manage(database::connection::DbPoolWrapper { pool })
+        .manage(AppState { pool })
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
             let _ = app
                 .get_webview_window("main")

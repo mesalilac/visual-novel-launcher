@@ -82,6 +82,6 @@ pub async fn util_close_visual_novel(state: AppState<'_>, id: String) -> Command
 // #[tauri::command]
 // #[auto_collect_command]
 // #[specta::specta]
-// pub async fn util_(state: DbState<'_>) -> CommandResult<()> {
+// pub async fn util_(state: AppState<'_>) -> CommandResult<()> {
 //     todo!()
 // }

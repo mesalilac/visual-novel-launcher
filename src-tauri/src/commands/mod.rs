@@ -59,7 +59,6 @@ pub type CommandResult<T> = Result<T, CommandError>;
 pub mod prelude {
     pub use crate::bridge::{dto::*, requests::*};
     pub use crate::commands::{CommandError, CommandResult};
-    use crate::database::connection::DbPoolWrapper;
     pub use crate::database::entities::*;
     pub use crate::database::types::{Timestamp, VisualNovelStatus};
     pub use diesel::prelude::*;
@@ -71,7 +70,7 @@ pub mod prelude {
         pub use crate::schema::*;
     }
 
-    pub type AppState<'a> = State<'a, DbPoolWrapper>;
+    pub type AppState<'a> = State<'a, crate::AppState>;
 }
 
 mod create;

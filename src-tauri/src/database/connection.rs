@@ -1,12 +1,7 @@
 use crate::utils::fs::get_app_data_dir;
+use crate::DbPool;
 use diesel::{r2d2, RunQueryDsl, SqliteConnection};
 use std::path::PathBuf;
-
-pub type DbPool = r2d2::Pool<r2d2::ConnectionManager<SqliteConnection>>;
-
-pub struct DbPoolWrapper {
-    pub pool: DbPool,
-}
 
 #[derive(Debug)]
 struct EnableForeignKeys;

@@ -99,6 +99,6 @@ pub async fn remove_tags(state: AppState<'_>) -> CommandResult<Vec<Tag>> {
 // #[tauri::command]
 // #[auto_collect_command]
 // #[specta::specta]
-// pub async fn remove_(state: DbState<'_>) -> CommandResult<()> {
+// pub async fn remove_(state: AppState<'_>) -> CommandResult<()> {
 //     todo!()
 // }
