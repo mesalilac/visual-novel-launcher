@@ -21,7 +21,7 @@ struct VisualNovelChangeset {
 #[auto_collect_command]
 #[specta::specta]
 pub async fn update_visual_novel(
-    state: DbState<'_>,
+    state: AppState<'_>,
     id: String,
     payload: UpdateVisualNovelRequest,
 ) -> CommandResult<VisualNovel> {
@@ -89,7 +89,7 @@ struct TagChangeset {
 #[auto_collect_command]
 #[specta::specta]
 pub async fn update_tag(
-    state: DbState<'_>,
+    state: AppState<'_>,
     id: String,
     payload: UpdateTagRequest,
 ) -> CommandResult<Tag> {
@@ -120,7 +120,7 @@ struct SettingChangeset {
 #[auto_collect_command]
 #[specta::specta]
 pub async fn update_settings(
-    state: DbState<'_>,
+    state: AppState<'_>,
     payload: UpdateSettingsRequest,
 ) -> CommandResult<Setting> {
     use schema::settings::dsl as setting_dsl;

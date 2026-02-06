@@ -9,7 +9,7 @@ use nanoid::nanoid;
 #[auto_collect_command]
 #[specta::specta]
 pub async fn create_visual_novel(
-    state: DbState<'_>,
+    state: AppState<'_>,
     payload: CreateVisualNovelRequest,
 ) -> CommandResult<VisualNovel> {
     use schema::tags::dsl as tag_dsl;
@@ -70,7 +70,7 @@ pub async fn create_visual_novel(
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn create_tag(state: DbState<'_>, payload: CreateTagRequest) -> CommandResult<Tag> {
+pub async fn create_tag(state: AppState<'_>, payload: CreateTagRequest) -> CommandResult<Tag> {
     use schema::tags::dsl as tag_dsl;
 
     let mut conn = state.pool.get()?;

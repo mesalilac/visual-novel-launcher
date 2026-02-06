@@ -71,7 +71,7 @@ pub mod prelude {
         pub use crate::schema::*;
     }
 
-    pub type DbState<'a> = State<'a, DbPoolWrapper>;
+    pub type AppState<'a> = State<'a, DbPoolWrapper>;
 }
 
 mod create;

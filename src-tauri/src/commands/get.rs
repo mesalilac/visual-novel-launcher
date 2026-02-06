@@ -8,7 +8,7 @@ use super::prelude::*;
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn get_visual_novels(state: DbState<'_>) -> CommandResult<Vec<VisualNovel>> {
+pub async fn get_visual_novels(state: AppState<'_>) -> CommandResult<Vec<VisualNovel>> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
 
@@ -34,7 +34,7 @@ pub async fn get_visual_novels(state: DbState<'_>) -> CommandResult<Vec<VisualNo
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn get_visual_novel_by_id(state: DbState<'_>, id: String) -> CommandResult<VisualNovel> {
+pub async fn get_visual_novel_by_id(state: AppState<'_>, id: String) -> CommandResult<VisualNovel> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
 
@@ -57,7 +57,7 @@ pub async fn get_visual_novel_by_id(state: DbState<'_>, id: String) -> CommandRe
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn get_tags(state: DbState<'_>) -> CommandResult<Vec<Tag>> {
+pub async fn get_tags(state: AppState<'_>) -> CommandResult<Vec<Tag>> {
     use schema::tags::dsl as tag_dsl;
 
     let mut conn = state.pool.get()?;
@@ -73,7 +73,7 @@ pub async fn get_tags(state: DbState<'_>) -> CommandResult<Vec<Tag>> {
 #[auto_collect_command]
 #[specta::specta]
 pub async fn get_tags_with_visual_novels(
-    state: DbState<'_>,
+    state: AppState<'_>,
 ) -> CommandResult<Vec<TagWithVisualNovels>> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
@@ -129,7 +129,7 @@ pub async fn get_tags_with_visual_novels(
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn get_settings(state: DbState<'_>) -> CommandResult<Setting> {
+pub async fn get_settings(state: AppState<'_>) -> CommandResult<Setting> {
     use schema::settings::dsl as setting_dsl;
 
     let mut conn = state.pool.get()?;
@@ -144,7 +144,7 @@ pub async fn get_settings(state: DbState<'_>) -> CommandResult<Setting> {
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn get_stats(state: DbState<'_>) -> CommandResult<GeneralStats> {
+pub async fn get_stats(state: AppState<'_>) -> CommandResult<GeneralStats> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
 

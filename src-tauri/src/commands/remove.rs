@@ -4,7 +4,7 @@ use diesel::delete;
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn remove_visual_novel_by_id(state: DbState<'_>, id: String) -> CommandResult<()> {
+pub async fn remove_visual_novel_by_id(state: AppState<'_>, id: String) -> CommandResult<()> {
     use schema::visual_novels::dsl as vn_dsl;
 
     let mut conn = state.pool.get()?;
@@ -17,7 +17,7 @@ pub async fn remove_visual_novel_by_id(state: DbState<'_>, id: String) -> Comman
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn remove_tag_by_id(state: DbState<'_>, id: String) -> CommandResult<()> {
+pub async fn remove_tag_by_id(state: AppState<'_>, id: String) -> CommandResult<()> {
     use schema::tags::dsl as tag_dsl;
 
     let mut conn = state.pool.get()?;
@@ -31,7 +31,7 @@ pub async fn remove_tag_by_id(state: DbState<'_>, id: String) -> CommandResult<(
 #[auto_collect_command]
 #[specta::specta]
 pub async fn remove_tag_from_visual_novel_by_id(
-    state: DbState<'_>,
+    state: AppState<'_>,
     visual_novel_id: String,
     tag_id: String,
 ) -> CommandResult<()> {
@@ -54,7 +54,7 @@ pub async fn remove_tag_from_visual_novel_by_id(
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn remove_all_visual_novels(state: DbState<'_>) -> CommandResult<Vec<VisualNovel>> {
+pub async fn remove_all_visual_novels(state: AppState<'_>) -> CommandResult<Vec<VisualNovel>> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
 
@@ -82,7 +82,7 @@ pub async fn remove_all_visual_novels(state: DbState<'_>) -> CommandResult<Vec<V
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn remove_tags(state: DbState<'_>) -> CommandResult<Vec<Tag>> {
+pub async fn remove_tags(state: AppState<'_>) -> CommandResult<Vec<Tag>> {
     use schema::tags::dsl as tag_dsl;
 
     let mut conn = state.pool.get()?;
