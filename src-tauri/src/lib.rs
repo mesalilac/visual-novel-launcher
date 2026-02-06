@@ -20,7 +20,7 @@ use tauri_helper::{auto_collect_command, specta_collect_commands};
 use tauri_specta::Builder;
 
 const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
-const APP_NAME: &str = "visual-novel-launcher";
+const APP_NAME: &str = "com.mesalilac.visual-novel-launcher";
 const APP_SETTINGS_ID: i32 = 1;
 
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
