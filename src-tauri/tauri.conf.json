@@ -13,8 +13,12 @@
     "windows": [
       {
         "title": "visual-novel-launcher",
-        "width": 800,
-        "height": 600
+        "width": 1600,
+        "height": 900,
+        "minWidth": 1600,
+        "minHeight": 900,
+        "center": true,
+        "backgroundColor": "#0d0d0d"
       }
     ],
     "security": {
