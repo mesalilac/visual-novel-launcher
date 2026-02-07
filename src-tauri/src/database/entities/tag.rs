@@ -1,7 +1,6 @@
 use super::prelude::*;
-use serde::{Deserialize, Serialize};
 
-#[derive(Queryable, Selectable, Insertable, Identifiable, Serialize, Deserialize, Debug, Clone)]
+#[derive(Queryable, Selectable, Insertable, Identifiable, Debug, Clone)]
 #[diesel(table_name = tags)]
 pub struct TagEntity {
     pub id: String,
