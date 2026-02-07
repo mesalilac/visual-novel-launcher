@@ -30,6 +30,7 @@ pub async fn create_visual_novel(
         executable_path: payload.executable_path,
         launch_options: payload.launch_options,
         is_missing: false,
+        use_locale_emulator: true,
         created_at: Timestamp::now(),
     };
 

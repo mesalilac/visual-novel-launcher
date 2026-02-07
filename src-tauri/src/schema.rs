@@ -39,6 +39,7 @@ diesel::table! {
         executable_path -> Text,
         launch_options -> Nullable<Text>,
         is_missing -> Bool,
+        use_locale_emulator -> Bool,
         created_at -> BigInt,
     }
 }

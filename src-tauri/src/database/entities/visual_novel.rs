@@ -15,5 +15,6 @@ pub struct VisualNovelEntity {
     pub executable_path: String,
     pub launch_options: Option<String>,
     pub is_missing: bool,
+    pub use_locale_emulator: bool,
     pub created_at: Timestamp,
 }

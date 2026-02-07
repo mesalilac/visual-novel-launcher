@@ -59,6 +59,7 @@ pub struct VisualNovel {
     pub executable_path: String,
     pub launch_options: Option<String>,
     pub is_missing: bool,
+    pub use_locale_emulator: bool,
     pub created_at: Timestamp,
     pub tags: Vec<Tag>,
 }
@@ -77,6 +78,7 @@ impl VisualNovel {
             executable_path: entity.executable_path,
             launch_options: entity.launch_options,
             is_missing: entity.is_missing,
+            use_locale_emulator: true,
             created_at: entity.created_at,
             tags: tags_entity.into_iter().map(|e| Tag::from_db(e)).collect(),
         }

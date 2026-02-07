@@ -69,6 +69,7 @@ pub fn scan_library(
             executable_path: exe_entry,
             launch_options: None,
             is_missing: false,
+            use_locale_emulator: true,
             created_at: Timestamp::now(),
         };
 
