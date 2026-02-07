@@ -26,6 +26,8 @@ pub async fn create_visual_novel(
         playtime: payload.playtime,
         last_time_played_at: None,
         status: payload.status.unwrap_or_default(),
+        is_favorite: false,
+        notes: None,
         dir_path: payload.dir_path,
         executable_path: payload.executable_path,
         launch_options: payload.launch_options,

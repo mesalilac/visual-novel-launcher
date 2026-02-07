@@ -11,6 +11,8 @@ pub struct VisualNovelEntity {
     pub playtime: i64,
     pub last_time_played_at: Option<Timestamp>,
     pub status: VisualNovelStatus,
+    pub is_favorite: bool,
+    pub notes: Option<String>,
     pub dir_path: String,
     pub executable_path: String,
     pub launch_options: Option<String>,

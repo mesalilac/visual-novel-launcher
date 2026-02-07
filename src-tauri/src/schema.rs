@@ -35,6 +35,8 @@ diesel::table! {
         playtime -> BigInt,
         last_time_played_at -> Nullable<BigInt>,
         status -> Text,
+        is_favorite -> Bool,
+        notes -> Nullable<Text>,
         dir_path -> Text,
         executable_path -> Text,
         launch_options -> Nullable<Text>,

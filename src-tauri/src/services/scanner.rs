@@ -65,6 +65,8 @@ pub fn scan_library(
             playtime: 0,
             last_time_played_at: None,
             status: VisualNovelStatus::Backlog,
+            is_favorite: false,
+            notes: None,
             dir_path: entry.path().to_string_lossy().to_string(),
             executable_path: exe_entry,
             launch_options: None,

@@ -9,6 +9,8 @@ CREATE TABLE
         status TEXT NOT NULL CHECK (
             status IN ('Backlog', 'Playing', 'Finished', 'Dropped')
         ) DEFAULT 'Backlog',
+        is_favorite BOOLEAN NOT NULL DEFAULT 0 CHECK (is_favorite IN (0, 1)),
+        notes TEXT,
         dir_path TEXT NOT NULL UNIQUE,
         executable_path TEXT NOT NULL,
         launch_options TEXT,
