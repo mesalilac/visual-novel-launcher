@@ -5,3 +5,5 @@ DROP TABLE visual_novels;
 DROP TABLE tags;
 
 DROP TABLE settings;
+
+DROP TABLE play_sessions;

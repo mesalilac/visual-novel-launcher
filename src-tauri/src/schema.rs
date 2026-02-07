@@ -4,6 +4,19 @@ diesel::table! {
     use diesel::sql_types::*;
     use crate::database::types::*;
 
+    play_sessions (id) {
+        id -> Text,
+        visual_novel_id -> Text,
+        started_time -> BigInt,
+        ended_time -> Nullable<BigInt>,
+        duration_seconds -> Nullable<BigInt>,
+    }
+}
+
+diesel::table! {
+    use diesel::sql_types::*;
+    use crate::database::types::*;
+
     settings (id) {
         id -> Integer,
         library_path -> Nullable<Text>,
@@ -56,7 +69,14 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(play_sessions -> visual_novels (visual_novel_id));
 diesel::joinable!(visual_novels_tags -> tags (tag_id));
 diesel::joinable!(visual_novels_tags -> visual_novels (visual_novel_id));
 
-diesel::allow_tables_to_appear_in_same_query!(settings, tags, visual_novels, visual_novels_tags,);
+diesel::allow_tables_to_appear_in_same_query!(
+    play_sessions,
+    settings,
+    tags,
+    visual_novels,
+    visual_novels_tags,
+);

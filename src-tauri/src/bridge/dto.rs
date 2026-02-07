@@ -1,6 +1,9 @@
-use crate::database::{
-    entities::{SettingEntity, TagEntity, VisualNovelEntity},
-    types::{Timestamp, VisualNovelStatus},
+use crate::{
+    commands::prelude::PlaySessionEntity,
+    database::{
+        entities::{SettingEntity, TagEntity, VisualNovelEntity},
+        types::{Timestamp, VisualNovelStatus},
+    },
 };
 use serde::{Deserialize, Serialize};
 
@@ -105,6 +108,28 @@ impl Setting {
             library_path: entity.library_path,
             locale_emulator_executable_path: entity.locale_emulator_executable_path,
             locale_emulator_launch_options: entity.locale_emulator_launch_options,
+        }
+    }
+}
+
+#[derive(specta::Type, Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct PlaySession {
+    pub id: String,
+    pub visual_novel_id: String,
+    pub started_time: i64,
+    pub ended_time: Option<i64>,
+    pub duration_seconds: Option<i64>,
+}
+
+impl PlaySession {
+    pub fn from_db(entity: PlaySessionEntity) -> Self {
+        Self {
+            id: entity.id,
+            visual_novel_id: entity.visual_novel_id,
+            started_time: entity.started_time,
+            ended_time: entity.ended_time,
+            duration_seconds: entity.duration_seconds,
         }
     }
 }

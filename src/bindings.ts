@@ -5,28 +5,12 @@
 /** user-defined commands **/
 
 export const commands = {
-    async utilScanLibrary(): Promise<Result<VisualNovel[], CommandError>> {
+    async removeTagById(id: string): Promise<Result<null, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('util_scan_library'),
+                data: await TAURI_INVOKE('remove_tag_by_id', { id }),
             };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async getTags(): Promise<Result<Tag[], CommandError>> {
-        try {
-            return { status: 'ok', data: await TAURI_INVOKE('get_tags') };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async removeTags(): Promise<Result<Tag[], CommandError>> {
-        try {
-            return { status: 'ok', data: await TAURI_INVOKE('remove_tags') };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
@@ -66,79 +50,34 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async removeVisualNovelById(
+    async getTags(): Promise<Result<Tag[], CommandError>> {
+        try {
+            return { status: 'ok', data: await TAURI_INVOKE('get_tags') };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async getVisualNovelById(
         id: string,
-    ): Promise<Result<null, CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('remove_visual_novel_by_id', { id }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async createTag(
-        payload: CreateTagRequest,
-    ): Promise<Result<Tag, CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('create_tag', { payload }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async removeTagById(id: string): Promise<Result<null, CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('remove_tag_by_id', { id }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async utilCloseVisualNovel(
-        id: string,
-    ): Promise<Result<null, CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('util_close_visual_novel', { id }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async greet(name: string): Promise<string> {
-        return await TAURI_INVOKE('greet', { name });
-    },
-    async updateSettings(
-        payload: UpdateSettingsRequest,
-    ): Promise<Result<Setting, CommandError>> {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('update_settings', { payload }),
-            };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async createVisualNovel(
-        payload: CreateVisualNovelRequest,
     ): Promise<Result<VisualNovel, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('create_visual_novel', { payload }),
+                data: await TAURI_INVOKE('get_visual_novel_by_id', { id }),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async removeAllVisualNovels(): Promise<
+        Result<VisualNovel[], CommandError>
+    > {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('remove_all_visual_novels'),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
@@ -156,26 +95,56 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async getTagsWithVisualNovels(): Promise<
-        Result<TagWithVisualNovels[], CommandError>
-    > {
+    async getStats(): Promise<Result<GeneralStats, CommandError>> {
+        try {
+            return { status: 'ok', data: await TAURI_INVOKE('get_stats') };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async utilScanLibrary(): Promise<Result<VisualNovel[], CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('get_tags_with_visual_novels'),
+                data: await TAURI_INVOKE('util_scan_library'),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
         }
     },
-    async getVisualNovelById(
+    async getPlaySessions(): Promise<Result<PlaySession[], CommandError>> {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('get_play_sessions'),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async removeVisualNovelById(
         id: string,
+    ): Promise<Result<null, CommandError>> {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('remove_visual_novel_by_id', { id }),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async createVisualNovel(
+        payload: CreateVisualNovelRequest,
     ): Promise<Result<VisualNovel, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('get_visual_novel_by_id', { id }),
+                data: await TAURI_INVOKE('create_visual_novel', { payload }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
@@ -196,9 +165,14 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async getStats(): Promise<Result<GeneralStats, CommandError>> {
+    async utilCloseVisualNovel(
+        id: string,
+    ): Promise<Result<null, CommandError>> {
         try {
-            return { status: 'ok', data: await TAURI_INVOKE('get_stats') };
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('util_close_visual_novel', { id }),
+            };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
@@ -212,13 +186,39 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async removeAllVisualNovels(): Promise<
-        Result<VisualNovel[], CommandError>
+    async createTag(
+        payload: CreateTagRequest,
+    ): Promise<Result<Tag, CommandError>> {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('create_tag', { payload }),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async updateSettings(
+        payload: UpdateSettingsRequest,
+    ): Promise<Result<Setting, CommandError>> {
+        try {
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('update_settings', { payload }),
+            };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async getTagsWithVisualNovels(): Promise<
+        Result<TagWithVisualNovels[], CommandError>
     > {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('remove_all_visual_novels'),
+                data: await TAURI_INVOKE('get_tags_with_visual_novels'),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
@@ -238,12 +238,23 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
+    async greet(name: string): Promise<string> {
+        return await TAURI_INVOKE('greet', { name });
+    },
     async utilSyncLibrary(): Promise<Result<VisualNovel[], CommandError>> {
         try {
             return {
                 status: 'ok',
                 data: await TAURI_INVOKE('util_sync_library'),
             };
+        } catch (e) {
+            if (e instanceof Error) throw e;
+            else return { status: 'error', error: e as any };
+        }
+    },
+    async removeTags(): Promise<Result<Tag[], CommandError>> {
+        try {
+            return { status: 'ok', data: await TAURI_INVOKE('remove_tags') };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
@@ -288,6 +299,13 @@ export type GeneralStats = {
     backlogCount: number;
     droppedCount: number;
 };
+export type PlaySession = {
+    id: string;
+    visualNovelId: string;
+    startedTime: number;
+    endedTime: number | null;
+    durationSeconds: number | null;
+};
 export type Setting = {
     id: number;
     libraryPath: string | null;
@@ -325,10 +343,13 @@ export type VisualNovel = {
     playtime: number;
     lastTimePlayedAt: Timestamp | null;
     status: VisualNovelStatus;
+    isFavorite: boolean;
+    notes: string | null;
     dirPath: string;
     executablePath: string;
     launchOptions: string | null;
     isMissing: boolean;
+    useLocaleEmulator: boolean;
     createdAt: Timestamp;
     tags: Tag[];
 };

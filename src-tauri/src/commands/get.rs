@@ -144,6 +144,24 @@ pub async fn get_settings(state: AppState<'_>) -> CommandResult<Setting> {
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
+pub async fn get_play_sessions(state: AppState<'_>) -> CommandResult<Vec<PlaySession>> {
+    use schema::play_sessions::dsl as play_session_dsl;
+
+    let mut conn = state.pool.get()?;
+
+    let play_sessions = play_session_dsl::play_sessions.load::<PlaySessionEntity>(&mut conn)?;
+
+    let data = play_sessions
+        .into_iter()
+        .map(|e| PlaySession::from_db(e))
+        .collect::<Vec<PlaySession>>();
+
+    Ok(data)
+}
+
+#[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 pub async fn get_stats(state: AppState<'_>) -> CommandResult<GeneralStats> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;

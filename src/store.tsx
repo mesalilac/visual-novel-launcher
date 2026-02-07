@@ -11,6 +11,7 @@ import { createStore, type SetStoreFunction } from 'solid-js/store';
 import {
     commands,
     type GeneralStats,
+    type PlaySession,
     type Setting,
     type Tag,
     type TagWithVisualNovels,
@@ -36,6 +37,7 @@ export type GlobalData = {
         tags: ManagedResource<Tag[]>;
         tagWithVisualNovels: ManagedResource<TagWithVisualNovels[]>;
         settings: ManagedResource<Setting>;
+        playSessions: ManagedResource<PlaySession[]>;
         generalStats: ManagedResource<GeneralStats>;
     };
 };
@@ -71,6 +73,12 @@ const createGlobalData = (): GlobalData => {
         throw res.error;
     });
 
+    const [playSessions, playSessionsActions] = createResource(async () => {
+        const res = await commands.getPlaySessions();
+        if (res.status === 'ok') return res.data;
+        throw res.error;
+    });
+
     const [generalStats, generalStatsActions] = createResource(async () => {
         const res = await commands.getStats();
         if (res.status === 'ok') return res.data;
@@ -100,6 +108,11 @@ const createGlobalData = (): GlobalData => {
                 get: settings,
                 refetch: settingsActions.refetch,
                 mutate: settingsActions.mutate,
+            },
+            playSessions: {
+                get: playSessions,
+                refetch: playSessionsActions.refetch,
+                mutate: playSessionsActions.mutate,
             },
             generalStats: {
                 get: generalStats,
