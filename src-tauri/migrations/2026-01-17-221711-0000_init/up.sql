@@ -13,6 +13,7 @@ CREATE TABLE
         executable_path TEXT NOT NULL,
         launch_options TEXT,
         is_missing BOOLEAN NOT NULL DEFAULT 0 CHECK (is_missing IN (0, 1)),
+        use_locale_emulator BOOLEAN NOT NULL DEFAULT 0 CHECK (use_locale_emulator IN (0, 1)),
         created_at BIGINT NOT NULL
     );
 
