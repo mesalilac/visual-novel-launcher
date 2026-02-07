@@ -97,6 +97,7 @@ impl VisualNovel {
 pub struct Setting {
     pub id: i32,
     pub library_path: Option<String>,
+    pub use_locale_emulator: bool,
     pub locale_emulator_executable_path: Option<String>,
     pub locale_emulator_launch_options: Option<String>,
 }
@@ -106,6 +107,7 @@ impl Setting {
         Self {
             id: entity.id,
             library_path: entity.library_path,
+            use_locale_emulator: entity.use_locale_emulator,
             locale_emulator_executable_path: entity.locale_emulator_executable_path,
             locale_emulator_launch_options: entity.locale_emulator_launch_options,
         }

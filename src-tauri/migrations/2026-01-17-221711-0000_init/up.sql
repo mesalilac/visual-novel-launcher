@@ -37,6 +37,7 @@ CREATE TABLE
     settings (
         id INT NOT NULL PRIMARY KEY,
         library_path TEXT,
+        use_locale_emulator BOOLEAN NOT NULL DEFAULT 1 CHECK (use_locale_emulator IN (0, 1)),
         locale_emulator_executable_path TEXT,
         locale_emulator_launch_options TEXT
     );

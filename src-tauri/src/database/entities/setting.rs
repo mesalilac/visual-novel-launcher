@@ -5,6 +5,7 @@ use super::prelude::*;
 pub struct SettingEntity {
     pub id: i32,
     pub library_path: Option<String>,
+    pub use_locale_emulator: bool,
     pub locale_emulator_executable_path: Option<String>,
     pub locale_emulator_launch_options: Option<String>,
 }

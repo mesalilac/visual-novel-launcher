@@ -20,6 +20,7 @@ diesel::table! {
     settings (id) {
         id -> Integer,
         library_path -> Nullable<Text>,
+        use_locale_emulator -> Bool,
         locale_emulator_executable_path -> Nullable<Text>,
         locale_emulator_launch_options -> Nullable<Text>,
     }
