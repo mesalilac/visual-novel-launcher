@@ -1,39 +1,39 @@
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "visual-novel-launcher",
-  "version": "0.1.0",
-  "identifier": "com.mesalilac.visual-novel-launcher",
-  "build": {
-    "beforeDevCommand": "pnpm dev",
-    "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "pnpm build",
-    "frontendDist": "../dist"
-  },
-  "app": {
-    "windows": [
-      {
-        "title": "Visual Novel Launcher",
-        "width": 1600,
-        "height": 900,
-        "minWidth": 1600,
-        "minHeight": 900,
-        "center": true,
-        "backgroundColor": "#0d0d0d"
-      }
-    ],
-    "security": {
-      "csp": null
+    "$schema": "https://schema.tauri.app/config/2",
+    "productName": "visual-novel-launcher",
+    "version": "0.1.0",
+    "identifier": "com.mesalilac.visual-novel-launcher",
+    "build": {
+        "beforeDevCommand": "pnpm dev",
+        "devUrl": "http://localhost:1420",
+        "beforeBuildCommand": "pnpm build",
+        "frontendDist": "../dist"
+    },
+    "app": {
+        "windows": [
+            {
+                "title": "Visual Novel Launcher",
+                "width": 1600,
+                "height": 900,
+                "minWidth": 1600,
+                "minHeight": 900,
+                "center": true,
+                "backgroundColor": "#0d0d0d"
+            }
+        ],
+        "security": {
+            "csp": null
+        }
+    },
+    "bundle": {
+        "active": true,
+        "targets": "all",
+        "icon": [
+            "icons/32x32.png",
+            "icons/128x128.png",
+            "icons/128x128@2x.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
+        ]
     }
-  },
-  "bundle": {
-    "active": true,
-    "targets": "all",
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ]
-  }
 }
