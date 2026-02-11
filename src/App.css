@@ -10,8 +10,8 @@
 body {
     font-family: "Ioskeley Mono", monospace;
     line-height: 1.5;
-    color: var(--color-app-fg);
-    background-color: var(--color-app-bg);
+    color: var(--s-color-foreground-default);
+    background-color: var(--s-color-background-page);
 }
 
 input,
@@ -46,131 +46,89 @@ h6 {
 
 input,
 textarea {
-    padding: var(--size-padding-2xs) var(--size-padding-md);
-    border: var(--size-border-medium) solid var(--color-input-border);
-    border-radius: var(--size-radius-input);
+    padding: var(--s-size-padding-sm) var(--s-size-padding-md);
+    border: var(--s-size-border-sm) solid var(--s-color-border-subtle);
+    border-radius: var(--s-size-radius-md);
 
-    color: var(--color-input-fg);
+    color: var(--s-color-foreground-default);
 
-    background-color: var(--color-input-bg);
+    background-color: hsl(from var(--s-color-background-surface-4) h s l / 40%);
     outline: none;
 }
 
 input:hover,
 textarea:hover {
-    background-color: hsl(from var(--color-input-bg-hover) h s l / 20%);
+    background-color: hsl(
+        from var(--s-color-background-surface-4-hovered) h s l /
+        40%
+    );
 }
 
 input:focus,
 textarea:focus {
-    border-color: var(--color-input-border-focus);
+    border-color: var(--s-color-border-default);
+    background-color: hsl(
+        from var(--s-color-background-surface-4-pressed) h s l /
+        40%
+    );
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: var(--color-input-placeholder);
-}
-
-.input-error {
-    border-color: var(--color-input-error-border);
-    color: var(--color-input-error-fg);
-}
-
-.input-warning {
-    border-color: var(--color-input-warning-border);
-    color: var(--color-input-warning-fg);
+    color: var(--s-color-foreground-quaternary);
 }
 
 button {
     cursor: pointer;
 
     display: flex;
-    gap: var(--size-gap-sm);
+    gap: var(--s-size-gap-sm);
     align-items: center;
     justify-content: center;
 
-    padding: var(--size-padding-2xs) var(--size-padding-md);
+    padding: var(--s-size-padding-xxs) var(--s-size-padding-md);
     border: none;
-    border-radius: var(--size-radius-button);
+    border-radius: var(--s-size-radius-md);
 
-    color: var(--color-button-fg);
+    color: var(--s-color-foreground-default);
 
-    background-color: var(--color-button-bg);
+    background-color: var(--s-color-background-surface-4);
 
     &:hover {
-        background-color: var(--color-button-bg-hover);
+        background-color: var(--s-color-background-surface-4-hovered);
     }
 
     &:active {
-        background-color: var(--color-button-bg-active);
+        background-color: var(--s-color-background-surface-4-pressed);
     }
 }
 
 .button-primary {
-    cursor: pointer;
-
-    padding: var(--size-padding-2xs) var(--size-padding-md);
-    border: none;
-    border-radius: var(--size-radius-button);
-
-    color: var(--color-button-fg);
-
-    background-color: var(--color-button-primary);
+    background-color: var(--s-color-background-brand);
 
     &:hover {
-        background-color: var(--color-button-primary-hover);
+        background-color: var(--s-color-background-brand-hovered);
     }
 
     &:active {
-        background-color: var(--color-button-primary-active);
+        background-color: var(--s-color-background-brand-pressed);
     }
-}
-
-.button-secondary {
-    cursor: pointer;
-
-    padding: var(--size-padding-2xs) var(--size-padding-md);
-    border: none;
-    border-radius: var(--size-radius-button);
-
-    color: var(--color-button-fg);
-
-    background-color: var(--color-button-secondary);
-
-    &:hover {
-        background-color: var(--color-button-secondary-hover);
-    }
-
-    &:active {
-        background-color: var(--color-button-secondary-active);
-    }
-}
-
-.drag-handler {
-    cursor: grab;
-
-    padding: var(--size-padding-2xs) var(--size-padding-xs);
-    border-radius: var(--size-radius-button);
-
-    color: var(--color-button-fg);
-
-    background-color: hsl(from var(--color-button-bg) h s l / 20%);
 }
 
 .main-container {
     display: flex;
     flex-direction: column;
-    gap: var(--size-gap-lg);
-    margin: var(--size-margin-lg);
+    gap: var(--s-size-gap-lg);
+    margin: var(--s-size-margin-lg);
 }
 
 .divider {
     width: 100%;
     height: 2px;
-    background-color: var(--color-border-divider);
+    background-color: var(--s-color-border-subtle);
 }
 
-.icon {
-    cursor: pointer;
-    color: var(--color-icon-muted);
+.input-error {
+    border-color: var(--s-color-border-danger);
+    color: var(--s-color-foreground-danger);
 }
