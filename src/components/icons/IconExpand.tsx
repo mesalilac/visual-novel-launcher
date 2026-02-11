@@ -9,15 +9,16 @@ export const IconExpand = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Expand'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M5 9.5H2.5V7M7 2.5H9.5V5'
+                d='M10 19H5V14M14 5H19V10'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

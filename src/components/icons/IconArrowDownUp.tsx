@@ -9,15 +9,16 @@ export const IconArrowDownUp = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Arrow Down Up'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M5.5 8L4 9.5M4 9.5L2.5 8M4 9.5V2.5M6.5 4L8 2.5M8 2.5L9.5 4M8 2.5V9.5'
+                d='M11 16L8 19M8 19L5 16M8 19V5M13 8L16 5M16 5L19 8M16 5V19'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

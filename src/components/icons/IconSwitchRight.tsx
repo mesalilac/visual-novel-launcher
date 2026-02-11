@@ -9,21 +9,23 @@ export const IconSwitchRight = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Switch Right'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M4 9H8C9.65685 9 11 7.65685 11 6C11 4.34315 9.65685 3 8 3H4C2.34315 3 1 4.34315 1 6C1 7.65685 2.34315 9 4 9Z'
+                d='M8 18H16C19.3137 18 22 15.3137 22 12C22 8.68629 19.3137 6 16 6H8C4.68629 6 2 8.68629 2 12C2 15.3137 4.68629 18 8 18Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />
             <path
-                d='M8 4.5C7.17157 4.5 6.5 5.17157 6.5 6C6.5 6.82843 7.17157 7.5 8 7.5C8.82843 7.5 9.5 6.82843 9.5 6C9.5 5.17157 8.82843 4.5 8 4.5Z'
+                d='M16 9C14.3431 9 13 10.3431 13 12C13 13.6569 14.3431 15 16 15C17.6569 15 19 13.6569 19 12C19 10.3431 17.6569 9 16 9Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

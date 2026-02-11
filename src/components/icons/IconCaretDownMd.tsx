@@ -9,15 +9,16 @@ export const IconCaretDownMd = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Caret Down Md'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M8 5L6 7L4 5'
+                d='M16 10L12 14L8 10'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

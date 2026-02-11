@@ -9,15 +9,16 @@ export const IconAddPlus = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Add Plus'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M3 6H6M6 6H9M6 6V9M6 6V3'
+                d='M6 12H12M12 12H18M12 12V18M12 12V6'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

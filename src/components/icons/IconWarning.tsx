@@ -9,15 +9,16 @@ export const IconWarning = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Warning'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M6 3V7M6.0249 9V9.05L5.9751 9.0501V9H6.0249Z'
+                d='M12 6V14M12.0498 18V18.1L11.9502 18.1002V18H12.0498Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

@@ -9,15 +9,16 @@ export const IconHamburgerMd = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Hamburger Md'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M2.5 8.5H9.5M2.5 6H9.5M2.5 3.5H9.5'
+                d='M5 17H19M5 12H19M5 7H19'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

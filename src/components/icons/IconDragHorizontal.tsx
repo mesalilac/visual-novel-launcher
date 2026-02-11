@@ -9,45 +9,51 @@ export const IconDragHorizontal = (props: JSX.SvgSVGAttributes<SVGSVGElement>) =
         <svg
             role='img'
             aria-label='Drag Horizontal'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M9 7C8.72386 7 8.5 7.22386 8.5 7.5C8.5 7.77614 8.72386 8 9 8C9.27614 8 9.5 7.77614 9.5 7.5C9.5 7.22386 9.27614 7 9 7Z'
+                d='M18 14C17.4477 14 17 14.4477 17 15C17 15.5523 17.4477 16 18 16C18.5523 16 19 15.5523 19 15C19 14.4477 18.5523 14 18 14Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />
             <path
-                d='M6 7C5.72386 7 5.5 7.22386 5.5 7.5C5.5 7.77614 5.72386 8 6 8C6.27614 8 6.5 7.77614 6.5 7.5C6.5 7.22386 6.27614 7 6 7Z'
+                d='M12 14C11.4477 14 11 14.4477 11 15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15C13 14.4477 12.5523 14 12 14Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />
             <path
-                d='M3 7C2.72386 7 2.5 7.22386 2.5 7.5C2.5 7.77614 2.72386 8 3 8C3.27614 8 3.5 7.77614 3.5 7.5C3.5 7.22386 3.27614 7 3 7Z'
+                d='M6 14C5.44772 14 5 14.4477 5 15C5 15.5523 5.44772 16 6 16C6.55228 16 7 15.5523 7 15C7 14.4477 6.55228 14 6 14Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />
             <path
-                d='M9 4C8.72386 4 8.5 4.22386 8.5 4.5C8.5 4.77614 8.72386 5 9 5C9.27614 5 9.5 4.77614 9.5 4.5C9.5 4.22386 9.27614 4 9 4Z'
+                d='M18 8C17.4477 8 17 8.44772 17 9C17 9.55228 17.4477 10 18 10C18.5523 10 19 9.55228 19 9C19 8.44772 18.5523 8 18 8Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />
             <path
-                d='M6 4C5.72386 4 5.5 4.22386 5.5 4.5C5.5 4.77614 5.72386 5 6 5C6.27614 5 6.5 4.77614 6.5 4.5C6.5 4.22386 6.27614 4 6 4Z'
+                d='M12 8C11.4477 8 11 8.44772 11 9C11 9.55228 11.4477 10 12 10C12.5523 10 13 9.55228 13 9C13 8.44772 12.5523 8 12 8Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />
             <path
-                d='M3 4C2.72386 4 2.5 4.22386 2.5 4.5C2.5 4.77614 2.72386 5 3 5C3.27614 5 3.5 4.77614 3.5 4.5C3.5 4.22386 3.27614 4 3 4Z'
+                d='M6 8C5.44772 8 5 8.44772 5 9C5 9.55228 5.44772 10 6 10C6.55228 10 7 9.55228 7 9C7 8.44772 6.55228 8 6 8Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

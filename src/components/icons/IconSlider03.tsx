@@ -9,15 +9,16 @@ export const IconSlider03 = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Slider03'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M5 9H10.5M1.5 9H3M3 9V10M3 9V8M10 6H10.5M1.5 6H8M8 6V7M8 6V5M7 3H10.5M1.5 3H5M5 3V4M5 3V2'
+                d='M10 18H21M3 18H6M6 18V20M6 18V16M20 12H21M3 12H16M16 12V14M16 12V10M14 6H21M3 6H10M10 6V8M10 6V4'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

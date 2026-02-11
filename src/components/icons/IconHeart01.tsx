@@ -9,15 +9,16 @@ export const IconHeart01 = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Heart01'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M6 3.84716C5 1.49994 1.5 1.74994 1.5 4.74995C1.5 7.74997 6 10.25 6 10.25C6 10.25 10.5 7.74997 10.5 4.74995C10.5 1.74994 7 1.49994 6 3.84716Z'
+                d='M12 7.69431C10 2.99988 3 3.49988 3 9.49991C3 15.4999 12 20.5001 12 20.5001C12 20.5001 21 15.4999 21 9.49991C21 3.49988 14 2.99988 12 7.69431Z'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

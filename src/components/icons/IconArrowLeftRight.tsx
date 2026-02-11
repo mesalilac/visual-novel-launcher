@@ -9,15 +9,16 @@ export const IconArrowLeftRight = (props: JSX.SvgSVGAttributes<SVGSVGElement>) =
         <svg
             role='img'
             aria-label='Arrow Left Right'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M8 6.5L9.5 8M9.5 8L8 9.5M9.5 8H2.5M4 5.5L2.5 4M2.5 4L4 2.5M2.5 4H9.5'
+                d='M16 13L19 16M19 16L16 19M19 16H5M8 11L5 8M5 8L8 5M5 8H19'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

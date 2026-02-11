@@ -9,15 +9,16 @@ export const IconCloseMd = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Close Md'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M8.99998 8.99998L6.00001 6.00001M6.00001 6.00001L3 3M6.00001 6.00001L9.00002 3M6.00001 6.00001L3 9.00002'
+                d='M18 18L12 12M12 12L6 6M12 12L18 6M12 12L6 18'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

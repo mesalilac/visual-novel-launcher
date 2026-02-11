@@ -9,15 +9,16 @@ export const IconUnfoldLess = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Unfold Less'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M4 9.5L6 7.5L8 9.5M8 2.5L6 4.5L4 2.5'
+                d='M8 19L12 15L16 19M16 5L12 9L8 5'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />

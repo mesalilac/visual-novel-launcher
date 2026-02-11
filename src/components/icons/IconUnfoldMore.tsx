@@ -9,15 +9,16 @@ export const IconUnfoldMore = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
         <svg
             role='img'
             aria-label='Unfold More'
-            width='12'
-            height='12'
-            viewBox='0 0 12 12'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
             fill='none'
             {...props}
         >
             <path
-                d='M8 7.5L6 9.5L4 7.5M4 4.5L6 2.5L8 4.5'
+                d='M16 15L12 19L8 15M8 9L12 5L16 9'
                 stroke='currentColor'
+                stroke-width='2'
                 stroke-linecap='round'
                 stroke-linejoin='round'
             />
