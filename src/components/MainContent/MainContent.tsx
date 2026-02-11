@@ -1,5 +1,6 @@
+import { useGlobalData } from '@store';
 import { For, Match, Switch } from 'solid-js';
-import { useGlobalData } from '../../store';
+
 import './MainContent.css';
 
 export const MainContent = () => {
