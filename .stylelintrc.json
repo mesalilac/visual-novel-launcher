@@ -8,7 +8,8 @@
         "stylelint-high-performance-animation",
         "stylelint-order",
         "stylelint-selector-bem-pattern",
-        "stylelint-declaration-block-no-ignored-properties"
+        "stylelint-declaration-block-no-ignored-properties",
+        "stylelint-value-no-unknown-custom-properties"
     ],
     "rules": {
         "csstools/use-nesting": "always",
@@ -22,6 +23,14 @@
         "plugin/selector-bem-pattern": {
             "preset": "bem"
         },
-        "plugin/declaration-block-no-ignored-properties": true
+        "plugin/declaration-block-no-ignored-properties": true,
+        "csstools/value-no-unknown-custom-properties": [
+            true,
+            {
+                "importFrom": [
+                    "./src/index.css"
+                ]
+            }
+        ]
     }
 }
