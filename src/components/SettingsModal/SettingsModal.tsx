@@ -2,7 +2,6 @@ import { ModalDismissButton } from '@components';
 import './SettingsModal.css';
 
 // import { useGlobalData } from '@store';
-import { type Accessor, createSignal, type Setter, Show } from 'solid-js';
 
 export const SettingsModal = () => {
     // const globalData = useGlobalData();

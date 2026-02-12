@@ -3,7 +3,6 @@ import './Nav.css';
 import { IconAddPlus, IconSettings, Modal, SettingsModal } from '@components';
 import { useGlobalData } from '@store';
 import { createSignal, Show } from 'solid-js';
-import { Transition } from 'solid-transition-group';
 
 export const Nav = () => {
     const globalData = useGlobalData();
