@@ -2,7 +2,7 @@ import './Nav.css';
 
 import { IconAddPlus, IconSettings, Modal, SettingsModal } from '@components';
 import { useGlobalData } from '@store';
-import { createSignal, Show } from 'solid-js';
+import { createSignal } from 'solid-js';
 
 export const Nav = () => {
     const globalData = useGlobalData();
