@@ -7,10 +7,13 @@
 /* :root {
 } */
 
-body {
+html {
+    overscroll-behavior: none;
+
     font-family: "Ioskeley Mono", monospace;
     line-height: 1.5;
     color: var(--s-color-foreground-default);
+
     background-color: var(--s-color-background-page);
 }
 
