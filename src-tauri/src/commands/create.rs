@@ -20,17 +20,17 @@ pub async fn create_visual_novel(
 
     let new_vn = VisualNovelEntity {
         id: nanoid!(),
-        title: payload.title,
-        description: payload.description,
-        cover_path: payload.cover_path,
+        title: payload.title.trim().into(),
+        description: payload.description.map(|s| s.trim().into()),
+        cover_path: payload.cover_path.map(|s| s.trim().into()),
         playtime: payload.playtime,
         last_time_played_at: None,
         status: payload.status.unwrap_or_default(),
         is_favorite: false,
         notes: None,
-        dir_path: payload.dir_path,
-        executable_path: payload.executable_path,
-        launch_options: payload.launch_options,
+        dir_path: payload.dir_path.trim().into(),
+        executable_path: payload.executable_path.trim().into(),
+        launch_options: payload.launch_options.map(|s| s.trim().into()),
         is_missing: false,
         use_locale_emulator: true,
         created_at: Timestamp::now(),
@@ -80,7 +80,7 @@ pub async fn create_tag(state: AppState<'_>, payload: CreateTagRequest) -> Comma
 
     let new_tag = TagEntity {
         id: nanoid!(),
-        name: payload.name,
+        name: payload.name.trim().into(),
         created_at: Timestamp::now(),
     };
 

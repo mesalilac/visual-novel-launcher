@@ -32,13 +32,13 @@ pub async fn update_visual_novel(
     let mut conn = state.pool.get()?;
 
     let vn_changeset = VisualNovelChangeset {
-        title: payload.title,
-        description: payload.description,
-        cover_path: payload.cover_path,
+        title: payload.title.map(|s| s.trim().into()),
+        description: payload.description.map(|s| s.trim().into()),
+        cover_path: payload.cover_path.map(|s| s.trim().into()),
         playtime: payload.playtime,
         status: payload.status,
-        executable_path: payload.executable_path,
-        launch_options: payload.launch_options,
+        executable_path: payload.executable_path.map(|s| s.trim().into()),
+        launch_options: payload.launch_options.map(|s| s.trim().into()),
     };
 
     let vn_entity = update(vn_dsl::visual_novels.find(&id))
@@ -97,7 +97,9 @@ pub async fn update_tag(
 
     let mut conn = state.pool.get()?;
 
-    let tag_changeset = TagChangeset { name: payload.name };
+    let tag_changeset = TagChangeset {
+        name: payload.name.trim().into(),
+    };
 
     let tag_entity = update(tag_dsl::tags.find(&id))
         .set(&tag_changeset)
@@ -128,9 +130,13 @@ pub async fn update_settings(
     let mut conn = state.pool.get()?;
 
     let setting_changeset = SettingChangeset {
-        library_path: payload.library_path,
-        locale_emulator_executable_path: payload.locale_emulator_executable_path,
-        locale_emulator_launch_options: payload.locale_emulator_launch_options,
+        library_path: payload.library_path.map(|s| s.trim().into()),
+        locale_emulator_executable_path: payload
+            .locale_emulator_executable_path
+            .map(|s| s.trim().into()),
+        locale_emulator_launch_options: payload
+            .locale_emulator_launch_options
+            .map(|s| s.trim().into()),
     };
 
     let setting_entity = update(setting_dsl::settings.find(APP_SETTINGS_ID))
