@@ -406,3 +406,8 @@
     width: var(--s-size-icon-xl);
     height: var(--s-size-icon-xl);
 }
+
+.div-debug {
+    color: black;
+    background-color: lightpink;
+}
