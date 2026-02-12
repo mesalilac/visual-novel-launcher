@@ -282,6 +282,10 @@
     margin: var(--s-size-margin-none);
 }
 
+.margin-auto {
+    margin: auto;
+}
+
 .margin-xxs {
     margin: var(--s-size-margin-xxs);
 }
@@ -318,6 +322,10 @@
     margin-top: var(--s-size-margin-none);
 }
 
+.margin-top-auto {
+    margin-top: auto;
+}
+
 .margin-top-xxs {
     margin-top: var(--s-size-margin-xxs);
 }
@@ -352,6 +360,10 @@
 
 .margin-bottom-none {
     margin-bottom: var(--s-size-margin-none);
+}
+
+.margin-bottom-auto {
+    margin-bottom: auto;
 }
 
 .margin-bottom-xxs {
