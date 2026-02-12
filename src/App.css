@@ -126,12 +126,6 @@ button {
     margin: var(--s-size-margin-lg);
 }
 
-.divider {
-    width: 100%;
-    height: 2px;
-    background-color: var(--s-color-border-subtle);
-}
-
 .input-error {
     border-color: var(--s-color-border-danger);
     color: var(--s-color-foreground-danger);
