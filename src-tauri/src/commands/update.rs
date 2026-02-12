@@ -118,6 +118,7 @@ pub async fn update_tag(
 #[diesel(table_name = schema::settings)]
 struct SettingChangeset {
     pub library_path: Option<String>,
+    pub use_locale_emulator: Option<bool>,
     pub locale_emulator_executable_path: Option<String>,
     pub locale_emulator_launch_options: Option<String>,
 }
@@ -135,6 +136,7 @@ pub async fn update_settings(
 
     let setting_changeset = SettingChangeset {
         library_path: payload.library_path.map(|s| s.trim().into()),
+        use_locale_emulator: payload.use_locale_emulator,
         locale_emulator_executable_path: payload
             .locale_emulator_executable_path
             .map(|s| s.trim().into()),
