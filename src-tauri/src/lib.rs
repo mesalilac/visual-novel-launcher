@@ -131,6 +131,7 @@ pub fn run() {
         _ = services::scanner::sync_library(&mut conn);
     }
 
+    // TODO: Go back to `specta_collect_commands!()` after https://github.com/RiadYan/tauri-helper/issues/1 is fixed
     // let specta_builder = Builder::<tauri::Wry>::new().commands(specta_collect_commands!());
     let specta_builder = Builder::<tauri::Wry>::new().commands(collect_commands![
         get_visual_novels,
