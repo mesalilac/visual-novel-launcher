@@ -17,7 +17,7 @@ use std::io;
 use std::process::Command;
 use tauri::Manager;
 use tauri_helper::{auto_collect_command, specta_collect_commands};
-use tauri_specta::Builder;
+use tauri_specta::{collect_commands, Builder};
 
 const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 const APP_NAME: &str = "com.mesalilac.visual-novel-launcher";
@@ -131,7 +131,30 @@ pub fn run() {
         _ = services::scanner::sync_library(&mut conn);
     }
 
-    let specta_builder = Builder::<tauri::Wry>::new().commands(specta_collect_commands!());
+    // let specta_builder = Builder::<tauri::Wry>::new().commands(specta_collect_commands!());
+    let specta_builder = Builder::<tauri::Wry>::new().commands(collect_commands![
+        get_visual_novels,
+        get_visual_novel_by_id,
+        get_tags,
+        get_tags_with_visual_novels,
+        get_settings,
+        get_play_sessions,
+        get_stats,
+        create_visual_novel,
+        create_tag,
+        remove_visual_novel_by_id,
+        remove_tag_by_id,
+        remove_tag_from_visual_novel_by_id,
+        remove_all_visual_novels,
+        remove_tags,
+        update_visual_novel,
+        update_tag,
+        update_settings,
+        util_scan_library,
+        util_sync_library,
+        util_launch_visual_novel,
+        util_close_visual_novel
+    ]);
 
     #[cfg(debug_assertions)]
     specta_builder
