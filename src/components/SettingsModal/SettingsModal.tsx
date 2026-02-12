@@ -1,64 +1,118 @@
+import { commands } from '@bindings';
 import './SettingsModal.css';
 
-import { ModalDismissButton } from '@components';
+import { ModalDismissButton, useModalContext } from '@components';
 import { useGlobalData } from '@store';
-import { Show } from 'solid-js';
+import { createEffect, createSignal, Show } from 'solid-js';
 
 export const SettingsModal = () => {
-    const globalData = useGlobalData();
+    const { setIsOpen } = useModalContext();
 
+    const globalData = useGlobalData();
     const settings = globalData.resources.settings;
 
-    const handleOnAction = () => {};
+    const [libraryPath, setLibraryPath] = createSignal<string | null>(
+        settings.get()?.libraryPath || null,
+    );
+    const [useLocaleEmulator, setUseLocaleEmulator] = createSignal<
+        boolean | null
+    >(settings.get()?.useLocaleEmulator || null);
+    const [localeEmulatorExecutablePath, setLocaleEmulatorExecutablePath] =
+        createSignal<string | null>(
+            settings.get()?.localeEmulatorExecutablePath || null,
+        );
+    const [localeEmulatorLaunchOptions, setLocaleEmulatorLaunchOptions] =
+        createSignal<string | null>(
+            settings.get()?.localeEmulatorLaunchOptions || null,
+        );
+
+    createEffect(() => {
+        if (settings.get.state === 'ready' && settings.get()) {
+            setLibraryPath(settings.get().libraryPath);
+            setUseLocaleEmulator(settings.get().useLocaleEmulator);
+            setLocaleEmulatorExecutablePath(
+                settings.get().localeEmulatorExecutablePath,
+            );
+            setLocaleEmulatorLaunchOptions(
+                settings.get().localeEmulatorLaunchOptions,
+            );
+        }
+    });
+
+    const handleOnAction = () => {
+        commands
+            .updateSettings({
+                libraryPath: libraryPath(),
+                useLocaleEmulator: useLocaleEmulator(),
+                localeEmulatorExecutablePath: localeEmulatorExecutablePath(),
+                localeEmulatorLaunchOptions: localeEmulatorLaunchOptions(),
+            })
+            .then((res) => {
+                if (res.status === 'ok') {
+                    settings.mutate(res.data);
+                } else if (res.status === 'error') {
+                    console.error(res.error);
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+
+        setIsOpen(false);
+    };
 
     return (
         <div class='flex-column height-100'>
             <h2>Settings</h2>
             <div class='divider margin-bottom-lg' />
             <div class='flex-column'>
-                <Show when={settings.get.state === 'ready' && settings.get()}>
-                    {(settings) => {
-                        return (
-                            <div class='flex-column gap-md'>
-                                <div class='flex-row justify-between'>
-                                    <span>Library Path</span>
-                                    <input
-                                        type='text'
-                                        value={settings().libraryPath || ''}
-                                    />
-                                </div>
-                                <div class='flex-row'>
-                                    <span>use Locale Emulator</span>
-                                    <input
-                                        checked={settings().useLocaleEmulator}
-                                        type='checkbox'
-                                    />
-                                </div>
-                                <div class='flex-row justify-between'>
-                                    <span>locale Emulator Executable Path</span>
-                                    <input
-                                        type='text'
-                                        value={
-                                            settings()
-                                                .localeEmulatorExecutablePath ||
-                                            ''
-                                        }
-                                    />
-                                </div>
-                                <div class='flex-row justify-between'>
-                                    <span>locale Emulator Launch Options</span>
-                                    <input
-                                        type='text'
-                                        value={
-                                            settings()
-                                                .localeEmulatorLaunchOptions ||
-                                            ''
-                                        }
-                                    />
-                                </div>
-                            </div>
-                        );
-                    }}
+                <Show when={settings.get.state === 'ready'}>
+                    <div class='flex-column gap-md'>
+                        <div class='flex-row justify-between'>
+                            <span>Library Path</span>
+                            <input
+                                onChange={(e) =>
+                                    setLibraryPath(e.target.value.trim())
+                                }
+                                type='text'
+                                value={libraryPath() || ''}
+                            />
+                        </div>
+                        <div class='flex-row'>
+                            <span>use Locale Emulator</span>
+                            <input
+                                checked={useLocaleEmulator() || true}
+                                onChange={(e) =>
+                                    setUseLocaleEmulator(e.target.checked)
+                                }
+                                type='checkbox'
+                            />
+                        </div>
+                        <div class='flex-row justify-between'>
+                            <span>locale Emulator Executable Path</span>
+                            <input
+                                onChange={(e) =>
+                                    setLocaleEmulatorExecutablePath(
+                                        e.target.value.trim(),
+                                    )
+                                }
+                                type='text'
+                                value={localeEmulatorExecutablePath() || ''}
+                            />
+                        </div>
+                        <div class='flex-row justify-between'>
+                            <span>locale Emulator Launch Options</span>
+                            <input
+                                onChange={(e) =>
+                                    setLocaleEmulatorLaunchOptions(
+                                        e.target.value.trim(),
+                                    )
+                                }
+                                type='text'
+                                value={localeEmulatorLaunchOptions() || ''}
+                            />
+                        </div>
+                    </div>
                 </Show>
             </div>
             <div class='divider margin-top-auto' />
