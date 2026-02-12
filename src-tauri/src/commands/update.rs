@@ -13,6 +13,8 @@ struct VisualNovelChangeset {
     pub cover_path: Option<String>,
     pub playtime: Option<i64>,
     pub status: Option<VisualNovelStatus>,
+    pub is_favorite: Option<bool>,
+    pub notes: Option<String>,
     pub executable_path: Option<String>,
     pub launch_options: Option<String>,
 }
@@ -37,6 +39,8 @@ pub async fn update_visual_novel(
         cover_path: payload.cover_path.map(|s| s.trim().into()),
         playtime: payload.playtime,
         status: payload.status,
+        is_favorite: payload.is_favorite,
+        notes: payload.notes.map(|s| s.trim().into()),
         executable_path: payload.executable_path.map(|s| s.trim().into()),
         launch_options: payload.launch_options.map(|s| s.trim().into()),
     };
