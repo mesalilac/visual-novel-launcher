@@ -1,6 +1,6 @@
-import { ModalDismissButton } from '@components';
 import './SettingsModal.css';
 
+import { ModalDismissButton } from '@components';
 // import { useGlobalData } from '@store';
 
 export const SettingsModal = () => {
