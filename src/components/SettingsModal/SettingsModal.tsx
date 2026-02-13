@@ -95,6 +95,7 @@ export const SettingsModal = () => {
                                     onChange={(e) =>
                                         setLibraryPath(e.target.value.trim())
                                     }
+                                    title={libraryPath() ?? ''}
                                     type='text'
                                     value={libraryPath() ?? ''}
                                 />
@@ -122,6 +123,7 @@ export const SettingsModal = () => {
                                             e.target.value.trim(),
                                         )
                                     }
+                                    title={localeEmulatorExecutablePath() ?? ''}
                                     type='text'
                                     value={localeEmulatorExecutablePath() ?? ''}
                                 />
@@ -141,6 +143,7 @@ export const SettingsModal = () => {
                                         e.target.value.trim(),
                                     )
                                 }
+                                title={localeEmulatorLaunchOptions() ?? ''}
                                 type='text'
                                 value={localeEmulatorLaunchOptions() ?? ''}
                             />
