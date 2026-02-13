@@ -55,9 +55,15 @@ export const Modal = (props: {
 
     createEffect(() => {
         if (props.isOpen()) {
+            const originalOverflow = window.getComputedStyle(
+                document.body,
+            ).overflow;
+            document.body.style.overflow = 'hidden';
+
             document.addEventListener('keydown', handleKeydown);
 
             onCleanup(() => {
+                document.body.style.overflow = originalOverflow;
                 document.removeEventListener('keydown', handleKeydown);
             });
         }
