@@ -13,7 +13,7 @@
     width: var(--s-size-modal-width);
     height: var(--s-size-modal-height);
     padding: var(--s-size-padding-lg);
-    border: var(--s-size-border-sm) solid var(--s-color-border-subtle);
+    border: var(--s-size-border-md) solid var(--s-color-border-subtle);
     border-radius: var(--s-size-radius-lg);
 
     background-color: hsl(from var(--s-color-background-surface-1) h s l / 30%);
