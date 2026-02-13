@@ -7,7 +7,6 @@
     justify-content: center;
 
     background-color: var(--s-color-background-overlay);
-    backdrop-filter: blur(2px);
 }
 
 .modal-body {
@@ -17,7 +16,8 @@
     border: var(--s-size-border-sm) solid var(--s-color-border-subtle);
     border-radius: var(--s-size-radius-lg);
 
-    background-color: var(--s-color-background-surface-1);
+    background-color: hsl(from var(--s-color-background-surface-1) h s l / 30%);
+    backdrop-filter: blur(var(--s-size-blur));
 }
 
 .modal-anim-enter-active {
