@@ -69,7 +69,20 @@ export const SettingsModal = () => {
             })
             .then((res) => {
                 if (res.status === 'ok') {
-                    settings.mutate(res.data);
+                    if (settings.get()?.libraryPath !== res.data.libraryPath) {
+                        commands
+                            .utilScanLibrary()
+                            .then((scanRes) => {
+                                if (scanRes.status === 'ok') {
+                                    globalData.resources.vns.refetch();
+                                } else if (scanRes.status === 'error') {
+                                    console.error(scanRes.error);
+                                }
+                            })
+                            .catch((e) => console.error(e));
+                    }
+
+                    settings.refetch();
                 } else if (res.status === 'error') {
                     console.error(res.error);
                 }
