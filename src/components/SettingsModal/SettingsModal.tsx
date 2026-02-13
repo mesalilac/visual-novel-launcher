@@ -3,6 +3,7 @@ import './SettingsModal.css';
 
 import { ModalDismissButton, useModalContext } from '@components';
 import { useGlobalData } from '@store';
+import { open } from '@tauri-apps/plugin-dialog';
 import { createEffect, createSignal, Show } from 'solid-js';
 
 export const SettingsModal = () => {
@@ -39,6 +40,25 @@ export const SettingsModal = () => {
         }
     });
 
+    const pickLibraryPath = async () => {
+        const path = await open({
+            directory: true,
+        });
+        if (path) {
+            setLibraryPath(path);
+        }
+    };
+
+    const pickLocaleEmulatorExecutablePath = async () => {
+        const path = await open({
+            title: 'Select locale emulator executable',
+            filters: [{ name: 'Executable', extensions: ['exe'] }],
+        });
+        if (path) {
+            setLocaleEmulatorExecutablePath(path);
+        }
+    };
+
     const handleOnAction = () => {
         commands
             .updateSettings({
@@ -70,13 +90,18 @@ export const SettingsModal = () => {
                     <div class='flex-column gap-md'>
                         <div class='flex-row justify-between'>
                             <span>Library Path</span>
-                            <input
-                                onChange={(e) =>
-                                    setLibraryPath(e.target.value.trim())
-                                }
-                                type='text'
-                                value={libraryPath() ?? ''}
-                            />
+                            <div class='flex-row'>
+                                <input
+                                    onChange={(e) =>
+                                        setLibraryPath(e.target.value.trim())
+                                    }
+                                    type='text'
+                                    value={libraryPath() ?? ''}
+                                />
+                                <button onClick={pickLibraryPath} type='button'>
+                                    Browse
+                                </button>
+                            </div>
                         </div>
                         <div class='flex-row'>
                             <span>use Locale Emulator</span>
@@ -90,15 +115,23 @@ export const SettingsModal = () => {
                         </div>
                         <div class='flex-row justify-between'>
                             <span>locale Emulator Executable Path</span>
-                            <input
-                                onChange={(e) =>
-                                    setLocaleEmulatorExecutablePath(
-                                        e.target.value.trim(),
-                                    )
-                                }
-                                type='text'
-                                value={localeEmulatorExecutablePath() ?? ''}
-                            />
+                            <div class='flex-row'>
+                                <input
+                                    onChange={(e) =>
+                                        setLocaleEmulatorExecutablePath(
+                                            e.target.value.trim(),
+                                        )
+                                    }
+                                    type='text'
+                                    value={localeEmulatorExecutablePath() ?? ''}
+                                />
+                                <button
+                                    onClick={pickLocaleEmulatorExecutablePath}
+                                    type='button'
+                                >
+                                    Browse
+                                </button>
+                            </div>
                         </div>
                         <div class='flex-row justify-between'>
                             <span>locale Emulator Launch Options</span>
