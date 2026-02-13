@@ -250,7 +250,7 @@
     --s-size-margin-xxxl: 80px;
     --s-size-gap-none: 0px;
     --s-color-status-backlog: var(--s-color-background-disabled);
-    --s-size-blur: 8px;
+    --s-size-blur: 10px;
     --s-size-modal-width: 1200px;
     --s-size-icon-xs: 4px;
     --s-size-gap-sm: 8px;
