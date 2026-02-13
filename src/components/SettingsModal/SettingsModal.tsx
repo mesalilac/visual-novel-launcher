@@ -148,11 +148,12 @@ export const SettingsModal = () => {
             <div class='divider margin-bottom-lg' />
             <div class='flex-column'>
                 <Show when={settings.get.state === 'ready'}>
-                    <div class='flex-column gap-md'>
-                        <div class='flex-row justify-between'>
+                    <div class='flex-column gap-lg'>
+                        <div class='flex-column'>
                             <span>Library Path</span>
                             <div class='flex-row'>
                                 <input
+                                    class='flex-grow'
                                     onChange={(e) =>
                                         setLibraryPath(e.target.value.trim())
                                     }
@@ -175,10 +176,11 @@ export const SettingsModal = () => {
                                 type='checkbox'
                             />
                         </div>
-                        <div class='flex-row justify-between'>
+                        <div class='flex-column'>
                             <span>locale Emulator Executable Path</span>
                             <div class='flex-row'>
                                 <input
+                                    class='flex-grow'
                                     onChange={(e) =>
                                         setLocaleEmulatorExecutablePath(
                                             e.target.value.trim(),
@@ -196,7 +198,7 @@ export const SettingsModal = () => {
                                 </button>
                             </div>
                         </div>
-                        <div class='flex-row justify-between'>
+                        <div class='flex-column'>
                             <span>locale Emulator Launch Options</span>
                             <input
                                 onChange={(e) =>
@@ -209,20 +211,20 @@ export const SettingsModal = () => {
                                 value={localeEmulatorLaunchOptions() ?? ''}
                             />
                         </div>
-                        <div class='flex-row justify-between'>
+                        <div class='flex-column'>
                             <span>Remove All Visual Novels</span>
                             <button
-                                class='button-danger'
+                                class='button-danger self-start'
                                 onClick={removeAllVisualNovels}
                                 type='button'
                             >
                                 Remove
                             </button>
                         </div>
-                        <div class='flex-row justify-between'>
+                        <div class='flex-column'>
                             <span>Remove All Tags</span>
                             <button
-                                class='button-danger'
+                                class='button-danger self-start'
                                 onClick={removeAllTags}
                                 type='button'
                             >
