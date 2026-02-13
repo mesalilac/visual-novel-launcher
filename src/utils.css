@@ -121,6 +121,22 @@
     white-space: nowrap;
 }
 
+.surface-1 {
+    background-color: var(--s-color-background-surface-1);
+}
+
+.surface-2 {
+    background-color: var(--s-color-background-surface-2);
+}
+
+.surface-3 {
+    background-color: var(--s-color-background-surface-3);
+}
+
+.surface-4 {
+    background-color: var(--s-color-background-surface-4);
+}
+
 .position-relative {
     position: relative;
 }
