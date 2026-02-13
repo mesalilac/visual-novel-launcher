@@ -8,6 +8,8 @@
 } */
 
 html {
+    scrollbar-gutter: stable;
+
     overscroll-behavior: none;
 
     font-family: "Ioskeley Mono", monospace;
