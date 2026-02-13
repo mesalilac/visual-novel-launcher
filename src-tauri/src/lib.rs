@@ -147,7 +147,7 @@ pub fn run() {
         remove_tag_by_id,
         remove_tag_from_visual_novel_by_id,
         remove_all_visual_novels,
-        remove_tags,
+        remove_all_tags,
         update_visual_novel,
         update_tag,
         update_settings,

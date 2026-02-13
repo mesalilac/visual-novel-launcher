@@ -157,9 +157,12 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async removeTags(): Promise<Result<Tag[], CommandError>> {
+    async removeAllTags(): Promise<Result<Tag[], CommandError>> {
         try {
-            return { status: 'ok', data: await TAURI_INVOKE('remove_tags') };
+            return {
+                status: 'ok',
+                data: await TAURI_INVOKE('remove_all_tags'),
+            };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };

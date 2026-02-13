@@ -82,7 +82,7 @@ pub async fn remove_all_visual_novels(state: AppState<'_>) -> CommandResult<Vec<
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn remove_tags(state: AppState<'_>) -> CommandResult<Vec<Tag>> {
+pub async fn remove_all_tags(state: AppState<'_>) -> CommandResult<Vec<Tag>> {
     use schema::tags::dsl as tag_dsl;
 
     let mut conn = state.pool.get()?;
