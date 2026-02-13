@@ -1,4 +1,5 @@
 use super::prelude::*;
+use crate::utils::db::normalize_optional_string;
 use crate::APP_SETTINGS_ID;
 use diesel::{
     dsl::{exists, select},
@@ -9,13 +10,17 @@ use diesel::{
 #[diesel(table_name = schema::visual_novels)]
 struct VisualNovelChangeset {
     pub title: Option<String>,
+    #[diesel(treat_none_as_null = true)]
     pub description: Option<String>,
+    #[diesel(treat_none_as_null = true)]
     pub cover_path: Option<String>,
     pub playtime: Option<i64>,
     pub status: Option<VisualNovelStatus>,
     pub is_favorite: Option<bool>,
+    #[diesel(treat_none_as_null = true)]
     pub notes: Option<String>,
     pub executable_path: Option<String>,
+    #[diesel(treat_none_as_null = true)]
     pub launch_options: Option<String>,
 }
 
@@ -35,14 +40,14 @@ pub async fn update_visual_novel(
 
     let vn_changeset = VisualNovelChangeset {
         title: payload.title.map(|s| s.trim().into()),
-        description: payload.description.map(|s| s.trim().into()),
-        cover_path: payload.cover_path.map(|s| s.trim().into()),
+        description: normalize_optional_string(payload.description),
+        cover_path: normalize_optional_string(payload.cover_path),
         playtime: payload.playtime,
         status: payload.status,
         is_favorite: payload.is_favorite,
-        notes: payload.notes.map(|s| s.trim().into()),
+        notes: normalize_optional_string(payload.notes),
         executable_path: payload.executable_path.map(|s| s.trim().into()),
-        launch_options: payload.launch_options.map(|s| s.trim().into()),
+        launch_options: normalize_optional_string(payload.launch_options),
     };
 
     let vn_entity = update(vn_dsl::visual_novels.find(&id))
@@ -117,9 +122,12 @@ pub async fn update_tag(
 #[derive(Debug, Clone, Serialize, AsChangeset)]
 #[diesel(table_name = schema::settings)]
 struct SettingChangeset {
+    #[diesel(treat_none_as_null = true)]
     pub library_path: Option<String>,
     pub use_locale_emulator: Option<bool>,
+    #[diesel(treat_none_as_null = true)]
     pub locale_emulator_executable_path: Option<String>,
+    #[diesel(treat_none_as_null = true)]
     pub locale_emulator_launch_options: Option<String>,
 }
 
@@ -135,14 +143,14 @@ pub async fn update_settings(
     let mut conn = state.pool.get()?;
 
     let setting_changeset = SettingChangeset {
-        library_path: payload.library_path.map(|s| s.trim().into()),
+        library_path: normalize_optional_string(payload.library_path),
         use_locale_emulator: payload.use_locale_emulator,
-        locale_emulator_executable_path: payload
-            .locale_emulator_executable_path
-            .map(|s| s.trim().into()),
-        locale_emulator_launch_options: payload
-            .locale_emulator_launch_options
-            .map(|s| s.trim().into()),
+        locale_emulator_executable_path: normalize_optional_string(
+            payload.locale_emulator_executable_path,
+        ),
+        locale_emulator_launch_options: normalize_optional_string(
+            payload.locale_emulator_launch_options,
+        ),
     };
 
     let setting_entity = update(setting_dsl::settings.find(APP_SETTINGS_ID))
