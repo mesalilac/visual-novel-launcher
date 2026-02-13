@@ -212,6 +212,7 @@ export const SettingsModal = () => {
                         <div class='flex-row justify-between'>
                             <span>Remove All Visual Novels</span>
                             <button
+                                class='button-danger'
                                 onClick={removeAllVisualNovels}
                                 type='button'
                             >
@@ -220,7 +221,11 @@ export const SettingsModal = () => {
                         </div>
                         <div class='flex-row justify-between'>
                             <span>Remove All Tags</span>
-                            <button onClick={removeAllTags} type='button'>
+                            <button
+                                class='button-danger'
+                                onClick={removeAllTags}
+                                type='button'
+                            >
                                 Remove
                             </button>
                         </div>

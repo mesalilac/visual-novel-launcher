@@ -121,6 +121,18 @@ button {
     }
 }
 
+.button-danger {
+    background-color: var(--s-color-background-danger);
+
+    &:hover {
+        background-color: var(--s-color-background-danger-hovered);
+    }
+
+    &:active {
+        background-color: var(--s-color-background-danger-pressed);
+    }
+}
+
 .main-container {
     display: flex;
     flex-direction: column;
