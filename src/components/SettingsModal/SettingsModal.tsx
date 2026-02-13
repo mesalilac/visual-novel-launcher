@@ -3,7 +3,7 @@ import './SettingsModal.css';
 
 import { ModalDismissButton, useModalContext } from '@components';
 import { useGlobalData } from '@store';
-import { open } from '@tauri-apps/plugin-dialog';
+import { ask, open } from '@tauri-apps/plugin-dialog';
 import { createEffect, createSignal, Show } from 'solid-js';
 
 export const SettingsModal = () => {
@@ -94,6 +94,54 @@ export const SettingsModal = () => {
         setIsOpen(false);
     };
 
+    const removeAllVisualNovels = async () => {
+        try {
+            const confirmation = await ask(
+                'Are you sure you want to remove all Visual Novels?',
+                {
+                    title: 'Remove all Visual Novels',
+                    kind: 'warning',
+                },
+            );
+
+            if (!confirmation) return;
+
+            const res = await commands.removeAllVisualNovels();
+
+            if (res.status === 'ok') {
+                globalData.resources.vns.refetch();
+            } else if (res.status === 'error') {
+                console.error(res.error);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const removeAllTags = async () => {
+        try {
+            const confirmation = await ask(
+                'Are you sure you want to remove all Tags?',
+                {
+                    title: 'Remove all Tags',
+                    kind: 'warning',
+                },
+            );
+
+            if (!confirmation) return;
+
+            const res = await commands.removeAllTags();
+
+            if (res.status === 'ok') {
+                globalData.resources.vns.refetch();
+            } else if (res.status === 'error') {
+                console.error(res.error);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return (
         <div class='flex-column height-100'>
             <h2>Settings</h2>
@@ -160,6 +208,21 @@ export const SettingsModal = () => {
                                 type='text'
                                 value={localeEmulatorLaunchOptions() ?? ''}
                             />
+                        </div>
+                        <div class='flex-row justify-between'>
+                            <span>Remove All Visual Novels</span>
+                            <button
+                                onClick={removeAllVisualNovels}
+                                type='button'
+                            >
+                                Remove
+                            </button>
+                        </div>
+                        <div class='flex-row justify-between'>
+                            <span>Remove All Tags</span>
+                            <button onClick={removeAllTags} type='button'>
+                                Remove
+                            </button>
                         </div>
                     </div>
                 </Show>
