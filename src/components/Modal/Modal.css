@@ -10,15 +10,38 @@
 }
 
 .modal-body {
+    position: relative;
+
     width: var(--s-size-modal-width);
     height: var(--s-size-modal-height);
     padding: var(--s-size-padding-lg);
-    border: var(--s-size-border-md) solid var(--s-color-border-subtle);
     border-radius: var(--s-size-radius-lg);
 
     background-color: hsl(from var(--s-color-background-surface-1) h s l / 30%);
     background-image: url("/random-noise.svg");
     backdrop-filter: blur(var(--s-size-blur));
+
+    &::before {
+        content: "";
+
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+
+        border: var(--s-size-border-md) solid transparent;
+        border-radius: inherit;
+
+        background: linear-gradient(
+                var(--s-color-background-surface-1),
+                var(--s-color-background-surface-3)
+            )
+            border-box;
+
+        mask:
+            linear-gradient(hsl(0deg 0 0 / 50%)) border-box,
+            linear-gradient(hsl(0deg 0 0 / 50%)) padding-box;
+        mask-composite: subtract;
+    }
 }
 
 .modal-anim-enter-active {
