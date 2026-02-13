@@ -9,9 +9,6 @@ export const MainContent = () => {
 
     return (
         <main>
-            <button onClick={() => vns.refetch()} type='button'>
-                Refresh
-            </button>
             <Switch fallback={<span>Failed to display visual novels</span>}>
                 <Match when={vns.get.state === 'pending'}>
                     <span>loading...</span>

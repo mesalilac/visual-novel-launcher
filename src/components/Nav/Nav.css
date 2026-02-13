@@ -6,3 +6,12 @@
         transform: rotate(20deg);
     }
 }
+
+.refresh-icon {
+    transform: translateZ(0);
+    transition: transform 0.1s ease-out;
+
+    &:hover {
+        transform: rotate(-60deg);
+    }
+}

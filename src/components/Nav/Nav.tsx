@@ -1,6 +1,12 @@
 import './Nav.css';
 
-import { IconAddPlus, IconSettings, Modal, SettingsModal } from '@components';
+import {
+    IconAddPlus,
+    IconArrowReload02,
+    IconSettings,
+    Modal,
+    SettingsModal,
+} from '@components';
 import { useGlobalData } from '@store';
 import { createSignal } from 'solid-js';
 
@@ -14,6 +20,10 @@ export const Nav = () => {
         <nav class='flex-row justify-between'>
             <h2>Visual Novel library ({vns.get()?.length})</h2>
             <div class='flex-row gap-lg'>
+                <IconArrowReload02
+                    class='cursor-pointer user-select-none refresh-icon'
+                    onClick={() => vns.refetch()}
+                />
                 <button class='button-primary' type='button'>
                     <IconAddPlus />
                     Add a Game
