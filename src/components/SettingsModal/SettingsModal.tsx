@@ -39,10 +39,6 @@ export const SettingsModal = () => {
         }
     });
 
-    createEffect(() => {
-        console.log('useLocaleEmulator', useLocaleEmulator());
-    });
-
     const handleOnAction = () => {
         commands
             .updateSettings({
