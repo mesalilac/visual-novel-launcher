@@ -167,7 +167,7 @@ export const SettingsModal = () => {
                             </div>
                         </div>
                         <div class='flex-row'>
-                            <span>use Locale Emulator</span>
+                            <span>Use Locale Emulator</span>
                             <input
                                 checked={useLocaleEmulator() ?? true}
                                 onChange={(e) =>
@@ -177,7 +177,7 @@ export const SettingsModal = () => {
                             />
                         </div>
                         <div class='flex-column'>
-                            <span>locale Emulator Executable Path</span>
+                            <span>Locale Emulator Executable Path</span>
                             <div class='flex-row'>
                                 <input
                                     class='flex-grow'
@@ -199,7 +199,7 @@ export const SettingsModal = () => {
                             </div>
                         </div>
                         <div class='flex-column'>
-                            <span>locale Emulator Launch Options</span>
+                            <span>Locale Emulator Launch Options</span>
                             <input
                                 onChange={(e) =>
                                     setLocaleEmulatorLaunchOptions(
