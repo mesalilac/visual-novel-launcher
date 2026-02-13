@@ -1,3 +1,4 @@
+import { commands } from '@bindings';
 import './Nav.css';
 
 import {
@@ -16,13 +17,27 @@ export const Nav = () => {
 
     const [showSettingsModal, setShowSettingsModal] = createSignal(false);
 
+    const refresh = async () => {
+        try {
+            const res = await commands.utilScanLibrary();
+
+            if (res.status === 'ok') {
+                vns.refetch();
+            } else if (res.status === 'error') {
+                console.error(res.error);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return (
         <nav class='flex-row justify-between'>
             <h2>Visual Novel library ({vns.get()?.length})</h2>
             <div class='flex-row gap-lg'>
                 <IconArrowReload02
                     class='cursor-pointer user-select-none refresh-icon'
-                    onClick={() => vns.refetch()}
+                    onClick={refresh}
                 />
                 <button class='button-primary' type='button'>
                     <IconAddPlus />
