@@ -39,6 +39,10 @@ export const SettingsModal = () => {
         }
     });
 
+    createEffect(() => {
+        console.log('useLocaleEmulator', useLocaleEmulator());
+    });
+
     const handleOnAction = () => {
         commands
             .updateSettings({
@@ -75,13 +79,13 @@ export const SettingsModal = () => {
                                     setLibraryPath(e.target.value.trim())
                                 }
                                 type='text'
-                                value={libraryPath() || ''}
+                                value={libraryPath() ?? ''}
                             />
                         </div>
                         <div class='flex-row'>
                             <span>use Locale Emulator</span>
                             <input
-                                checked={useLocaleEmulator() || true}
+                                checked={useLocaleEmulator() ?? true}
                                 onChange={(e) =>
                                     setUseLocaleEmulator(e.target.checked)
                                 }
@@ -97,7 +101,7 @@ export const SettingsModal = () => {
                                     )
                                 }
                                 type='text'
-                                value={localeEmulatorExecutablePath() || ''}
+                                value={localeEmulatorExecutablePath() ?? ''}
                             />
                         </div>
                         <div class='flex-row justify-between'>
@@ -109,7 +113,7 @@ export const SettingsModal = () => {
                                     )
                                 }
                                 type='text'
-                                value={localeEmulatorLaunchOptions() || ''}
+                                value={localeEmulatorLaunchOptions() ?? ''}
                             />
                         </div>
                     </div>
