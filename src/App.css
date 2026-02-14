@@ -94,6 +94,13 @@ select {
 
     background-color: hsl(from var(--s-color-background-surface-4) h s l / 40%);
     outline: none;
+
+    &:hover {
+        background-color: hsl(
+            from var(--s-color-background-surface-4-hovered) h s l /
+            40%
+        );
+    }
 }
 
 option {
