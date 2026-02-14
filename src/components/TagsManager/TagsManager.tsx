@@ -1,4 +1,4 @@
-import { createEffect, createSignal, For, Show } from 'solid-js';
+import { createEffect, createMemo, createSignal, For, Show } from 'solid-js';
 import { commands, type TagWithVisualNovels } from '@/bindings';
 import {
     IconAddPlus,
@@ -9,7 +9,12 @@ import {
     IconTag,
     IconTrashFull,
 } from '@/components';
-import { sortDirection, tagSortBy } from '@/consts';
+import {
+    type SortDirectionType,
+    sortDirection,
+    type TagSortByType,
+    tagSortBy,
+} from '@/consts';
 import { useGlobalData } from '@/store';
 
 import './TagsManager.css';
@@ -134,33 +139,42 @@ export const TagsManager = () => {
 
     const tagsWithVns = globalData.resources.tags;
 
-    const [filteredTags, setFilteredTags] = createSignal<TagWithVisualNovels[]>(
-        [],
-    );
     const [searchQuery, setSearchQuery] = createSignal('');
 
-    createEffect(() => {
-        if (tagsWithVns.get.state === 'ready') {
-            setFilteredTags(tagsWithVns.get());
-        }
+    const [searchSortBy, setSearchSortBy] =
+        createSignal<TagSortByType>('Relevance');
+    const [searchSortDirection, setSearchSortDirection] =
+        createSignal<SortDirectionType>('Desc');
+
+    const filteredTags = createMemo(() => {
+        const tags = tagsWithVns.get() || [];
+        const query = searchQuery().trim().toLowerCase();
+
+        if (!query) return tags;
+
+        return tags.filter((tag) => tag.name.toLowerCase().includes(query));
     });
 
-    createEffect(() => {
-        if (tagsWithVns.get.state === 'ready') {
-            if (searchQuery()) {
-                setFilteredTags(
-                    tagsWithVns
-                        .get()
-                        .filter((tag) =>
-                            tag.name
-                                .toLowerCase()
-                                .includes(searchQuery().toLowerCase()),
-                        ),
-                );
-            } else {
-                setFilteredTags(tagsWithVns.get());
+    const sortedTags = createMemo(() => {
+        const list = [...(filteredTags() || [])];
+        const sortBy = searchSortBy();
+        const direction = searchSortDirection();
+
+        return list.sort((a, b) => {
+            let result = 0;
+
+            if (sortBy === 'Relevance') {
+                result = a.visualNovels.length - b.visualNovels.length;
+            } else if (sortBy === 'Name') {
+                result = a.name.localeCompare(b.name);
+            } else if (sortBy === 'Date Added') {
+                result =
+                    new Date(a.createdAt).getTime() -
+                    new Date(b.createdAt).getTime();
             }
-        }
+
+            return direction === 'Asc' ? result : -result;
+        });
     });
 
     const refresh = () => {
@@ -207,11 +221,15 @@ export const TagsManager = () => {
                     <span>/</span>
                     <span>{tagsWithVns.get()?.length}</span>
                 </span>
-                <select>
+                <select
+                    onChange={(e) =>
+                        setSearchSortBy(e.target.value as TagSortByType)
+                    }
+                >
                     <For each={tagSortBy}>
                         {(sortBy) => (
                             <option
-                                selected={sortBy === 'Relevance'}
+                                selected={sortBy === searchSortBy()}
                                 value={sortBy}
                             >
                                 {sortBy}
@@ -219,11 +237,17 @@ export const TagsManager = () => {
                         )}
                     </For>
                 </select>
-                <select>
+                <select
+                    onChange={(e) =>
+                        setSearchSortDirection(
+                            e.target.value as SortDirectionType,
+                        )
+                    }
+                >
                     <For each={sortDirection}>
                         {(sortDir) => (
                             <option
-                                selected={sortDir === 'Desc'}
+                                selected={sortDir === searchSortDirection()}
                                 value={sortDir}
                             >
                                 {sortDir}
@@ -247,9 +271,7 @@ export const TagsManager = () => {
                         <IconAddPlus /> {searchQuery()}
                     </button>
                 </Show>
-                <For each={filteredTags()}>
-                    {(tag) => <TagItem tag={tag} />}
-                </For>
+                <For each={sortedTags()}>{(tag) => <TagItem tag={tag} />}</For>
             </div>
         </div>
     );
