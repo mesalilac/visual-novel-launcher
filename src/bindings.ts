@@ -79,7 +79,7 @@ export const commands = {
     },
     async createTag(
         payload: CreateTagRequest,
-    ): Promise<Result<Tag, CommandError>> {
+    ): Promise<Result<TagWithVisualNovels, CommandError>> {
         try {
             return {
                 status: 'ok',

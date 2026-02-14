@@ -73,7 +73,10 @@ pub async fn create_visual_novel(
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn create_tag(state: AppState<'_>, payload: CreateTagRequest) -> CommandResult<Tag> {
+pub async fn create_tag(
+    state: AppState<'_>,
+    payload: CreateTagRequest,
+) -> CommandResult<TagWithVisualNovels> {
     use schema::tags::dsl as tag_dsl;
 
     let mut conn = state.pool.get()?;
@@ -84,18 +87,14 @@ pub async fn create_tag(state: AppState<'_>, payload: CreateTagRequest) -> Comma
         created_at: Timestamp::now(),
     };
 
-    let tag_exists = select(exists(
-        tag_dsl::tags.filter(tag_dsl::name.eq(&new_tag.name)),
-    ))
-    .get_result::<bool>(&mut conn)?;
+    let inserted_tag = insert_into(tag_dsl::tags)
+        .values(&new_tag)
+        .get_result::<TagEntity>(&mut conn)?;
 
-    if !tag_exists {
-        insert_into(tag_dsl::tags)
-            .values(&new_tag)
-            .execute(&mut conn)?;
-    }
-
-    Ok(Tag::from_db(new_tag))
+    Ok(TagWithVisualNovels {
+        tag: Tag::from_db(inserted_tag),
+        visual_novels: Vec::new(),
+    })
 }
 
 // #[tauri::command]
