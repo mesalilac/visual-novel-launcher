@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, For, Show } from 'solid-js';
+import { createMemo, createSignal, For, Show } from 'solid-js';
 import { commands, type TagWithVisualNovels } from '@/bindings';
 import {
     IconAddPlus,
