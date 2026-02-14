@@ -137,7 +137,6 @@ pub fn run() {
         get_visual_novels,
         get_visual_novel_by_id,
         get_tags,
-        get_tags_with_visual_novels,
         get_settings,
         get_play_sessions,
         get_stats,

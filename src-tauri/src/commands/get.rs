@@ -57,24 +57,7 @@ pub async fn get_visual_novel_by_id(state: AppState<'_>, id: String) -> CommandR
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn get_tags(state: AppState<'_>) -> CommandResult<Vec<Tag>> {
-    use schema::tags::dsl as tag_dsl;
-
-    let mut conn = state.pool.get()?;
-
-    let tags = tag_dsl::tags.load::<TagEntity>(&mut conn)?;
-
-    let data = tags.into_iter().map(Tag::from_db).collect();
-
-    Ok(data)
-}
-
-#[tauri::command]
-#[auto_collect_command]
-#[specta::specta]
-pub async fn get_tags_with_visual_novels(
-    state: AppState<'_>,
-) -> CommandResult<Vec<TagWithVisualNovels>> {
+pub async fn get_tags(state: AppState<'_>) -> CommandResult<Vec<TagWithVisualNovels>> {
     use schema::tags::dsl as tag_dsl;
     use schema::visual_novels::dsl as vn_dsl;
 
