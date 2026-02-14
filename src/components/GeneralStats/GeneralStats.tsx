@@ -1,4 +1,4 @@
-import { type Accessor, createEffect, Show } from 'solid-js';
+import { Show } from 'solid-js';
 import { useGlobalData } from '@/store';
 import { toTitleCase } from '@/utils';
 
