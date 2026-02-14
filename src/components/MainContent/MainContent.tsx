@@ -2,6 +2,7 @@ import { useGlobalData } from '@store';
 import { For, Match, Switch } from 'solid-js';
 
 import './MainContent.css';
+import { LoadingDots } from '@components';
 
 export const MainContent = () => {
     const globalData = useGlobalData();
@@ -11,10 +12,10 @@ export const MainContent = () => {
         <main>
             <Switch fallback={<span>Failed to display visual novels</span>}>
                 <Match when={vns.get.state === 'pending'}>
-                    <span>loading...</span>
+                    <span>Loading</span> <LoadingDots />
                 </Match>
                 <Match when={vns.get.state === 'refreshing'}>
-                    <span>Refreshing...</span>
+                    <span>Refreshing</span> <LoadingDots />
                 </Match>
                 <Match when={vns.get.state === 'errored'}>
                     <span>{vns.get.error}</span>

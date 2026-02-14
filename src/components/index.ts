@@ -1,6 +1,7 @@
 export * from './FilterBar/FilterBar';
 export * from './GeneralStats/GeneralStats';
 export * from './icons';
+export * from './LoadingSpinner/LoadingSpinner';
 export * from './MainContent/MainContent';
 export * from './Modal/Modal';
 export * from './Nav/Nav';

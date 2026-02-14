@@ -29,6 +29,7 @@ export * from './Interface/IconExternalLink';
 export * from './Interface/IconFilter';
 export * from './Interface/IconFilterOff';
 export * from './Interface/IconHeart01';
+export * from './Interface/IconLoading';
 export * from './Interface/IconRadioFill';
 export * from './Interface/IconRadioUnchecked';
 export * from './Interface/IconSearchMagnifyingGlass';
