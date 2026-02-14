@@ -261,7 +261,7 @@ export const TagsManager = () => {
                 />
             </div>
             <div class='divider' />
-            <div class='flex-row overflow-auto tags-manager-list'>
+            <div class='flex-row overflow-auto'>
                 <Show when={searchQuery()}>
                     <button
                         class='button-primary'
