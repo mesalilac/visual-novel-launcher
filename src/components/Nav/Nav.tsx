@@ -36,7 +36,7 @@ export const Nav = () => {
             <h2>Visual Novel library ({vns.get()?.length})</h2>
             <div class='flex-row gap-lg'>
                 <IconArrowReload02
-                    class='cursor-pointer user-select-none refresh-icon'
+                    class='icon-clickable refresh-icon'
                     onClick={refresh}
                 />
                 <button class='button-primary' type='button'>
@@ -44,7 +44,7 @@ export const Nav = () => {
                     Add a Game
                 </button>
                 <IconSettings
-                    class='cursor-pointer settings-icon'
+                    class='icon-clickable settings-icon'
                     onClick={() => setShowSettingsModal(true)}
                 />
                 <Modal
