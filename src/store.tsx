@@ -3,7 +3,6 @@ import {
     type GeneralStats,
     type PlaySession,
     type Setting,
-    type Tag,
     type TagWithVisualNovels,
     type VisualNovel,
 } from '@bindings';
