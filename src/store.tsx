@@ -33,8 +33,7 @@ export type GlobalData = {
 
     resources: {
         vns: ManagedResource<VisualNovel[]>;
-        tags: ManagedResource<Tag[]>;
-        tagWithVisualNovels: ManagedResource<TagWithVisualNovels[]>;
+        tags: ManagedResource<TagWithVisualNovels[]>;
         settings: ManagedResource<Setting>;
         playSessions: ManagedResource<PlaySession[]>;
         generalStats: ManagedResource<GeneralStats>;
@@ -57,14 +56,6 @@ const createGlobalData = (): GlobalData => {
         if (res.status === 'ok') return res.data;
         throw res.error;
     });
-
-    const [tagsWithVisualNovels, tagsWithVisualNovelsActions] = createResource(
-        async () => {
-            const res = await commands.getTagsWithVisualNovels();
-            if (res.status === 'ok') return res.data;
-            throw res.error;
-        },
-    );
 
     const [settings, settingsActions] = createResource(async () => {
         const res = await commands.getSettings();
@@ -97,11 +88,6 @@ const createGlobalData = (): GlobalData => {
                 get: tags,
                 refetch: tagsActions.refetch,
                 mutate: tagsActions.mutate,
-            },
-            tagWithVisualNovels: {
-                get: tagsWithVisualNovels,
-                refetch: tagsWithVisualNovelsActions.refetch,
-                mutate: tagsWithVisualNovelsActions.mutate,
             },
             settings: {
                 get: settings,

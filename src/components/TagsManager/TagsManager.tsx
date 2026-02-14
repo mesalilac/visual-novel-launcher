@@ -55,7 +55,7 @@ const TagItem = (props: { tag: TagWithVisualNovels }) => {
             const res = await commands.updateTag(props.tag.id, { name });
 
             if (res.status === 'ok') {
-                globalData.resources.tagWithVisualNovels.mutate((prev) => {
+                globalData.resources.tags.mutate((prev) => {
                     if (!prev) return;
 
                     return prev.map((tag) => {
@@ -75,7 +75,7 @@ const TagItem = (props: { tag: TagWithVisualNovels }) => {
             const res = await commands.removeTagById(props.tag.id);
 
             if (res.status === 'ok') {
-                globalData.resources.tagWithVisualNovels.mutate((prev) => {
+                globalData.resources.tags.mutate((prev) => {
                     if (!prev) return;
 
                     return prev.filter((tag) => tag.id !== props.tag.id);
@@ -131,7 +131,7 @@ const TagItem = (props: { tag: TagWithVisualNovels }) => {
 export const TagsManager = () => {
     const globalData = useGlobalData();
 
-    const tagsWithVns = globalData.resources.tagWithVisualNovels;
+    const tagsWithVns = globalData.resources.tags;
 
     const [filteredTags, setFilteredTags] = createSignal<TagWithVisualNovels[]>(
         [],
@@ -163,7 +163,7 @@ export const TagsManager = () => {
     });
 
     const refresh = () => {
-        globalData.resources.tagWithVisualNovels.refetch();
+        globalData.resources.tags.refetch();
     };
 
     return (

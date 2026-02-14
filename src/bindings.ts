@@ -29,22 +29,9 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async getTags(): Promise<Result<Tag[], CommandError>> {
+    async getTags(): Promise<Result<TagWithVisualNovels[], CommandError>> {
         try {
             return { status: 'ok', data: await TAURI_INVOKE('get_tags') };
-        } catch (e) {
-            if (e instanceof Error) throw e;
-            else return { status: 'error', error: e as any };
-        }
-    },
-    async getTagsWithVisualNovels(): Promise<
-        Result<TagWithVisualNovels[], CommandError>
-    > {
-        try {
-            return {
-                status: 'ok',
-                data: await TAURI_INVOKE('get_tags_with_visual_novels'),
-            };
         } catch (e) {
             if (e instanceof Error) throw e;
             else return { status: 'error', error: e as any };
