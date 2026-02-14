@@ -1,6 +1,5 @@
-import { commands, type TagWithVisualNovels } from '@bindings';
-import './TagsManager.css';
-
+import { createEffect, createSignal, For, Show } from 'solid-js';
+import { commands, type TagWithVisualNovels } from '@/bindings';
 import {
     IconArrowReload02,
     IconCloseMd,
@@ -8,10 +7,11 @@ import {
     IconSave,
     IconTag,
     IconTrashFull,
-} from '@components';
-import { sortDirection, tagSortBy } from '@consts';
-import { useGlobalData } from '@store';
-import { createEffect, createSignal, For, Show } from 'solid-js';
+} from '@/components';
+import { sortDirection, tagSortBy } from '@/consts';
+import { useGlobalData } from '@/store';
+
+import './TagsManager.css';
 
 const TagItem = (props: { tag: TagWithVisualNovels }) => {
     const globalData = useGlobalData();

@@ -1,12 +1,4 @@
 import {
-    commands,
-    type GeneralStats,
-    type PlaySession,
-    type Setting,
-    type TagWithVisualNovels,
-    type VisualNovel,
-} from '@bindings';
-import {
     createContext,
     createResource,
     type JSX,
@@ -15,6 +7,14 @@ import {
     useContext,
 } from 'solid-js';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
+import {
+    commands,
+    type GeneralStats,
+    type PlaySession,
+    type Setting,
+    type TagWithVisualNovels,
+    type VisualNovel,
+} from '@/bindings';
 
 export type ManagedResource<T> = {
     get: Resource<T>;

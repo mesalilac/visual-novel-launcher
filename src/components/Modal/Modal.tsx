@@ -1,5 +1,3 @@
-import './Modal.css';
-
 import type { Accessor, JSX, Setter } from 'solid-js';
 import {
     createContext,
@@ -10,6 +8,8 @@ import {
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import { Transition } from 'solid-transition-group';
+
+import './Modal.css';
 
 type ModalContextData = {
     isOpen: Accessor<boolean>;

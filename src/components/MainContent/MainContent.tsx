@@ -1,8 +1,8 @@
-import { useGlobalData } from '@store';
 import { For, Match, Switch } from 'solid-js';
+import { LoadingDots } from '@/components';
+import { useGlobalData } from '@/store';
 
 import './MainContent.css';
-import { LoadingDots } from '@components';
 
 export const MainContent = () => {
     const globalData = useGlobalData();

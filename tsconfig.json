@@ -20,10 +20,10 @@
         "noFallthroughCasesInSwitch": true,
 
         "paths": {
-            "@store": ["./src/store"],
-            "@bindings": ["./src/bindings"],
-            "@consts": ["./src/consts"],
-            "@components": ["./src/components"]
+            "@/store": ["./src/store"],
+            "@/bindings": ["./src/bindings"],
+            "@/consts": ["./src/consts"],
+            "@/components": ["./src/components"]
         }
     },
     "include": ["src"],

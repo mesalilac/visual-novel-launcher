@@ -1,15 +1,15 @@
-import { commands } from '@bindings';
-import './SettingsModal.css';
-
+import { ask, open } from '@tauri-apps/plugin-dialog';
+import { createEffect, createSignal, Show } from 'solid-js';
+import { commands } from '@/bindings';
 import {
     GeneralStats,
     ModalDismissButton,
     TagsManager,
     useModalContext,
-} from '@components';
-import { useGlobalData } from '@store';
-import { ask, open } from '@tauri-apps/plugin-dialog';
-import { createEffect, createSignal, Show } from 'solid-js';
+} from '@/components';
+import { useGlobalData } from '@/store';
+
+import './SettingsModal.css';
 
 export const SettingsModal = () => {
     const { setIsOpen } = useModalContext();

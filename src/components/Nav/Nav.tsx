@@ -1,15 +1,15 @@
-import { commands } from '@bindings';
-import './Nav.css';
-
+import { createSignal } from 'solid-js';
+import { commands } from '@/bindings';
 import {
     IconAddPlus,
     IconArrowReload02,
     IconSettings,
     Modal,
     SettingsModal,
-} from '@components';
-import { useGlobalData } from '@store';
-import { createSignal } from 'solid-js';
+} from '@/components';
+import { useGlobalData } from '@/store';
+
+import './Nav.css';
 
 export const Nav = () => {
     const globalData = useGlobalData();

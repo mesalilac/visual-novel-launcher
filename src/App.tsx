@@ -1,8 +1,8 @@
+import { FilterBar, MainContent, Nav } from '@/components';
+import { GlobalDataProvider } from '@/store';
+
 import './App.css';
 import './utils.css';
-
-import { FilterBar, MainContent, Nav } from '@components';
-import { GlobalDataProvider } from '@store';
 
 function App() {
     return (
