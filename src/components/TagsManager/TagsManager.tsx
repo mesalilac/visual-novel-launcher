@@ -206,7 +206,7 @@ export const TagsManager = () => {
                 />
             </div>
             <div class='divider' />
-            <div class='flex-row'>
+            <div class='flex-row overflow-auto tags-manager-list'>
                 <For each={filteredTags()}>
                     {(tag) => <TagItem tag={tag} />}
                 </For>

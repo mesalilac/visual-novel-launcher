@@ -19,3 +19,8 @@
 .tag-save-icon {
     color: var(--s-color-background-info);
 }
+
+.tags-manager-list {
+    min-height: 40rem;
+    max-height: 40rem;
+}
