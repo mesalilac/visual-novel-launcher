@@ -20,6 +20,10 @@
     color: var(--s-color-background-info);
 }
 
+.tag-count-no-results {
+    color: var(--s-color-foreground-tertiary);
+}
+
 .tags-manager-list {
     max-height: 40rem;
 }

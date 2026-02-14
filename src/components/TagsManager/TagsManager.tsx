@@ -176,6 +176,17 @@ export const TagsManager = () => {
                     type='text'
                     value={searchQuery()}
                 />
+                <span class='flex-row gap-sm surface-3 padding-sm radius-md'>
+                    <span
+                        classList={{
+                            'tag-count-no-results': filteredTags().length === 0,
+                        }}
+                    >
+                        {filteredTags().length}
+                    </span>
+                    <span>/</span>
+                    <span>{tagsWithVns.get()?.length}</span>
+                </span>
                 <select>
                     <For each={tagSortBy}>
                         {(sortBy) => (
