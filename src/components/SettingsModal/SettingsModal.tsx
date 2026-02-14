@@ -1,7 +1,7 @@
 import { commands } from '@bindings';
 import './SettingsModal.css';
 
-import { ModalDismissButton, useModalContext } from '@components';
+import { ModalDismissButton, TagsManager, useModalContext } from '@components';
 import { useGlobalData } from '@store';
 import { ask, open } from '@tauri-apps/plugin-dialog';
 import { createEffect, createSignal, Show } from 'solid-js';
@@ -146,9 +146,9 @@ export const SettingsModal = () => {
         <div class='flex-column height-100'>
             <h2>Settings</h2>
             <div class='divider margin-bottom-lg' />
-            <div class='flex-column'>
+            <div class='flex-column overflow-auto'>
                 <Show when={settings.get.state === 'ready'}>
-                    <div class='flex-column gap-lg'>
+                    <div class='flex-column gap-lg margin-bottom-lg'>
                         <div class='flex-column'>
                             <span>Library Path</span>
                             <div class='flex-row'>
@@ -230,6 +230,10 @@ export const SettingsModal = () => {
                             >
                                 Remove
                             </button>
+                        </div>
+                        <div class='flex-column'>
+                            <span>Manage Tags</span>
+                            <TagsManager />
                         </div>
                     </div>
                 </Show>
