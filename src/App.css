@@ -115,7 +115,7 @@ button {
     align-items: center;
     justify-content: center;
 
-    padding: var(--s-size-padding-xxs) var(--s-size-padding-md);
+    padding: var(--s-size-padding-sm) var(--s-size-padding-md);
     border: none;
     border-radius: var(--s-size-radius-md);
 
