@@ -97,7 +97,7 @@ const TagItem = (props: { tag: TagWithVisualNovels }) => {
                 >
                     {props.tag.name}
                 </span>
-                <div class='surface-4 padding-sides-sm radius-round'>
+                <div class='user-select-none surface-4 padding-sides-sm radius-round'>
                     {props.tag.visualNovels.length}
                 </div>
             </div>
