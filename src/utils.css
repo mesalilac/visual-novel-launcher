@@ -735,6 +735,11 @@
     border: var(--s-size-border-lg) solid var(--s-color-border-default);
 }
 
+.icon-clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
 .icon-xs {
     width: var(--s-size-icon-xs);
     height: var(--s-size-icon-xs);
