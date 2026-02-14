@@ -4,8 +4,9 @@ import argparse
 from io import StringIO
 from pathlib import Path
 import os
+import sys
 
-COMPONENTS_DIR_PATH = Path(__file__).parent / "src/components"
+COMPONENTS_DIR_PATH = Path("src/components")
 INDEX_FILE = COMPONENTS_DIR_PATH / "index.ts"
 
 
@@ -33,6 +34,11 @@ def build_tsx(comp_name: str) -> str:
 
 
 def main():
+
+    if not COMPONENTS_DIR_PATH.exists():
+        print(f"[ERROR]: Components directory not found at '{COMPONENTS_DIR_PATH}'")
+        sys.exit(1)
+
     parser = argparse.ArgumentParser()
     parser.add_argument("component_name", type=str, help="Component name")
     parser.add_argument(
