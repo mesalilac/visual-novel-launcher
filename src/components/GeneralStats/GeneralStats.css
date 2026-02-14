@@ -1,0 +1,67 @@
+.status-fg {
+    color: var(--s-color-foreground-default);
+
+    &.playing {
+        color: var(--s-color-status-playing);
+    }
+
+    &.finished {
+        color: var(--s-color-status-finished);
+    }
+
+    &.dropped {
+        color: var(--s-color-status-dropped);
+    }
+
+    &.backlog {
+        color: var(--s-color-status-backlog);
+    }
+
+    &.unplayed {
+        color: var(--s-color-background-category-3);
+    }
+}
+
+.status-bg {
+    height: 0.6rem;
+
+    &.circle {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+    }
+
+    &.playing {
+        background-color: var(--s-color-status-playing);
+    }
+
+    &.finished {
+        background-color: var(--s-color-status-finished);
+    }
+
+    &.dropped {
+        background-color: var(--s-color-status-dropped);
+    }
+
+    &.backlog {
+        background-color: var(--s-color-status-backlog);
+    }
+
+    &.unplayed {
+        background-color: var(--s-color-background-category-3);
+    }
+}
+
+.status-chart {
+    & > :first-child {
+        border-radius: var(--s-size-radius-lg) 0 0 var(--s-size-radius-lg);
+    }
+
+    & > :last-child {
+        border-radius: 0 var(--s-size-radius-lg) var(--s-size-radius-lg) 0;
+    }
+}
+
+.stats-description {
+    color: var(--s-color-foreground-tertiary);
+}
