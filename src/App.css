@@ -83,6 +83,29 @@ textarea::placeholder {
     color: var(--s-color-foreground-quaternary);
 }
 
+select {
+    cursor: pointer;
+
+    padding: var(--s-size-padding-sm) var(--s-size-padding-md);
+    border: var(--s-size-border-sm) solid var(--s-color-border-subtle);
+    border-radius: var(--s-size-radius-md);
+
+    color: var(--s-color-foreground-default);
+
+    background-color: hsl(from var(--s-color-background-surface-4) h s l / 40%);
+    outline: none;
+}
+
+option {
+    color: var(--s-color-foreground-default);
+    background-color: var(--s-color-background-surface-4);
+
+    &:checked {
+        color: var(--s-color-foreground-default);
+        background-color: var(--s-color-background-brand);
+    }
+}
+
 button {
     cursor: pointer;
     user-select: none;
