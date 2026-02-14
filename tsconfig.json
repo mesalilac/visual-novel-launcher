@@ -22,6 +22,7 @@
         "paths": {
             "@/store": ["./src/store"],
             "@/bindings": ["./src/bindings"],
+            "@/utils": ["./src/utils"],
             "@/consts": ["./src/consts"],
             "@/components": ["./src/components"]
         }
