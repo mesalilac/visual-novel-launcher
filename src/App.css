@@ -59,28 +59,25 @@ textarea {
 
     background-color: hsl(from var(--s-color-background-surface-4) h s l / 40%);
     outline: none;
-}
 
-input:hover,
-textarea:hover {
-    background-color: hsl(
-        from var(--s-color-background-surface-4-hovered) h s l /
-        40%
-    );
-}
+    &::placeholder {
+        color: var(--s-color-foreground-quaternary);
+    }
 
-input:focus,
-textarea:focus {
-    border-color: var(--s-color-border-default);
-    background-color: hsl(
-        from var(--s-color-background-surface-4-pressed) h s l /
-        40%
-    );
-}
+    &:hover {
+        background-color: hsl(
+            from var(--s-color-background-surface-4-hovered) h s l /
+            40%
+        );
+    }
 
-input::placeholder,
-textarea::placeholder {
-    color: var(--s-color-foreground-quaternary);
+    &:focus {
+        border-color: var(--s-color-border-default);
+        background-color: hsl(
+            from var(--s-color-background-surface-4-pressed) h s l /
+            40%
+        );
+    }
 }
 
 select {
