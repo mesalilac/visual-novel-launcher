@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+
+import argparse
+from io import StringIO
+from pathlib import Path
+import os
+
+COMPONENTS_DIR_PATH = Path(__file__).parent / "src/components"
+INDEX_FILE = COMPONENTS_DIR_PATH / "index.ts"
+
+
+def toPascalCase(s: str) -> str:
+    s = s.strip().lower().replace("-", " ").replace("_", " ")
+
+    return "".join(word.capitalize() for word in s.split())
+
+
+def build_tsx(comp_name: str) -> str:
+    indent = " " * 4
+
+    buffer = StringIO()
+
+    buffer.write(f"import './{comp_name}.css';\n")
+    buffer.write("\n")
+    buffer.write(f"export const {comp_name} = () => {{\n")
+    buffer.write(indent)
+    buffer.write(f"return <>{comp_name} component</>;\n")
+    buffer.write("};\n")
+
+    content = buffer.getvalue()
+    buffer.close()
+    return content
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("component_name", type=str, help="Component name")
+    parser.add_argument(
+        "--write", "-w", action="store_true", help="Write component to file"
+    )
+    args = parser.parse_args()
+    component_name: str = toPascalCase(args.component_name)
+    write_to_fs: bool = args.write
+
+    tsx = build_tsx(component_name)
+
+    if not write_to_fs:
+        print(tsx)
+        return
+
+    component_path = COMPONENTS_DIR_PATH / component_name
+
+    if component_path.exists():
+        print(f"[ERROR]: Component already exists '{component_path}'")
+        return
+
+    os.makedirs(component_path)
+
+    css_file = component_path / f"{component_name}.css"
+    css_file.write_text("")
+
+    tsx_file = component_path / f"{component_name}.tsx"
+    tsx_file.write_text(tsx)
+
+    with open(INDEX_FILE, "a", encoding="utf-8") as f:
+        f.write(f"export * from './{component_name}/{component_name}';\n")
+
+    print(f"[INFO]: Component created '{component_path}'")
+
+
+if __name__ == "__main__":
+    main()
