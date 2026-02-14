@@ -1,7 +1,12 @@
 import { commands } from '@bindings';
 import './SettingsModal.css';
 
-import { ModalDismissButton, TagsManager, useModalContext } from '@components';
+import {
+    GeneralStats,
+    ModalDismissButton,
+    TagsManager,
+    useModalContext,
+} from '@components';
 import { useGlobalData } from '@store';
 import { ask, open } from '@tauri-apps/plugin-dialog';
 import { createEffect, createSignal, Show } from 'solid-js';
@@ -234,6 +239,10 @@ export const SettingsModal = () => {
                         <div class='flex-column'>
                             <span>Manage Tags</span>
                             <TagsManager />
+                        </div>
+                        <div>
+                            <span>General Stats</span>
+                            <GeneralStats />
                         </div>
                     </div>
                 </Show>
