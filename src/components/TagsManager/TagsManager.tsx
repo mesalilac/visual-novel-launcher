@@ -1,6 +1,7 @@
 import { createEffect, createSignal, For, Show } from 'solid-js';
 import { commands, type TagWithVisualNovels } from '@/bindings';
 import {
+    IconAddPlus,
     IconArrowReload02,
     IconCloseMd,
     IconEditPencilLine01,
@@ -166,6 +167,25 @@ export const TagsManager = () => {
         globalData.resources.tags.refetch();
     };
 
+    const addNewTag = async () => {
+        const name = searchQuery().trim();
+
+        if (!name) return;
+
+        try {
+            const res = await commands.createTag({ name });
+
+            if (res.status === 'ok') {
+                globalData.resources.tags.mutate((prev) => {
+                    if (!prev) return;
+                    return [...prev, res.data];
+                });
+            } else if (res.status === 'error') console.error(res.error);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     return (
         <div class='flex-column surface-2 padding-sm radius-lg'>
             <div class='flex-row'>
@@ -218,6 +238,15 @@ export const TagsManager = () => {
             </div>
             <div class='divider' />
             <div class='flex-row overflow-auto tags-manager-list'>
+                <Show when={searchQuery()}>
+                    <button
+                        class='button-primary'
+                        onClick={addNewTag}
+                        type='button'
+                    >
+                        <IconAddPlus /> {searchQuery()}
+                    </button>
+                </Show>
                 <For each={filteredTags()}>
                     {(tag) => <TagItem tag={tag} />}
                 </For>
