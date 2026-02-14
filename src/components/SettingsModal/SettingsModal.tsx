@@ -236,13 +236,13 @@ export const SettingsModal = () => {
                                 Remove
                             </button>
                         </div>
-                        <div class='flex-column'>
-                            <span>Manage Tags</span>
-                            <TagsManager />
-                        </div>
                         <div>
                             <span>General Stats</span>
                             <GeneralStats />
+                        </div>
+                        <div class='flex-column'>
+                            <span>Manage Tags</span>
+                            <TagsManager />
                         </div>
                     </div>
                 </Show>
