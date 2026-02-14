@@ -1,4 +1,4 @@
-export const tagSortBy = ['Relevance', 'Name', 'VnCount', 'CreatedAt'] as const;
+export const tagSortBy = ['Relevance', 'Name', 'Date Added'] as const;
 
 export type TagSortByType = (typeof tagSortBy)[number];
 
