@@ -1,5 +1,5 @@
-import './Visualnovel.css';
+import './VisualNovel.css';
 
-export const Visualnovel = () => {
-    return <>Visualnovel component</>;
+export const VisualNovel = () => {
+    return <>VisualNovel component</>;
 };
