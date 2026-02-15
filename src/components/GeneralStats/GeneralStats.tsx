@@ -149,7 +149,9 @@ export const GeneralStats = () => {
                                 <StatsBlock
                                     description='recent activity'
                                     title='last played'
-                                    value={stats.lastPlayedAt}
+                                    value={new Date(
+                                        stats.lastPlayedAt || 0,
+                                    ).toLocaleString()}
                                 />
                             </div>
                             <div class='flex-column surface-3 padding-sm radius-lg border-xs'>
