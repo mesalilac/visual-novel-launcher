@@ -4,14 +4,18 @@
 
 import type { JSX } from 'solid-js';
 
+interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+    size?: string;
+}
+
 /** Menu */
-export const IconCloseMd = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
+export const IconCloseMd = (props: IconProps) => {
     return (
         <svg
             role='img'
             aria-label='Close Md'
-            width='24'
-            height='24'
+            width={props.size || '1em'}
+            height={props.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
             {...props}

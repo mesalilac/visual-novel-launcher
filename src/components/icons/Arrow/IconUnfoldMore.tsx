@@ -4,14 +4,18 @@
 
 import type { JSX } from 'solid-js';
 
+interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+    size?: string;
+}
+
 /** Arrow */
-export const IconUnfoldMore = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
+export const IconUnfoldMore = (props: IconProps) => {
     return (
         <svg
             role='img'
             aria-label='Unfold More'
-            width='24'
-            height='24'
+            width={props.size || '1em'}
+            height={props.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
             {...props}

@@ -4,14 +4,18 @@
 
 import type { JSX } from 'solid-js';
 
+interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+    size?: string;
+}
+
 /** Interface */
-export const IconSlider03 = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
+export const IconSlider03 = (props: IconProps) => {
     return (
         <svg
             role='img'
             aria-label='Slider03'
-            width='24'
-            height='24'
+            width={props.size || '1em'}
+            height={props.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
             {...props}

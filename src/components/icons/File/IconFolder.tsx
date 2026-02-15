@@ -4,14 +4,18 @@
 
 import type { JSX } from 'solid-js';
 
+interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+    size?: string;
+}
+
 /** File */
-export const IconFolder = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
+export const IconFolder = (props: IconProps) => {
     return (
         <svg
             role='img'
             aria-label='Folder'
-            width='24'
-            height='24'
+            width={props.size || '1em'}
+            height={props.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
             {...props}
