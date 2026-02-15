@@ -1,12 +1,17 @@
-import random
-from sqlite3 import Cursor
-from time import time
-from pydantic import BaseModel, Field
 import pynanoid
+import random
+import time
+
+from sqlite3 import Cursor
+from pydantic import BaseModel, Field
 
 VISUAL_NOVEL_STATUS: list[str] = ["Backlog", "Playing", "Finished", "Dropped"]
 
-SECONDS_IN_7_DAYS = 7 * 24 * 60 * 60
+MS_IN_7_DAYS = 7 * 24 * 60 * 60 * 1000
+
+
+def timestamp() -> int:
+    return int(time.time() * 1000)
 
 
 class VisualNovel(BaseModel):
@@ -25,7 +30,7 @@ class VisualNovel(BaseModel):
     is_missing: bool = False
     use_locale_emulator: bool = True
     created_at: int = Field(
-        default_factory=lambda: int(time() - random.randint(0, SECONDS_IN_7_DAYS))
+        default_factory=lambda: timestamp() - random.randint(0, MS_IN_7_DAYS)
     )
 
     def insert(self, cursor: Cursor):
@@ -73,7 +78,7 @@ class Tag(BaseModel):
     id: str = Field(default_factory=pynanoid.generate)
     name: str
     created_at: int = Field(
-        default_factory=lambda: int(time() - random.randint(0, SECONDS_IN_7_DAYS))
+        default_factory=lambda: timestamp() - random.randint(0, MS_IN_7_DAYS)
     )
 
     def insert(self, cursor: Cursor):

@@ -4,7 +4,6 @@ import os
 import sys
 import faker
 import re
-import time
 import shutil
 
 from pprint import pprint
@@ -12,7 +11,7 @@ from pathlib import Path
 from random import randint, choice, sample
 from PIL import Image, ImageDraw
 
-from entities import Tag, VisualNovel, VISUAL_NOVEL_STATUS
+from entities import timestamp, Tag, VisualNovel, VISUAL_NOVEL_STATUS
 
 ROOT_DIR = Path(__file__).parent.parent.parent
 
@@ -20,7 +19,7 @@ DB_PATH = ROOT_DIR / Path("src-tauri/dev.db")
 FAKE_EXE_PATH = Path(__file__).parent / "fake-exe.exe"
 TESTING_LIBRARY_PATH = ROOT_DIR / "testing-library"
 
-SECONDS_IN_3_DAYS = 3 * 24 * 60 * 60
+MS_IN_3_DAYS = 3 * 24 * 60 * 60 * 1000
 
 
 def is_project_root(dir: Path) -> bool:
@@ -111,7 +110,7 @@ def vns(count: int, max_tags: int):
         last_time_played_at: int | None = None
 
         if playtime > 0:
-            last_time_played_at = int(time.time() - randint(0, SECONDS_IN_3_DAYS))
+            last_time_played_at = timestamp() - randint(0, MS_IN_3_DAYS)
 
         vn_path = TESTING_LIBRARY_PATH / title
         vn_cover_path = vn_path / "cover.png"

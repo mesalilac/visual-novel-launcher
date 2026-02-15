@@ -29,7 +29,9 @@ impl Timestamp {
             .duration_since(std::time::UNIX_EPOCH)
             .expect("Failed to get current time");
 
-        Self(timestamp.as_secs() as i64)
+        let ms = timestamp.as_millis() as i64;
+
+        Self(ms)
     }
 }
 
