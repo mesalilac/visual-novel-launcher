@@ -22,8 +22,13 @@ export type ManagedResource<T> = {
     mutate: ResourceActions<T | undefined, unknown>['mutate'];
 };
 
+export type GameState = {
+    id: string;
+    startedAt: number;
+};
+
 export type GlobalStore = {
-    runningGameId: string | null;
+    gameState: GameState | null;
 };
 
 export type GlobalData = {
@@ -41,7 +46,7 @@ export type GlobalData = {
 
 const createGlobalData = (): GlobalData => {
     const [store, setStore] = createStore<GlobalStore>({
-        runningGameId: null,
+        gameState: null,
     });
 
     const [vns, vnsActions] = createResource(async () => {
