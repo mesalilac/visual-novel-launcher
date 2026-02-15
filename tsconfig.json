@@ -24,7 +24,8 @@
             "@/bindings": ["./src/bindings"],
             "@/utils": ["./src/utils"],
             "@/consts": ["./src/consts"],
-            "@/components": ["./src/components"]
+            "@/components": ["./src/components"],
+            "@/assets/*": ["./src/assets/*"]
         }
     },
     "include": ["src"],
