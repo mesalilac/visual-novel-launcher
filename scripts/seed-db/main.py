@@ -86,14 +86,14 @@ def cli():
     "--count",
     "-c",
     required=True,
-    type=click.IntRange(0, 100, clamp=True),
+    type=click.IntRange(0),
     help="Number of visual novels to generate",
 )
 @click.option(
     "--max-tags",
     "-t",
     required=True,
-    type=click.IntRange(0, 30),
+    type=click.IntRange(0),
     help="Max number of tags to attach to each visual novel",
 )
 def vns(count: int, max_tags: int):
@@ -176,7 +176,7 @@ def vns(count: int, max_tags: int):
     "--count",
     "-c",
     required=True,
-    type=click.IntRange(0, 100),
+    type=click.IntRange(0),
     help="Number of tags to generate",
 )
 def tags(count: int):
