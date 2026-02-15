@@ -1,5 +1,6 @@
-import { For, Match, Switch } from 'solid-js';
-import { LoadingDots } from '@/components';
+import { convertFileSrc } from '@tauri-apps/api/core';
+import { For, Match, Show, Switch } from 'solid-js';
+import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
 
 import './MainContent.css';
@@ -32,7 +33,7 @@ export const MainContent = () => {
                             <Match when={vns().length > 0}>
                                 <div class='cards-container'>
                                     <For each={vns()}>
-                                        {(vn) => <div>{vn.title}</div>}
+                                        {(vn) => <VisualNovelCard vn={vn} />}
                                     </For>
                                 </div>
                             </Match>
