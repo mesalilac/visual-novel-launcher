@@ -105,12 +105,18 @@ def vns(count: int, max_tags: int):
     for _ in range(count):
         title = fs_safe(fake.catch_phrase().title())
         description = fake.text(max_nb_chars=200)
+        status = choice(VISUAL_NOVEL_STATUS)
         playtime = randint(0, 12000)
 
         last_time_played_at: int | None = None
 
+        if randint(0, 4) == 0:
+            playtime = 0
+
         if playtime > 0:
             last_time_played_at = timestamp() - randint(0, MS_IN_3_DAYS)
+        else:
+            status = "Backlog"
 
         vn_path = TESTING_LIBRARY_PATH / title
         vn_cover_path = vn_path / "cover.png"
@@ -122,7 +128,7 @@ def vns(count: int, max_tags: int):
             cover_path=str(vn_cover_path),
             last_time_played_at=last_time_played_at,
             playtime=playtime,
-            status=choice(VISUAL_NOVEL_STATUS),
+            status=status,
             dir_path=str(vn_path),
             executable_path=str(game_exe_path),
         )

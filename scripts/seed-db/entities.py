@@ -5,7 +5,7 @@ import time
 from sqlite3 import Cursor
 from pydantic import BaseModel, Field
 
-VISUAL_NOVEL_STATUS: list[str] = ["Backlog", "Playing", "Finished", "Dropped"]
+VISUAL_NOVEL_STATUS: list[str] = ["Playing", "Finished", "Dropped"]
 
 MS_IN_7_DAYS = 7 * 24 * 60 * 60 * 1000
 
