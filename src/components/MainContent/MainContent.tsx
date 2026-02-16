@@ -1,4 +1,4 @@
-import { createMemo, For, Match, Switch } from 'solid-js';
+import { createEffect, createMemo, For, Match, Switch } from 'solid-js';
 import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
 import './MainContent.css';
@@ -61,6 +61,10 @@ export const MainContent = () => {
 
             return direction === 'Asc' ? result : -result;
         });
+    });
+
+    createEffect(() => {
+        globalData.setStore('vnsFilter', 'totalCount', sortedVns().length);
     });
 
     return (

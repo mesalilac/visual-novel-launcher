@@ -31,6 +31,7 @@ export type GameState = {
 export type GlobalStore = {
     gameState: GameState | null;
     vnsFilter: {
+        totalCount: number;
         query: string;
         status: SortByStatusType;
         sortBy: SortByType;
@@ -56,6 +57,7 @@ const createGlobalData = (): GlobalData => {
     const [store, setStore] = createStore<GlobalStore>({
         gameState: null,
         vnsFilter: {
+            totalCount: 0,
             query: '',
             status: 'All',
             sortBy: 'Relevance',

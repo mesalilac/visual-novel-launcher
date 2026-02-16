@@ -33,7 +33,9 @@ export const Nav = () => {
 
     return (
         <nav class='flex-row justify-between'>
-            <h2>Visual Novel library ({vns.get()?.length})</h2>
+            <h2>
+                Visual Novel library ({globalData.store.vnsFilter.totalCount})
+            </h2>
             <div class='flex-row gap-lg'>
                 <IconArrowReload02
                     class='icon-clickable refresh-icon'
