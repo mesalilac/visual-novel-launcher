@@ -1,4 +1,3 @@
-export * from './FilterBar/FilterBar';
 export * from './GeneralStats/GeneralStats';
 export * from './icons';
 export * from './LoadingDots/LoadingDots';

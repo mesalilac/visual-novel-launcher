@@ -1,4 +1,4 @@
-import { FilterBar, MainContent, Nav } from '@/components';
+import { MainContent, Nav } from '@/components';
 import { GlobalDataProvider } from '@/store';
 
 import './App.css';
@@ -9,7 +9,6 @@ function App() {
         <GlobalDataProvider>
             <div class='main-container'>
                 <Nav />
-                <FilterBar />
                 <MainContent />
             </div>
         </GlobalDataProvider>
