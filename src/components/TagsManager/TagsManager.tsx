@@ -9,15 +9,13 @@ import {
     IconTag,
     IconTrashFull,
 } from '@/components';
-import {
-    type SortDirectionType,
-    sortDirection,
-    type TagSortByType,
-    tagSortBy,
-} from '@/consts';
+import { type SortDirectionType, sortDirection } from '@/consts';
 import { useGlobalData } from '@/store';
 
 import './TagsManager.css';
+
+const sortByList = ['Relevance', 'Name', 'Date Added'] as const;
+type SortByType = (typeof sortByList)[number];
 
 const TagItem = (props: { tag: TagWithVisualNovels }) => {
     const globalData = useGlobalData();
@@ -142,7 +140,7 @@ export const TagsManager = () => {
     const [searchQuery, setSearchQuery] = createSignal('');
 
     const [searchSortBy, setSearchSortBy] =
-        createSignal<TagSortByType>('Relevance');
+        createSignal<SortByType>('Relevance');
     const [searchSortDirection, setSearchSortDirection] =
         createSignal<SortDirectionType>('Desc');
 
@@ -223,10 +221,10 @@ export const TagsManager = () => {
                 </span>
                 <select
                     onChange={(e) =>
-                        setSearchSortBy(e.target.value as TagSortByType)
+                        setSearchSortBy(e.target.value as SortByType)
                     }
                 >
-                    <For each={tagSortBy}>
+                    <For each={sortByList}>
                         {(sortBy) => (
                             <option
                                 selected={sortBy === searchSortBy()}
