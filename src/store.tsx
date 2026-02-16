@@ -15,6 +15,7 @@ import {
     type TagWithVisualNovels,
     type VisualNovel,
 } from '@/bindings';
+import type { SortByStatusType, SortByType, SortDirectionType } from '@/consts';
 
 export type ManagedResource<T> = {
     get: Resource<T>;
@@ -29,6 +30,13 @@ export type GameState = {
 
 export type GlobalStore = {
     gameState: GameState | null;
+    vnsFilter: {
+        query: string;
+        status: SortByStatusType;
+        sortBy: SortByType;
+        sortDirection: SortDirectionType;
+        tagIds: string[];
+    };
 };
 
 export type GlobalData = {
@@ -47,6 +55,13 @@ export type GlobalData = {
 const createGlobalData = (): GlobalData => {
     const [store, setStore] = createStore<GlobalStore>({
         gameState: null,
+        vnsFilter: {
+            query: '',
+            status: 'All',
+            sortBy: 'Relevance',
+            sortDirection: 'Desc',
+            tagIds: [],
+        },
     });
 
     const [vns, vnsActions] = createResource(async () => {

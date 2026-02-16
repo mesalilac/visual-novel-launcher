@@ -2,46 +2,25 @@ import { createMemo, For, Match, Switch } from 'solid-js';
 import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
 import './MainContent.css';
-import { createStore } from 'solid-js/store';
-import { type SortDirectionType, sortDirectionList } from '@/consts';
-
-const sortByStatusList = [
-    'All',
-    'Playing',
-    'Finished',
-    'Dropped',
-    'Backlog',
-    'Unplayed',
-] as const;
-type SortByStatusType = (typeof sortByStatusList)[number];
-
-const sortByList = ['Relevance', 'Name', 'Date Added'] as const;
-type SortByType = (typeof sortByList)[number];
+import {
+    type SortByStatusType,
+    type SortByType,
+    type SortDirectionType,
+    sortByList,
+    sortByStatusList,
+    sortDirectionList,
+} from '@/consts';
 
 export const MainContent = () => {
     const globalData = useGlobalData();
     const vns = globalData.resources.vns;
 
-    const [filterStore, setFilterStore] = createStore<{
-        query: string;
-        status: SortByStatusType;
-        sortBy: SortByType;
-        sortDirection: SortDirectionType;
-        tagIds: string[];
-    }>({
-        query: '',
-        status: 'All',
-        sortBy: 'Relevance',
-        sortDirection: 'Desc',
-        tagIds: [],
-    });
-
     const sortedVns = createMemo(() => {
         const list = [...(vns.get() || [])];
-        const query = filterStore.query.trim().toLowerCase();
-        const statusFilter = filterStore.status;
-        const sortBy = filterStore.sortBy;
-        const direction = filterStore.sortDirection;
+        const query = globalData.store.vnsFilter.query.trim().toLowerCase();
+        const statusFilter = globalData.store.vnsFilter.status;
+        const sortBy = globalData.store.vnsFilter.sortBy;
+        const direction = globalData.store.vnsFilter.sortDirection;
 
         const filtered = list.filter((vn) => {
             const matchesQuery =
@@ -55,9 +34,9 @@ export const MainContent = () => {
             }
 
             let matchesTags = true;
-            if (filterStore.tagIds.length > 0) {
+            if (globalData.store.vnsFilter.tagIds.length > 0) {
                 matchesTags = vn.tags.some((tag) =>
-                    filterStore.tagIds.includes(tag.id),
+                    globalData.store.vnsFilter.tagIds.includes(tag.id),
                 );
             }
 
@@ -88,10 +67,16 @@ export const MainContent = () => {
         <>
             <div class='flex-row justify-between'>
                 <input
-                    onInput={(e) => setFilterStore('query', e.target.value)}
+                    onInput={(e) =>
+                        globalData.setStore(
+                            'vnsFilter',
+                            'query',
+                            e.target.value,
+                        )
+                    }
                     placeholder='Search'
                     type='search'
-                    value={filterStore.query}
+                    value={globalData.store.vnsFilter.query}
                 />
                 <div class='flex-row'>
                     <select
@@ -101,13 +86,13 @@ export const MainContent = () => {
                                 e.currentTarget.selectedOptions,
                             ).map((x) => x.value);
 
-                            setFilterStore('tagIds', ids);
+                            globalData.setStore('vnsFilter', 'tagIds', ids);
                         }}
                     >
                         <For each={globalData.resources.tags.get()}>
                             {(tag) => (
                                 <option
-                                    selected={filterStore.tagIds.includes(
+                                    selected={globalData.store.vnsFilter.tagIds.includes(
                                         tag.id,
                                     )}
                                     value={tag.id}
@@ -119,7 +104,8 @@ export const MainContent = () => {
                     </select>
                     <select
                         onChange={(e) =>
-                            setFilterStore(
+                            globalData.setStore(
+                                'vnsFilter',
                                 'status',
                                 e.target.value as SortByStatusType,
                             )
@@ -128,7 +114,10 @@ export const MainContent = () => {
                         <For each={sortByStatusList}>
                             {(status) => (
                                 <option
-                                    selected={status === filterStore.status}
+                                    selected={
+                                        status ===
+                                        globalData.store.vnsFilter.status
+                                    }
                                     value={status}
                                 >
                                     {status}
@@ -138,7 +127,8 @@ export const MainContent = () => {
                     </select>
                     <select
                         onChange={(e) =>
-                            setFilterStore(
+                            globalData.setStore(
+                                'vnsFilter',
                                 'sortBy',
                                 e.target.value as SortByType,
                             )
@@ -147,7 +137,10 @@ export const MainContent = () => {
                         <For each={sortByList}>
                             {(status) => (
                                 <option
-                                    selected={status === filterStore.sortBy}
+                                    selected={
+                                        status ===
+                                        globalData.store.vnsFilter.sortBy
+                                    }
                                     value={status}
                                 >
                                     {status}
@@ -157,7 +150,8 @@ export const MainContent = () => {
                     </select>
                     <select
                         onChange={(e) =>
-                            setFilterStore(
+                            globalData.setStore(
+                                'vnsFilter',
                                 'sortDirection',
                                 e.target.value as SortDirectionType,
                             )
@@ -167,7 +161,8 @@ export const MainContent = () => {
                             {(option) => (
                                 <option
                                     selected={
-                                        option === filterStore.sortDirection
+                                        option ===
+                                        globalData.store.vnsFilter.sortDirection
                                     }
                                     value={option}
                                 >
@@ -204,8 +199,9 @@ export const MainContent = () => {
                                 <Match
                                     when={
                                         vns().length === 0 &&
-                                        (filterStore.query ||
-                                            filterStore.tagIds.length > 0)
+                                        (globalData.store.vnsFilter.query ||
+                                            globalData.store.vnsFilter.tagIds
+                                                .length > 0)
                                     }
                                 >
                                     <span>No Visual Novels found.</span>
