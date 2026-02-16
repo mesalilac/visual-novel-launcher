@@ -221,11 +221,11 @@ export const commands = {
             else return { status: 'error', error: e as any };
         }
     },
-    async utilOpenFolder(path: string): Promise<Result<null, CommandError>> {
+    async utilOpenPath(path: string): Promise<Result<null, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('util_open_folder', { path }),
+                data: await TAURI_INVOKE('util_open_path', { path }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
