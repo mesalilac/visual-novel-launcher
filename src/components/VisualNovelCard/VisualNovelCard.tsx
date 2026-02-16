@@ -107,6 +107,15 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         }
     };
 
+    const handleStatusClick = () => {
+        if (globalData.store.vnsFilter.status === props.vn.status) {
+            globalData.setStore('vnsFilter', 'status', 'All');
+            return;
+        }
+
+        globalData.setStore('vnsFilter', 'status', props.vn.status);
+    };
+
     return (
         <div
             class='visual-novel-card'
@@ -114,14 +123,16 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 running: props.vn.id === globalData.store.gameState?.id,
             }}
         >
-            <span
+            <button
                 class='visual-novel-card__status'
                 classList={{
                     [props.vn.status.toLowerCase()]: true,
                 }}
+                onClick={handleStatusClick}
+                type='button'
             >
                 {props.vn.status}
-            </span>
+            </button>
             <div class='flex-row icon-clickable visual-novel-card__menu'>
                 <IconMoreVertical size='1.5em' />
             </div>
