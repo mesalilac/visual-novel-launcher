@@ -151,7 +151,7 @@ export const SettingsModal = () => {
         <div class='flex-column height-100'>
             <h2>Settings</h2>
             <div class='divider margin-bottom-lg' />
-            <div class='flex-column overflow-auto'>
+            <div class='flex-column overflow-auto padding-md'>
                 <Show when={settings.get.state === 'ready'}>
                     <div class='flex-column gap-lg margin-bottom-lg'>
                         <div class='flex-column'>
