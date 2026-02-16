@@ -109,7 +109,8 @@
 }
 
 .visual-novel-card__tags {
-    max-height: 4rem;
+    min-height: 2rem;
+    max-height: 2rem;
 }
 
 .visual-novel-card__tag {
