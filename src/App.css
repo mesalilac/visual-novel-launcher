@@ -4,6 +4,21 @@
     margin: 0;
 }
 
+::-webkit-scrollbar {
+    width: 0.5em;
+    height: 1em;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 100vw;
+    background: hsl(from var(--s-color-background-page) h s l / 40%);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100vw;
+    background: var(--s-color-background-surface-4);
+}
+
 /* :root {
 } */
 
