@@ -1,8 +1,11 @@
 [popover] {
     margin: 0;
-    padding: 0;
+    padding: var(--s-size-padding-sm);
     border: 0;
-    background-color: var(--s-color-background-surface-4);
+    border-radius: var(--s-size-radius-lg);
+
+    background-color: var(--s-color-background-surface-1);
+    box-shadow: 0 0 30px 0 rgb(0 0 0 / 30%);
 
     /* &:not(:popover-open) {} */
 
