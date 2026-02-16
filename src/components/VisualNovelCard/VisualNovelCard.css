@@ -1,31 +1,42 @@
-.visual-novel-card__menu {
+.visual-novel-card__menu_trigger {
     position: absolute;
     z-index: 1;
     top: 0.5rem;
     right: 0.5rem;
 
     padding: var(--s-size-padding-xs);
-    border: var(--s-size-border-sm) solid var(--s-color-border-default);
+    border: var(--s-size-border-sm) solid transparent;
     border-radius: var(--s-size-radius-lg);
 
     font-size: var(--s-size-font-3);
 
-    visibility: hidden;
-    background-color: hsl(from var(--s-color-background-surface-1) h s l / 50%);
-    backdrop-filter: blur(var(--s-size-blur));
+    background-color: hsl(from var(--s-color-background-surface-1) h s l / 10%);
 
     &:hover {
         background-color: hsl(
             from var(--s-color-background-surface-1) h s l /
             30%
         );
+        backdrop-filter: blur(var(--s-size-blur));
     }
 
     &:active {
+        border: var(--s-size-border-sm) solid var(--s-color-border-default);
         background-color: hsl(
             from var(--s-color-background-surface-1) h s l /
-            80%
+            50%
         );
+    }
+}
+
+.visual-novel-card__menu {
+    z-index: 1;
+    color: inherit;
+
+    & > button {
+        justify-content: flex-start;
+        text-wrap: nowrap;
+        background: none;
     }
 }
 
@@ -41,10 +52,6 @@
 
     &.running {
         outline: var(--s-size-border-lg) solid var(--s-color-background-info);
-    }
-
-    &:hover .visual-novel-card__menu {
-        visibility: visible;
     }
 }
 

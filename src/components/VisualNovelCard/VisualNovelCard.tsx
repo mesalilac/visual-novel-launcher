@@ -9,15 +9,20 @@ import {
     onCleanup,
     Switch,
 } from 'solid-js';
+import { Portal } from 'solid-js/web';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
 import { commands, type VisualNovel } from '@/bindings';
 import {
     IconCalendar,
     IconClock,
+    IconEditPencilLine01,
+    IconFolderOpen,
     IconMoreVertical,
     IconPause,
     IconPlay,
+    IconTrashFull,
     IconTriangleWarning,
+    Popover,
 } from '@/components';
 import { useGlobalData } from '@/store';
 
@@ -131,6 +136,8 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         }
     };
 
+    const menuTriggerId = `vn-card-menu-${props.vn.id}`;
+
     return (
         <div
             class='visual-novel-card'
@@ -148,9 +155,31 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             >
                 {props.vn.status}
             </button>
-            <div class='flex-row icon-clickable visual-novel-card__menu'>
+            <button
+                class='flex-row visual-novel-card__menu_trigger'
+                id={menuTriggerId}
+                type='button'
+            >
                 <IconMoreVertical size='1.5em' />
-            </div>
+            </button>
+            <Popover
+                closeOnEscape={true}
+                closeOnOutsideInteraction={true}
+                targetPositionArea='bottom center'
+                triggerElement={`#${menuTriggerId}`}
+            >
+                <div class='flex-column visual-novel-card__menu'>
+                    <button type='button'>
+                        <IconFolderOpen /> Open Folder
+                    </button>
+                    <button type='button'>
+                        <IconEditPencilLine01 /> Edit
+                    </button>
+                    <button type='button'>
+                        <IconTrashFull /> Remove from Library
+                    </button>
+                </div>
+            </Popover>
             <img
                 aria-label='Visual Novel Cover'
                 class='visual-novel-card__cover'
