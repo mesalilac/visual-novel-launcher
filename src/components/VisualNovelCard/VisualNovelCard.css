@@ -103,9 +103,17 @@
 }
 
 .visual-novel-card__description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
+    min-height: 3rem;
+
+    font-size: var(--s-size-font-3);
+    line-height: 1.5rem;
     color: var(--s-color-foreground-secondary);
-    text-overflow: ellipsis;
-    text-wrap: nowrap;
 }
 
 .visual-novel-card__tags {
