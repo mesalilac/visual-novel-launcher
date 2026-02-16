@@ -1,7 +1,6 @@
 import { createMemo, For, Match, Switch } from 'solid-js';
 import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
-
 import './MainContent.css';
 import { createStore } from 'solid-js/store';
 import { type SortDirectionType, sortDirectionList } from '@/consts';
@@ -28,11 +27,13 @@ export const MainContent = () => {
         status: SortByStatusType;
         sortBy: SortByType;
         sortDirection: SortDirectionType;
+        tagIds: string[];
     }>({
         query: '',
         status: 'All',
         sortBy: 'Relevance',
         sortDirection: 'Desc',
+        tagIds: [],
     });
 
     const sortedVns = createMemo(() => {
@@ -53,7 +54,14 @@ export const MainContent = () => {
                 matchesStatus = vn.status === statusFilter;
             }
 
-            return matchesQuery && matchesStatus;
+            let matchesTags = true;
+            if (filterStore.tagIds.length > 0) {
+                matchesTags = vn.tags.some((tag) =>
+                    filterStore.tagIds.includes(tag.id),
+                );
+            }
+
+            return matchesQuery && matchesStatus && matchesTags;
         });
 
         return filtered.sort((a, b) => {
@@ -86,6 +94,29 @@ export const MainContent = () => {
                     value={filterStore.query}
                 />
                 <div class='flex-row'>
+                    <select
+                        multiple
+                        onChange={(e) => {
+                            const ids = Array.from(
+                                e.currentTarget.selectedOptions,
+                            ).map((x) => x.value);
+
+                            setFilterStore('tagIds', ids);
+                        }}
+                    >
+                        <For each={globalData.resources.tags.get()}>
+                            {(tag) => (
+                                <option
+                                    selected={filterStore.tagIds.includes(
+                                        tag.id,
+                                    )}
+                                    value={tag.id}
+                                >
+                                    {tag.name} ({tag.visualNovels.length})
+                                </option>
+                            )}
+                        </For>
+                    </select>
                     <select
                         onChange={(e) =>
                             setFilterStore(
@@ -161,23 +192,6 @@ export const MainContent = () => {
                     <Match when={vns.get.state === 'ready' && sortedVns()}>
                         {(vns) => (
                             <Switch>
-                                <Match
-                                    when={
-                                        vns().length === 0 && !filterStore.query
-                                    }
-                                >
-                                    <span>
-                                        No Visual Novels found. Try adding a
-                                        library in settings!
-                                    </span>
-                                </Match>
-                                <Match
-                                    when={
-                                        vns().length === 0 && filterStore.query
-                                    }
-                                >
-                                    <span>No Visual Novels found.</span>
-                                </Match>
                                 <Match when={vns().length > 0}>
                                     <div class='cards-container'>
                                         <For each={vns()}>
@@ -186,6 +200,21 @@ export const MainContent = () => {
                                             )}
                                         </For>
                                     </div>
+                                </Match>
+                                <Match
+                                    when={
+                                        vns().length === 0 &&
+                                        (filterStore.query ||
+                                            filterStore.tagIds.length > 0)
+                                    }
+                                >
+                                    <span>No Visual Novels found.</span>
+                                </Match>
+                                <Match when={vns().length === 0}>
+                                    <span>
+                                        No Visual Novels found. Try adding a
+                                        library in settings!
+                                    </span>
                                 </Match>
                             </Switch>
                         )}
