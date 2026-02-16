@@ -1,5 +1,4 @@
-import { convertFileSrc } from '@tauri-apps/api/core';
-import { For, Match, Show, Switch } from 'solid-js';
+import { For, Match, Switch } from 'solid-js';
 import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
 
