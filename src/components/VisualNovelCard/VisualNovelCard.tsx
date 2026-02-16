@@ -14,6 +14,7 @@ import { commands, type VisualNovel } from '@/bindings';
 import {
     IconCalendar,
     IconClock,
+    IconMoreVertical,
     IconPause,
     IconPlay,
     IconTriangleWarning,
@@ -121,6 +122,9 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             >
                 {props.vn.status}
             </span>
+            <div class='flex-row icon-clickable visual-novel-card__menu'>
+                <IconMoreVertical size='1.5em' />
+            </div>
             <img
                 aria-label='Visual Novel Cover'
                 class='visual-novel-card__cover'
