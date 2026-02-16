@@ -152,6 +152,7 @@ pub fn run() {
         update_settings,
         util_scan_library,
         util_sync_library,
+        util_open_folder,
         util_launch_visual_novel,
         util_close_visual_novel
     ]);

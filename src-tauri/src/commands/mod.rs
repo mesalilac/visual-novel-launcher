@@ -54,6 +54,12 @@ impl From<anyhow::Error> for CommandError {
     }
 }
 
+impl From<tauri_plugin_opener::Error> for CommandError {
+    fn from(error: tauri_plugin_opener::Error) -> Self {
+        CommandError::Io(error.to_string())
+    }
+}
+
 pub type CommandResult<T> = Result<T, CommandError>;
 
 pub mod prelude {

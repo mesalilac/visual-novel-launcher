@@ -68,6 +68,15 @@ pub async fn util_sync_library(state: AppState<'_>) -> CommandResult<Vec<VisualN
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
+pub async fn util_open_folder(state: AppState<'_>, path: String) -> CommandResult<()> {
+    tauri_plugin_opener::open_path(path, None::<&str>)?;
+
+    Ok(())
+}
+
+#[tauri::command]
+#[auto_collect_command]
+#[specta::specta]
 pub async fn util_launch_visual_novel(state: AppState<'_>, id: String) -> CommandResult<()> {
     todo!()
 }
