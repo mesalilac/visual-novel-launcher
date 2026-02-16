@@ -9,7 +9,7 @@ import {
     IconTag,
     IconTrashFull,
 } from '@/components';
-import { type SortDirectionType, sortDirection } from '@/consts';
+import { type SortDirectionType, sortDirectionList } from '@/consts';
 import { useGlobalData } from '@/store';
 
 import './TagsManager.css';
@@ -242,7 +242,7 @@ export const TagsManager = () => {
                         )
                     }
                 >
-                    <For each={sortDirection}>
+                    <For each={sortDirectionList}>
                         {(sortDir) => (
                             <option
                                 selected={sortDir === searchSortDirection()}
