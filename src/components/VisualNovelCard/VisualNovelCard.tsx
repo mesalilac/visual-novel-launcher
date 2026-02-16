@@ -9,7 +9,6 @@ import {
     onCleanup,
     Switch,
 } from 'solid-js';
-import { Portal } from 'solid-js/web';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
 import { commands, type VisualNovel } from '@/bindings';
 import {
@@ -136,6 +135,16 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         }
     };
 
+    const handleOpenFolder = async () => {
+        try {
+            await commands.utilOpenPath(props.vn.dirPath);
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
+    const handleDeleteVn = async () => {};
+
     const menuTriggerId = `vn-card-menu-${props.vn.id}`;
 
     return (
@@ -169,7 +178,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 triggerElement={`#${menuTriggerId}`}
             >
                 <div class='flex-column visual-novel-card__menu'>
-                    <button type='button'>
+                    <button onClick={handleOpenFolder} type='button'>
                         <IconFolderOpen /> Open Folder
                     </button>
                     <button type='button'>
