@@ -345,15 +345,15 @@ export const Popover: ParentComponent<PopoverProps> = (initialProps) => {
                             props.positionVisibility ?? '';
                     });
 
-                    createEffect(() => {
-                        // @ts-expect-error ts(2339)
-                        content.style.positionTryFallbacks =
-                            untrack(() =>
-                                props.positionTryFallbacks!(anchorName).join(
-                                    ',',
-                                ),
-                            ) ?? '';
-                    });
+                    // createEffect(() => {
+                    //     // @ts-expect-error ts(2339)
+                    //     content.style.positionTryFallbacks =
+                    //         untrack(() =>
+                    //             props.positionTryFallbacks!(anchorName).join(
+                    //                 ',',
+                    //             ),
+                    //         ) ?? '';
+                    // });
 
                     createEffect(() => {
                         // @ts-expect-error ts(2339)
