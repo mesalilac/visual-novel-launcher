@@ -2,7 +2,11 @@
     margin: 0;
     padding: 0;
     border: 0;
-    background-color: transparent;
+    background-color: var(--s-color-background-surface-4);
+
+    /* &:not(:popover-open) {} */
+
+    /* &:popover-open {} */
 }
 
 #anchor-element {
