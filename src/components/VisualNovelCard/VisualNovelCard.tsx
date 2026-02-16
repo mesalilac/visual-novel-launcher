@@ -116,6 +116,21 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         globalData.setStore('vnsFilter', 'status', props.vn.status);
     };
 
+    const handleTagClick = (id: string) => {
+        if (globalData.store.vnsFilter.tagIds.includes(id)) {
+            globalData.setStore('vnsFilter', 'tagIds', [
+                ...globalData.store.vnsFilter.tagIds.filter(
+                    (tagId) => tagId !== id,
+                ),
+            ]);
+        } else {
+            globalData.setStore('vnsFilter', 'tagIds', [
+                ...globalData.store.vnsFilter.tagIds,
+                id,
+            ]);
+        }
+    };
+
     return (
         <div
             class='visual-novel-card'
@@ -154,12 +169,22 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 <div class='flex-row overflow-auto visual-novel-card__tags'>
                     <For each={props.vn.tags}>
                         {(tag) => (
-                            <span
+                            <button
                                 class='visual-novel-card__tag'
+                                onClick={() => handleTagClick(tag.id)}
+                                style={{
+                                    outline:
+                                        globalData.store.vnsFilter.tagIds.includes(
+                                            tag.id,
+                                        )
+                                            ? 'var(--s-size-border-md) solid var(--s-color-background-info)'
+                                            : '',
+                                }}
                                 title={tag.name}
+                                type='button'
                             >
                                 {tag.name}
-                            </span>
+                            </button>
                         )}
                     </For>
                 </div>

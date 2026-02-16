@@ -155,6 +155,7 @@
 .visual-novel-card__tags {
     min-height: 2rem;
     max-height: 2rem;
+    padding: var(--s-size-padding-xxs);
 }
 
 .visual-novel-card__tag {
