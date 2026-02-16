@@ -1,4 +1,5 @@
 .visual-novel-card {
+    isolation: isolate;
     position: relative;
 
     overflow: hidden;
