@@ -143,7 +143,33 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         }
     };
 
-    const handleDeleteVn = async () => {};
+    const handleDeleteVn = async () => {
+        const confirmation = await ask(
+            'Are you sure you want to delete this Visual Novel?',
+            {
+                title: 'Delete Visual Novel',
+                kind: 'warning',
+            },
+        );
+
+        if (!confirmation) return;
+
+        try {
+            const res = await commands.removeVisualNovelById(props.vn.id);
+
+            if (res.status === 'ok') {
+                globalData.resources.vns.mutate((prev) => {
+                    if (!prev) return;
+
+                    return prev.filter((vn) => vn.id !== props.vn.id);
+                });
+            } else if (res.status === 'error') {
+                console.error(res.error);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     const menuTriggerId = `vn-card-menu-${props.vn.id}`;
 
@@ -184,7 +210,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     <button type='button'>
                         <IconEditPencilLine01 /> Edit
                     </button>
-                    <button type='button'>
+                    <button onClick={handleDeleteVn} type='button'>
                         <IconTrashFull /> Remove from Library
                     </button>
                 </div>
