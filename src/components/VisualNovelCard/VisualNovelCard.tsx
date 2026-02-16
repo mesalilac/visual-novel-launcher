@@ -156,7 +156,11 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     </div>
                     <div class='flex-row visual-novel-card__icon'>
                         <IconCalendar />
-                        <span>
+                        <span
+                            title={new Date(
+                                props.vn.lastTimePlayedAt || 0,
+                            ).toString()}
+                        >
                             {props.vn.lastTimePlayedAt
                                 ? new Date(
                                       props.vn.lastTimePlayedAt,
