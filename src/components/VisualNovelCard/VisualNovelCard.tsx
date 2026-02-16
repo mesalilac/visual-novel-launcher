@@ -126,6 +126,9 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 class='visual-novel-card__cover'
                 onError={handleImgError}
                 src={imgSrc()}
+                style={{
+                    filter: props.vn.isMissing ? 'grayscale(100%)' : '',
+                }}
             />
             <div class='flex-column visual-novel-card__info'>
                 <h3 class='visual-novel-card__title'>{props.vn.title}</h3>
