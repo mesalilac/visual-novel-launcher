@@ -49,7 +49,7 @@
 }
 
 .visual-novel-card__status {
-    --alpha: 30%;
+    --alpha: 60%;
 
     user-select: none;
 
@@ -68,7 +68,7 @@
 
     &.playing {
         border-color: var(--s-color-status-playing);
-        color: var(--s-color-status-playing);
+        color: color-mix(in hsl, var(--s-color-status-playing), black 40%);
         background-color: hsl(
             from var(--s-color-status-playing) h s l /
             var(--alpha)
@@ -77,7 +77,7 @@
 
     &.finished {
         border-color: var(--s-color-status-finished);
-        color: var(--s-color-status-finished);
+        color: color-mix(in hsl, var(--s-color-status-finished), black 40%);
         background-color: hsl(
             from var(--s-color-status-finished) h s l /
             var(--alpha)
@@ -86,7 +86,7 @@
 
     &.dropped {
         border-color: var(--s-color-status-dropped);
-        color: var(--s-color-status-dropped);
+        color: color-mix(in hsl, var(--s-color-status-dropped), black 40%);
         background-color: hsl(
             from var(--s-color-status-dropped) h s l /
             var(--alpha)
@@ -95,7 +95,7 @@
 
     &.backlog {
         border-color: var(--s-color-status-backlog);
-        color: var(--s-color-status-backlog);
+        color: color-mix(in hsl, var(--s-color-status-backlog), black 40%);
         background-color: hsl(
             from var(--s-color-status-backlog) h s l /
             var(--alpha)
