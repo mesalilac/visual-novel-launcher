@@ -43,6 +43,7 @@ export const MainContent = () => {
                     });
                 });
                 globalData.resources.generalStats.refetch();
+                globalData.resources.playSessions.refetch();
             }
         });
     });
