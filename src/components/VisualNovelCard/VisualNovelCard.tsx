@@ -42,7 +42,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     createEffect(() => {
         if (
             globalData.store.gameState &&
-            globalData.store.gameState.id === props.vn.id
+            globalData.store.gameState.vnId === props.vn.id
         ) {
             const timer = setInterval(() => {
                 let secondsSinceStart =
@@ -75,7 +75,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
 
             if (res.status === 'ok') {
                 globalData.setStore('gameState', {
-                    id: props.vn.id,
+                    vnId: props.vn.id,
                     startedAt: Date.now(),
                 });
             } else if (res.status === 'error') {
@@ -177,7 +177,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         <div
             class='visual-novel-card'
             classList={{
-                running: props.vn.id === globalData.store.gameState?.id,
+                running: props.vn.id === globalData.store.gameState?.vnId,
             }}
         >
             <button
@@ -277,7 +277,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     <Match
                         when={
                             !props.vn.isMissing &&
-                            props.vn.id !== globalData.store.gameState?.id
+                            props.vn.id !== globalData.store.gameState?.vnId
                         }
                     >
                         <button
@@ -292,7 +292,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     <Match
                         when={
                             !props.vn.isMissing &&
-                            props.vn.id === globalData.store.gameState?.id
+                            props.vn.id === globalData.store.gameState?.vnId
                         }
                     >
                         <button
