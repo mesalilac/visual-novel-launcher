@@ -1,3 +1,9 @@
+use std::path::Path;
+use std::process::Command;
+use std::thread;
+
+use diesel::associations::HasTable;
+
 use super::prelude::*;
 use crate::services;
 use crate::APP_SETTINGS_ID;
@@ -77,8 +83,43 @@ pub async fn util_open_path(_state: AppState<'_>, path: String) -> CommandResult
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn util_launch_visual_novel(state: AppState<'_>, id: String) -> CommandResult<()> {
-    todo!()
+pub async fn util_launch_visual_novel(state: AppState<'_>, id: String) -> CommandResult<u32> {
+    let mut conn: diesel::r2d2::PooledConnection<
+        diesel::r2d2::ConnectionManager<SqliteConnection>,
+    > = state.pool.get()?;
+
+    let settings = SettingEntity::table()
+        .find(APP_SETTINGS_ID)
+        .get_result::<SettingEntity>(&mut conn)?;
+
+    let vn = VisualNovelEntity::table()
+        .find(id)
+        .get_result::<VisualNovelEntity>(&mut conn)?;
+
+    let exe_path = Path::new(&vn.executable_path);
+
+    if !exe_path.exists() {
+        return Err(CommandError::LaunchFailure(format!(
+            "Executable does not exist: {}",
+            exe_path.to_string_lossy()
+        )));
+    }
+
+    let mut child = Command::new(&exe_path).spawn()?;
+
+    let pid = child.id();
+
+    thread::spawn(move || {
+        match child.wait() {
+            Ok(status) => println!("Process exited with status: {}", status),
+            Err(e) => println!("Process exited with error: {}", e),
+        };
+
+        // emit event
+        println!("Process exited");
+    });
+
+    Ok(pid)
 }
 
 #[tauri::command]

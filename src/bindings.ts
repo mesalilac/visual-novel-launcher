@@ -234,7 +234,7 @@ export const commands = {
     },
     async utilLaunchVisualNovel(
         id: string,
-    ): Promise<Result<null, CommandError>> {
+    ): Promise<Result<number, CommandError>> {
         try {
             return {
                 status: 'ok',
