@@ -118,7 +118,7 @@
 
     object-fit: cover;
 
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease 0.1s;
 
     &:hover {
         transform: scale(1.1);
