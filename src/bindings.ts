@@ -310,9 +310,9 @@ export type GeneralStats = {
 export type PlaySession = {
     id: string;
     visualNovelId: string;
-    startedTime: number;
-    endedTime: number | null;
-    durationSeconds: number | null;
+    startedTime: Timestamp;
+    endedTime: Timestamp;
+    durationSeconds: number;
 };
 export type Setting = {
     id: number;
