@@ -1,8 +1,11 @@
+use nanoid::nanoid;
 use std::path::Path;
 use std::process::Command;
 use std::thread;
 
 use diesel::associations::HasTable;
+use diesel::dsl::insert_into;
+use diesel::dsl::update;
 use tauri_specta::Event;
 
 use super::prelude::*;
@@ -90,6 +93,9 @@ pub async fn util_launch_visual_novel(
     app_handle: tauri::AppHandle,
     id: String,
 ) -> CommandResult<u32> {
+    use schema::play_sessions;
+    use schema::visual_novels;
+
     let mut conn: diesel::r2d2::PooledConnection<
         diesel::r2d2::ConnectionManager<SqliteConnection>,
     > = state.pool.get()?;
@@ -111,12 +117,42 @@ pub async fn util_launch_visual_novel(
         )));
     }
 
+    // TODO: use locale emulator is it's enabled on vn and in settings
+
     let mut child = Command::new(&exe_path).spawn()?;
 
     let pid = child.id();
 
     thread::spawn(move || {
+        let start_timestamp = Timestamp::now();
+
         let _ = child.wait();
+
+        let end_timestamp = Timestamp::now();
+
+        let duration_seconds = (end_timestamp.0 / 1000) - (start_timestamp.0 / 1000);
+        let new_total_seconds = duration_seconds + vn.playtime;
+
+        if let Ok(_) = update(visual_novels::table.find(&vn.id))
+            .set((
+                visual_novels::playtime.eq(new_total_seconds),
+                visual_novels::last_time_played_at.eq(end_timestamp),
+            ))
+            .execute(&mut conn)
+        {
+            let new_play_session = PlaySessionEntity {
+                id: nanoid!(),
+                visual_novel_id: vn.id,
+                started_time: start_timestamp,
+                ended_time: end_timestamp,
+                duration_seconds: duration_seconds,
+            };
+
+            insert_into(play_sessions::table)
+                .values(new_play_session)
+                .execute(&mut conn)
+                .ok();
+        }
 
         let _ = GameClosed(pid).emit(&app_handle);
     });
