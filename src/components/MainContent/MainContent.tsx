@@ -26,8 +26,23 @@ export const MainContent = () => {
 
     onMount(() => {
         events.gameClosed.listen((e) => {
-            if (globalData.store.gameState?.processId === e.payload) {
+            if (globalData.store.gameState?.processId === e.payload.pid) {
                 globalData.setStore('gameState', null);
+                vns.mutate((prev) => {
+                    if (!prev) return;
+
+                    return prev.map((vn) => {
+                        return vn.id === e.payload.vn_id
+                            ? {
+                                  ...vn,
+                                  playtime: e.payload.playtime,
+                                  lastTimePlayedAt:
+                                      e.payload.last_time_played_at,
+                              }
+                            : vn;
+                    });
+                });
+                globalData.resources.generalStats.refetch();
             }
         });
     });
