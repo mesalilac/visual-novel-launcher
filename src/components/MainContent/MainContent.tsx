@@ -3,7 +3,6 @@ import {
     createMemo,
     For,
     Match,
-    onCleanup,
     onMount,
     Switch,
 } from 'solid-js';
