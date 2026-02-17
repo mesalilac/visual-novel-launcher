@@ -13,8 +13,8 @@
 .modal-body {
     position: relative;
 
-    width: var(--s-size-modal-width);
-    height: var(--s-size-modal-height);
+    width: 95vw;
+    height: 95vh;
     padding: var(--s-size-padding-lg);
     border-radius: var(--s-size-radius-lg);
 
