@@ -69,6 +69,12 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         }
     });
 
+    createEffect(() => {
+        if (globalData.store.gameState == null) {
+            setRunningSince('00:00:00');
+        }
+    });
+
     const playGame = async () => {
         try {
             const res = await commands.utilLaunchVisualNovel(props.vn.id);
@@ -96,15 +102,14 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             },
         );
 
-        if (!confirmation) return;
+        if (!confirmation || !globalData.store.gameState) return;
 
         try {
-            const res = await commands.utilCloseVisualNovel(props.vn.id);
+            const res = await commands.utilCloseVisualNovel(
+                globalData.store.gameState.processId,
+            );
 
-            if (res.status === 'ok') {
-                globalData.setStore('gameState', null);
-                setRunningSince('00:00:00');
-            } else if (res.status === 'error') {
+            if (res.status === 'error') {
                 console.error(res.error);
             }
         } catch (e) {

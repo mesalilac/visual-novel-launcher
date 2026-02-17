@@ -127,8 +127,22 @@ pub async fn util_launch_visual_novel(
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn util_close_visual_novel(state: AppState<'_>, id: String) -> CommandResult<()> {
-    todo!()
+pub async fn util_close_visual_novel(_state: AppState<'_>, pid: u32) -> CommandResult<()> {
+    #[cfg(target_os = "windows")]
+    {
+        Command::new("taskkill")
+            .args(["/F", "/PID", &pid.to_string(), "/T"])
+            .spawn()?;
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    {
+        Command::new("kill")
+            .args(["-9", &pid.to_string()])
+            .spawn()?;
+    }
+
+    Ok(())
 }
 
 // #[tauri::command]

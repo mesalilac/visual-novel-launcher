@@ -246,12 +246,12 @@ export const commands = {
         }
     },
     async utilCloseVisualNovel(
-        id: string,
+        pid: number,
     ): Promise<Result<null, CommandError>> {
         try {
             return {
                 status: 'ok',
-                data: await TAURI_INVOKE('util_close_visual_novel', { id }),
+                data: await TAURI_INVOKE('util_close_visual_novel', { pid }),
             };
         } catch (e) {
             if (e instanceof Error) throw e;
