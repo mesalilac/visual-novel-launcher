@@ -25,6 +25,7 @@ export type ManagedResource<T> = {
 
 export type GameState = {
     vnId: string;
+    processId: number;
     startedAt: number;
 };
 
