@@ -120,8 +120,8 @@ pub struct PlaySession {
     pub id: String,
     pub visual_novel_id: String,
     pub started_time: i64,
-    pub ended_time: Option<i64>,
-    pub duration_seconds: Option<i64>,
+    pub ended_time: i64,
+    pub duration_seconds: i64,
 }
 
 impl PlaySession {
