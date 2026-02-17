@@ -1,5 +1,6 @@
 use nanoid::nanoid;
 use std::path::Path;
+use std::path::PathBuf;
 use std::process::Command;
 use std::thread;
 
@@ -117,9 +118,37 @@ pub async fn util_launch_visual_novel(
         )));
     }
 
-    // TODO: use locale emulator is it's enabled on vn and in settings
+    let use_locale_emulator = vn.use_locale_emulator && settings.use_locale_emulator;
 
-    let mut child = Command::new(&exe_path).spawn()?;
+    let launch_options_string = vn.launch_options.unwrap_or_default();
+    let launch_options = shell_words::split(&launch_options_string).map_err(|e| {
+        CommandError::LaunchFailure(format!("Invalid launch options: {}", e.to_string()))
+    })?;
+
+    let locale_exe_path = settings.locale_emulator_executable_path.map(PathBuf::from);
+    let locale_option_string = settings.locale_emulator_launch_options.unwrap_or_default();
+    let locale_launch_options = shell_words::split(&locale_option_string).map_err(|e| {
+        CommandError::LaunchFailure(format!("Invalid launch options: {}", e.to_string()))
+    })?;
+
+    let mut child = if use_locale_emulator && locale_exe_path.is_some() {
+        let locale_exe_path = locale_exe_path.unwrap();
+
+        if !locale_exe_path.exists() {
+            return Err(CommandError::LaunchFailure(format!(
+                "Locale emulator executable does not exist: {}",
+                locale_exe_path.to_string_lossy()
+            )));
+        }
+
+        Command::new(&locale_exe_path)
+            .args(&locale_launch_options)
+            .arg(&exe_path)
+            .args(&launch_options)
+            .spawn()?
+    } else {
+        Command::new(&exe_path).args(&launch_options).spawn()?
+    };
 
     let pid = child.id();
 
