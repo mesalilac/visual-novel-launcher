@@ -47,8 +47,8 @@ CREATE TABLE
         id TEXT NOT NULL PRIMARY KEY,
         visual_novel_id TEXT NOT NULL REFERENCES visual_novels (id) ON DELETE CASCADE,
         started_time BIGINT NOT NULL,
-        ended_time BIGINT,
-        duration_seconds BIGINT
+        ended_time BIGINT NOT NULL,
+        duration_seconds BIGINT NOT NULL
     );
 
 INSERT INTO

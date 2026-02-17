@@ -8,8 +8,8 @@ diesel::table! {
         id -> Text,
         visual_novel_id -> Text,
         started_time -> BigInt,
-        ended_time -> Nullable<BigInt>,
-        duration_seconds -> Nullable<BigInt>,
+        ended_time -> BigInt,
+        duration_seconds -> BigInt,
     }
 }
 
