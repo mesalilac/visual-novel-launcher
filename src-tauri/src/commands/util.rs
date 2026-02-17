@@ -142,7 +142,7 @@ pub async fn util_launch_visual_novel(
         {
             let new_play_session = PlaySessionEntity {
                 id: nanoid!(),
-                visual_novel_id: vn.id,
+                visual_novel_id: vn.id.clone(),
                 started_time: start_timestamp,
                 ended_time: end_timestamp,
                 duration_seconds: duration_seconds,
@@ -154,7 +154,13 @@ pub async fn util_launch_visual_novel(
                 .ok();
         }
 
-        let _ = GameClosed(pid).emit(&app_handle);
+        let _ = GameClosed {
+            pid,
+            vn_id: vn.id,
+            playtime: new_total_seconds,
+            last_time_played_at: end_timestamp,
+        }
+        .emit(&app_handle);
     });
 
     Ok(pid)

@@ -295,7 +295,12 @@ export type CreateVisualNovelRequest = {
     useLocaleEmulator: boolean;
     tags: Tag[];
 };
-export type GameClosed = number;
+export type GameClosed = {
+    pid: number;
+    vn_id: string;
+    playtime: number;
+    last_time_played_at: Timestamp;
+};
 export type GeneralStats = {
     lastPlayedAt: Timestamp | null;
     totalPlaytime: number;
