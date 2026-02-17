@@ -1,7 +1,17 @@
-import { createEffect, createMemo, For, Match, Switch } from 'solid-js';
+import {
+    createEffect,
+    createMemo,
+    For,
+    Match,
+    onCleanup,
+    onMount,
+    Switch,
+} from 'solid-js';
 import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
 import './MainContent.css';
+
+import { events } from '@/bindings';
 import {
     type SortByStatusType,
     type SortByType,
@@ -14,6 +24,14 @@ import {
 export const MainContent = () => {
     const globalData = useGlobalData();
     const vns = globalData.resources.vns;
+
+    onMount(() => {
+        events.gameClosed.listen((e) => {
+            if (globalData.store.gameState?.processId === e.payload) {
+                globalData.setStore('gameState', null);
+            }
+        });
+    });
 
     const sortedVns = createMemo(() => {
         const list = [...(vns.get() || [])];

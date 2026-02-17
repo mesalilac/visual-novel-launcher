@@ -76,6 +76,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             if (res.status === 'ok') {
                 globalData.setStore('gameState', {
                     vnId: props.vn.id,
+                    processId: res.data,
                     startedAt: Date.now(),
                 });
             } else if (res.status === 'error') {
