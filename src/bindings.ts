@@ -262,6 +262,12 @@ export const commands = {
 
 /** user-defined events **/
 
+export const events = __makeEvents__<{
+    gameClosed: GameClosed;
+}>({
+    gameClosed: 'game-closed',
+});
+
 /** user-defined constants **/
 
 /** user-defined types **/
@@ -289,6 +295,7 @@ export type CreateVisualNovelRequest = {
     useLocaleEmulator: boolean;
     tags: Tag[];
 };
+export type GameClosed = number;
 export type GeneralStats = {
     lastPlayedAt: Timestamp | null;
     totalPlaytime: number;

@@ -3,8 +3,10 @@ use std::process::Command;
 use std::thread;
 
 use diesel::associations::HasTable;
+use tauri_specta::Event;
 
 use super::prelude::*;
+use crate::events::GameClosed;
 use crate::services;
 use crate::APP_SETTINGS_ID;
 
@@ -83,7 +85,11 @@ pub async fn util_open_path(_state: AppState<'_>, path: String) -> CommandResult
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn util_launch_visual_novel(state: AppState<'_>, id: String) -> CommandResult<u32> {
+pub async fn util_launch_visual_novel(
+    state: AppState<'_>,
+    app_handle: tauri::AppHandle,
+    id: String,
+) -> CommandResult<u32> {
     let mut conn: diesel::r2d2::PooledConnection<
         diesel::r2d2::ConnectionManager<SqliteConnection>,
     > = state.pool.get()?;
@@ -110,13 +116,9 @@ pub async fn util_launch_visual_novel(state: AppState<'_>, id: String) -> Comman
     let pid = child.id();
 
     thread::spawn(move || {
-        match child.wait() {
-            Ok(status) => println!("Process exited with status: {}", status),
-            Err(e) => println!("Process exited with error: {}", e),
-        };
+        let _ = child.wait();
 
-        // emit event
-        println!("Process exited");
+        let _ = GameClosed(pid).emit(&app_handle);
     });
 
     Ok(pid)
