@@ -75,7 +75,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         }
     });
 
-    const playGame = async () => {
+    const launchGame = async () => {
         try {
             const res = await commands.utilLaunchVisualNovel(props.vn.id);
 
@@ -289,7 +289,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                         <button
                             class='visual-novel-card__button playable'
                             disabled={globalData.store.gameState !== null}
-                            onClick={playGame}
+                            onClick={launchGame}
                             type='button'
                         >
                             <IconPlay /> Play
