@@ -230,14 +230,14 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     >
                         <IconEditPencilLine01 /> Edit
                     </button>
-                    <Modal isOpen={showEditModal} setIsOpen={setShowEditModal}>
-                        <EditVisualNovelModal />
-                    </Modal>
                     <button onClick={handleDeleteVn} type='button'>
                         <IconTrashFull /> Remove from Library
                     </button>
                 </div>
             </Popover>
+            <Modal isOpen={showEditModal} setIsOpen={setShowEditModal}>
+                <EditVisualNovelModal />
+            </Modal>
             <img
                 aria-label='Visual Novel Cover'
                 class='visual-novel-card__cover'
