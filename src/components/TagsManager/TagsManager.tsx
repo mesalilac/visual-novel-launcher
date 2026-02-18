@@ -13,6 +13,7 @@ import { type SortDirectionType, sortDirectionList } from '@/consts';
 import { useGlobalData } from '@/store';
 
 import './TagsManager.css';
+import { handleIpcError, reportIpcError } from '@/utils';
 
 const sortByList = ['Relevance', 'Name', 'Date Added'] as const;
 type SortByType = (typeof sortByList)[number];
@@ -55,39 +56,45 @@ const TagItem = (props: { tag: TagWithVisualNovels }) => {
 
         if (name === props.tag.name) return;
 
-        try {
-            const res = await commands.updateTag(props.tag.id, { name });
+        const res = await commands
+            .updateTag(props.tag.id, { name })
+            .catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                globalData.resources.tags.mutate((prev) => {
-                    if (!prev) return;
+        if (!res) return;
 
-                    return prev.map((tag) => {
-                        return tag.id === props.tag.id
-                            ? { ...tag, name: res.data.name }
-                            : tag;
-                    });
-                });
-            } else if (res.status === 'error') console.error(res.error);
-        } catch (e) {
-            console.error(e);
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        globalData.resources.tags.mutate((prev) => {
+            if (!prev) return;
+
+            return prev.map((tag) => {
+                return tag.id === props.tag.id
+                    ? { ...tag, name: res.data.name }
+                    : tag;
+            });
+        });
     };
 
     const onDelete = async () => {
-        try {
-            const res = await commands.removeTagById(props.tag.id);
+        const res = await commands
+            .removeTagById(props.tag.id)
+            .catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                globalData.resources.tags.mutate((prev) => {
-                    if (!prev) return;
+        if (!res) return;
 
-                    return prev.filter((tag) => tag.id !== props.tag.id);
-                });
-            } else if (res.status === 'error') console.error(res.error);
-        } catch (e) {
-            console.error(e);
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        globalData.resources.tags.mutate((prev) => {
+            if (!prev) return;
+
+            return prev.filter((tag) => tag.id !== props.tag.id);
+        });
     };
 
     return (
@@ -184,18 +191,19 @@ export const TagsManager = () => {
 
         if (!name) return;
 
-        try {
-            const res = await commands.createTag({ name });
+        const res = await commands.createTag({ name }).catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                globalData.resources.tags.mutate((prev) => {
-                    if (!prev) return;
-                    return [...prev, res.data];
-                });
-            } else if (res.status === 'error') console.error(res.error);
-        } catch (e) {
-            console.error(e);
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        globalData.resources.tags.mutate((prev) => {
+            if (!prev) return;
+            return [...prev, res.data];
+        });
     };
 
     return (

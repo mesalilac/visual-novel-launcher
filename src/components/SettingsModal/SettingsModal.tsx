@@ -10,6 +10,7 @@ import {
 import { useGlobalData } from '@/store';
 
 import './SettingsModal.css';
+import { handleIpcError, reportIpcError } from '@/utils';
 
 export const SettingsModal = () => {
     const { setIsOpen } = useModalContext();
@@ -100,51 +101,51 @@ export const SettingsModal = () => {
     };
 
     const removeAllVisualNovels = async () => {
-        try {
-            const confirmation = await ask(
-                'Are you sure you want to remove all Visual Novels?',
-                {
-                    title: 'Remove all Visual Novels',
-                    kind: 'warning',
-                },
-            );
+        const confirmation = await ask(
+            'Are you sure you want to remove all Visual Novels?',
+            {
+                title: 'Remove all Visual Novels',
+                kind: 'warning',
+            },
+        );
 
-            if (!confirmation) return;
+        if (!confirmation) return;
 
-            const res = await commands.removeAllVisualNovels();
+        const res = await commands
+            .removeAllVisualNovels()
+            .catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                globalData.resources.vns.refetch();
-            } else if (res.status === 'error') {
-                console.error(res.error);
-            }
-        } catch (e) {
-            console.error(e);
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        globalData.resources.vns.refetch();
     };
 
     const removeAllTags = async () => {
-        try {
-            const confirmation = await ask(
-                'Are you sure you want to remove all Tags?',
-                {
-                    title: 'Remove all Tags',
-                    kind: 'warning',
-                },
-            );
+        const confirmation = await ask(
+            'Are you sure you want to remove all Tags?',
+            {
+                title: 'Remove all Tags',
+                kind: 'warning',
+            },
+        );
 
-            if (!confirmation) return;
+        if (!confirmation) return;
 
-            const res = await commands.removeAllTags();
+        const res = await commands.removeAllTags().catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                globalData.resources.vns.refetch();
-            } else if (res.status === 'error') {
-                console.error(res.error);
-            }
-        } catch (e) {
-            console.error(e);
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        globalData.resources.vns.refetch();
     };
 
     return (

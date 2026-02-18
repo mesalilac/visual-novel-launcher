@@ -24,6 +24,7 @@ import {
     Popover,
 } from '@/components';
 import { useGlobalData } from '@/store';
+import { handleIpcError, reportIpcError } from '@/utils';
 
 export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     const globalData = useGlobalData();
@@ -76,21 +77,22 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     });
 
     const launchGame = async () => {
-        try {
-            const res = await commands.utilLaunchVisualNovel(props.vn.id);
+        const res = await commands
+            .utilLaunchVisualNovel(props.vn.id)
+            .catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                globalData.setStore('gameState', {
-                    vnId: props.vn.id,
-                    processId: res.data,
-                    startedAt: Date.now(),
-                });
-            } else if (res.status === 'error') {
-                console.error(res.error);
-            }
-        } catch (e) {
-            console.error(e);
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        globalData.setStore('gameState', {
+            vnId: props.vn.id,
+            processId: res.data,
+            startedAt: Date.now(),
+        });
     };
 
     const closeGame = async () => {
@@ -104,16 +106,15 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
 
         if (!confirmation || !globalData.store.gameState) return;
 
-        try {
-            const res = await commands.utilCloseVisualNovel(
-                globalData.store.gameState.processId,
-            );
+        const res = await commands
+            .utilCloseVisualNovel(globalData.store.gameState.processId)
+            .catch(handleIpcError);
 
-            if (res.status === 'error') {
-                console.error(res.error);
-            }
-        } catch (e) {
-            console.error(e);
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
     };
 
@@ -142,10 +143,15 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     };
 
     const handleOpenFolder = async () => {
-        try {
-            await commands.utilOpenPath(props.vn.dirPath);
-        } catch (e) {
-            console.error(e);
+        const res = await commands
+            .utilOpenPath(props.vn.dirPath)
+            .catch(handleIpcError);
+
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
     };
 
@@ -160,21 +166,22 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
 
         if (!confirmation) return;
 
-        try {
-            const res = await commands.removeVisualNovelById(props.vn.id);
+        const res = await commands
+            .removeVisualNovelById(props.vn.id)
+            .catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                globalData.resources.vns.mutate((prev) => {
-                    if (!prev) return;
+        if (!res) return;
 
-                    return prev.filter((vn) => vn.id !== props.vn.id);
-                });
-            } else if (res.status === 'error') {
-                console.error(res.error);
-            }
-        } catch (e) {
-            console.error(e);
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        globalData.resources.vns.mutate((prev) => {
+            if (!prev) return;
+
+            return prev.filter((vn) => vn.id !== props.vn.id);
+        });
     };
 
     const menuTriggerId = `vn-card-menu-${props.vn.id}`;

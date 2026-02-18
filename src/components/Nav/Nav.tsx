@@ -10,6 +10,7 @@ import {
 import { useGlobalData } from '@/store';
 
 import './Nav.css';
+import { handleIpcError, reportIpcError } from '@/utils';
 
 export const Nav = () => {
     const globalData = useGlobalData();
@@ -18,17 +19,16 @@ export const Nav = () => {
     const [showSettingsModal, setShowSettingsModal] = createSignal(false);
 
     const refresh = async () => {
-        try {
-            const res = await commands.utilScanLibrary();
+        const res = await commands.utilScanLibrary().catch(handleIpcError);
 
-            if (res.status === 'ok') {
-                vns.refetch();
-            } else if (res.status === 'error') {
-                console.error(res.error);
-            }
-        } catch (e) {
-            console.error(e);
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
         }
+
+        vns.refetch();
     };
 
     return (
