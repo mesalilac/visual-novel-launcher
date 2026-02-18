@@ -238,8 +238,13 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 }}
             />
             <div class='flex-column visual-novel-card__info'>
-                <h3 class='visual-novel-card__title'>{props.vn.title}</h3>
-                <p class='visual-novel-card__description'>
+                <h3 class='visual-novel-card__title' title={props.vn.title}>
+                    {props.vn.title}
+                </h3>
+                <p
+                    class='visual-novel-card__description'
+                    title={props.vn.description || ''}
+                >
                     {props.vn.description}
                 </p>
 
@@ -269,7 +274,9 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 <div class='flex-row'>
                     <div class='flex-row visual-novel-card__icon'>
                         <IconClock />
-                        <span>{(props.vn.playtime / 3600).toFixed(1)}h</span>
+                        <span title={String(props.vn.playtime)}>
+                            {(props.vn.playtime / 3600).toFixed(1)}h
+                        </span>
                     </div>
                     <div class='flex-row visual-novel-card__icon'>
                         <IconCalendar />
