@@ -198,8 +198,6 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         setShowEditModal(true);
     };
 
-    const menuTriggerId = `vn-card-menu-${props.vn.id}`;
-
     const [showPopoverMenu, setShowPopoverMenu] = createSignal(false);
 
     let popoverMenuRef: HTMLButtonElement | undefined;
@@ -223,7 +221,6 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             </button>
             <button
                 class='flex-row visual-novel-card__menu_trigger'
-                id={menuTriggerId}
                 ref={popoverMenuRef}
                 type='button'
             >
