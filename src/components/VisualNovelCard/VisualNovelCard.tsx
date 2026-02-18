@@ -12,6 +12,7 @@ import {
 import defaultCover from '@/assets/cover-image-placeholder.svg';
 import { commands, type VisualNovel } from '@/bindings';
 import {
+    EditVisualNovelModal,
     IconCalendar,
     IconClock,
     IconEditPencilLine01,
@@ -21,6 +22,7 @@ import {
     IconPlay,
     IconTrashFull,
     IconTriangleWarning,
+    Modal,
     Popover,
 } from '@/components';
 import { useGlobalData } from '@/store';
@@ -28,6 +30,8 @@ import { handleIpcError, reportIpcError } from '@/utils';
 
 export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     const globalData = useGlobalData();
+
+    const [showEditModal, setShowEditModal] = createSignal(false);
 
     const [imgSrc, setImgSrc] = createSignal<string>(
         props.vn.coverPath !== null
@@ -220,9 +224,15 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     <button onClick={handleOpenFolder} type='button'>
                         <IconFolderOpen /> Open Folder
                     </button>
-                    <button type='button'>
+                    <button
+                        onClick={() => setShowEditModal(true)}
+                        type='button'
+                    >
                         <IconEditPencilLine01 /> Edit
                     </button>
+                    <Modal isOpen={showEditModal} setIsOpen={setShowEditModal}>
+                        <EditVisualNovelModal />
+                    </Modal>
                     <button onClick={handleDeleteVn} type='button'>
                         <IconTrashFull /> Remove from Library
                     </button>
