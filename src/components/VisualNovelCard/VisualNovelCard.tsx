@@ -147,6 +147,8 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     };
 
     const handleOpenFolder = async () => {
+        setShowPopoverMenu(false);
+
         const res = await commands
             .utilOpenPath(props.vn.dirPath)
             .catch(handleIpcError);
@@ -160,6 +162,8 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     };
 
     const handleDeleteVn = async () => {
+        setShowPopoverMenu(false);
+
         const confirmation = await ask(
             'Are you sure you want to delete this Visual Novel?',
             {
@@ -188,7 +192,17 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         });
     };
 
+    const handleEditVn = () => {
+        setShowPopoverMenu(false);
+
+        setShowEditModal(true);
+    };
+
     const menuTriggerId = `vn-card-menu-${props.vn.id}`;
+
+    const [showPopoverMenu, setShowPopoverMenu] = createSignal(false);
+
+    let popoverMenuRef: HTMLButtonElement | undefined;
 
     return (
         <div
@@ -210,24 +224,22 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             <button
                 class='flex-row visual-novel-card__menu_trigger'
                 id={menuTriggerId}
+                ref={popoverMenuRef}
                 type='button'
             >
                 <IconMoreVertical size='1.5em' />
             </button>
             <Popover
-                closeOnEscape={true}
-                closeOnOutsideInteraction={true}
+                onOpenChange={setShowPopoverMenu}
+                open={showPopoverMenu()}
                 targetPositionArea='bottom center'
-                triggerElement={`#${menuTriggerId}`}
+                triggerElement={popoverMenuRef}
             >
                 <div class='flex-column visual-novel-card__menu'>
                     <button onClick={handleOpenFolder} type='button'>
                         <IconFolderOpen /> Open Folder
                     </button>
-                    <button
-                        onClick={() => setShowEditModal(true)}
-                        type='button'
-                    >
+                    <button onClick={handleEditVn} type='button'>
                         <IconEditPencilLine01 /> Edit
                     </button>
                     <button onClick={handleDeleteVn} type='button'>
