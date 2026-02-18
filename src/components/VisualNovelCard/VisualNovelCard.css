@@ -55,6 +55,7 @@
 
 .visual-novel-card__status {
     --alpha: 60%;
+    --black: 30%;
 
     user-select: none;
 
@@ -68,12 +69,17 @@
     border-radius: var(--s-size-radius-lg);
 
     font-size: var(--s-size-font-3);
+    font-weight: var(--fw-bold);
 
     backdrop-filter: blur(var(--s-size-blur));
 
     &.playing {
         border-color: var(--s-color-status-playing);
-        color: color-mix(in hsl, var(--s-color-status-playing), black 40%);
+        color: color-mix(
+            in hsl,
+            var(--s-color-status-playing),
+            black var(--black)
+        );
         background-color: hsl(
             from var(--s-color-status-playing) h s l /
             var(--alpha)
@@ -82,7 +88,11 @@
 
     &.finished {
         border-color: var(--s-color-status-finished);
-        color: color-mix(in hsl, var(--s-color-status-finished), black 40%);
+        color: color-mix(
+            in hsl,
+            var(--s-color-status-finished),
+            black var(--black)
+        );
         background-color: hsl(
             from var(--s-color-status-finished) h s l /
             var(--alpha)
@@ -91,7 +101,11 @@
 
     &.dropped {
         border-color: var(--s-color-status-dropped);
-        color: color-mix(in hsl, var(--s-color-status-dropped), black 40%);
+        color: color-mix(
+            in hsl,
+            var(--s-color-status-dropped),
+            black var(--black)
+        );
         background-color: hsl(
             from var(--s-color-status-dropped) h s l /
             var(--alpha)
@@ -100,7 +114,11 @@
 
     &.backlog {
         border-color: var(--s-color-status-backlog);
-        color: color-mix(in hsl, var(--s-color-status-backlog), black 40%);
+        color: color-mix(
+            in hsl,
+            var(--s-color-status-backlog),
+            black var(--black)
+        );
         background-color: hsl(
             from var(--s-color-status-backlog) h s l /
             var(--alpha)
