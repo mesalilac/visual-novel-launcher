@@ -203,16 +203,6 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         // FIXME: update is not working
         const res = await commands
             .updateVisualNovel(props.vn.id, {
-                coverPath: props.vn.coverPath,
-                description: props.vn.description,
-                executablePath: props.vn.executablePath,
-                launchOptions: props.vn.launchOptions,
-                playtime: props.vn.playtime,
-                status: props.vn.status,
-                title: props.vn.title,
-                notes: props.vn.notes,
-                useLocaleEmulator: props.vn.useLocaleEmulator,
-                tagIds: [],
                 isFavorite: !props.vn.isFavorite,
             })
             .catch(handleIpcError);
@@ -228,7 +218,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             if (!prev) return;
 
             return prev.map((vn) => {
-                return vn.id === props.vn.id ? { ...vn } : vn;
+                return vn.id === props.vn.id ? { ...res.data } : vn;
             });
         });
     };
