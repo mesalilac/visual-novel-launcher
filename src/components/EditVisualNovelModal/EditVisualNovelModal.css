@@ -1,0 +1,44 @@
+.edit-visual-novel-modal {
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+
+    height: 100%;
+}
+
+.edit-visual-novel-modal__sidebar {
+    display: flex;
+    flex: 0 0 400px;
+    flex-direction: column;
+    gap: var(--s-size-gap-sm);
+
+    & > img {
+        flex-grow: 1;
+        border-radius: var(--s-size-radius-lg);
+        object-fit: cover;
+    }
+}
+
+.edit-visual-novel-modal__content {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 1rem;
+}
+
+.edit-visual-novel-modal__block {
+    display: flex;
+    flex-direction: column;
+
+    padding: var(--s-size-padding-md);
+    border-radius: var(--s-size-radius-lg);
+
+    background-color: var(--s-color-background-surface-2);
+}
+
+.edit-visual-novel-modal__content__description {
+    resize: none;
+    height: 150px;
+}

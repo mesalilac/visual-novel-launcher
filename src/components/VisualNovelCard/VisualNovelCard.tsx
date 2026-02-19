@@ -245,7 +245,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 </div>
             </Popover>
             <Modal isOpen={showEditModal} setIsOpen={setShowEditModal}>
-                <EditVisualNovelModal />
+                <EditVisualNovelModal vn={props.vn} />
             </Modal>
             <img
                 aria-label='Visual Novel Cover'

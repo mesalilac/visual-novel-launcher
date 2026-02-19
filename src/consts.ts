@@ -14,3 +14,10 @@ export type SortByStatusType = (typeof sortByStatusList)[number];
 
 export const sortByList = ['Relevance', 'Name', 'Date Added'] as const;
 export type SortByType = (typeof sortByList)[number];
+
+export const VisualNovelStatusList = [
+    'Backlog',
+    'Playing',
+    'Finished',
+    'Dropped',
+] as const;
