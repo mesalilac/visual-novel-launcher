@@ -4,16 +4,27 @@ use serde::{Deserialize, Serialize};
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateVisualNovelRequest {
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub title: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub description: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub cover_path: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub playtime: Option<i64>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub status: Option<VisualNovelStatus>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub is_favorite: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub notes: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub executable_path: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub launch_options: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none", default)]
     pub use_locale_emulator: Option<bool>,
+    #[serde(skip_serializing_if = "Vec::is_empty", default)]
     pub tag_ids: Vec<String>,
 }
 

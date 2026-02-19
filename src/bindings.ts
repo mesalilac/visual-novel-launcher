@@ -341,17 +341,17 @@ export type UpdateSettingsRequest = {
 };
 export type UpdateTagRequest = { name: string };
 export type UpdateVisualNovelRequest = {
-    title: string | null;
-    description: string | null;
-    coverPath: string | null;
-    playtime: number | null;
-    status: VisualNovelStatus | null;
-    isFavorite: boolean | null;
-    notes: string | null;
-    executablePath: string | null;
-    launchOptions: string | null;
-    useLocaleEmulator: boolean | null;
-    tagIds: string[];
+    title?: string | null;
+    description?: string | null;
+    coverPath?: string | null;
+    playtime?: number | null;
+    status?: VisualNovelStatus | null;
+    isFavorite?: boolean | null;
+    notes?: string | null;
+    executablePath?: string | null;
+    launchOptions?: string | null;
+    useLocaleEmulator?: boolean | null;
+    tagIds?: string[];
 };
 export type VisualNovel = {
     id: string;

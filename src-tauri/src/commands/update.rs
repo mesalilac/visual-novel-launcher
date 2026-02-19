@@ -10,18 +10,14 @@ use diesel::{
 #[diesel(table_name = schema::visual_novels)]
 struct VisualNovelChangeset {
     pub title: Option<String>,
-    #[diesel(treat_none_as_null = true)]
     pub description: Option<String>,
-    #[diesel(treat_none_as_null = true)]
     pub cover_path: Option<String>,
     pub playtime: Option<i64>,
     pub status: Option<VisualNovelStatus>,
     pub is_favorite: Option<bool>,
-    #[diesel(treat_none_as_null = true)]
     pub notes: Option<String>,
     pub executable_path: Option<String>,
     pub use_locale_emulator: Option<bool>,
-    #[diesel(treat_none_as_null = true)]
     pub launch_options: Option<String>,
 }
 
@@ -51,6 +47,8 @@ pub async fn update_visual_novel(
         executable_path: payload.executable_path.map(|s| s.trim().into()),
         launch_options: normalize_optional_string(payload.launch_options),
     };
+
+    println!("vn_changeset: {:#?}", vn_changeset);
 
     let vn_entity = update(vn_dsl::visual_novels.find(&id))
         .set(&vn_changeset)
