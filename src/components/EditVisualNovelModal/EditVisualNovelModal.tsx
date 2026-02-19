@@ -283,35 +283,23 @@ const Content = (props: {
 };
 
 type EditStore = {
-    rawImgSrc: string | null;
-    title: string | null;
-    description: string | null;
-    status: VisualNovelStatus | null;
-    playtime: number | null;
-    isFavorite: boolean | null;
-    notes: string | null;
-    executablePath: string | null;
-    launchOptions: string | null;
-    useLocaleEmulator: boolean | null;
-    tags: string[];
+    rawImgSrc?: string | null;
+    title?: string | null;
+    description?: string | null;
+    status?: VisualNovelStatus | null;
+    playtime?: number | null;
+    isFavorite?: boolean | null;
+    notes?: string | null;
+    executablePath?: string | null;
+    launchOptions?: string | null;
+    useLocaleEmulator?: boolean | null;
+    tags?: string[];
 };
 
 export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     const { setIsOpen } = useModalContext();
 
-    const [editStore, setEditStore] = createStore<EditStore>({
-        rawImgSrc: props.vn.coverPath,
-        title: props.vn.title,
-        description: props.vn.description,
-        status: props.vn.status,
-        playtime: props.vn.playtime,
-        isFavorite: props.vn.isFavorite,
-        notes: props.vn.notes,
-        executablePath: props.vn.executablePath,
-        launchOptions: props.vn.launchOptions,
-        useLocaleEmulator: props.vn.useLocaleEmulator,
-        tags: [],
-    });
+    const [editStore, setEditStore] = createStore<EditStore>();
 
     const handleOnAction = () => {
         setIsOpen(false);
