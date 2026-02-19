@@ -48,11 +48,9 @@ pub async fn update_visual_novel(
         launch_options: normalize_optional_string(payload.launch_options),
     };
 
-    println!("vn_changeset: {:#?}", vn_changeset);
-
-    let vn_entity = update(vn_dsl::visual_novels.find(&id))
+    update(vn_dsl::visual_novels.find(&id))
         .set(&vn_changeset)
-        .get_result::<VisualNovelEntity>(&mut conn)?;
+        .execute(&mut conn)?;
 
     for tag in payload.tag_ids {
         let tag_exists = select(exists(
@@ -77,6 +75,11 @@ pub async fn update_visual_novel(
             .values(&new_tag_junction)
             .execute(&mut conn)?;
     }
+
+    let vn_entity = vn_dsl::visual_novels
+        .find(&id)
+        .select(VisualNovelEntity::as_select())
+        .first::<VisualNovelEntity>(&mut conn)?;
 
     let tags = VisualNovelTagEntity::belonging_to(&vn_entity)
         .inner_join(tag_dsl::tags)
