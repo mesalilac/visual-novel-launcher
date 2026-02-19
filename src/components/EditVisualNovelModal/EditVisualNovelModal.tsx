@@ -90,25 +90,6 @@ const SideBar = (props: {
                 >
                     Reset
                 </button>
-                <button
-                    onClick={() =>
-                        props.setEditStore(
-                            'isFavorite',
-                            props.editStore.isFavorite !== null
-                                ? !props.editStore.isFavorite
-                                : !props.vn.isFavorite,
-                        )
-                    }
-                    type='button'
-                >
-                    <IconHeart01
-                        class='favorite-icon'
-                        classList={{
-                            active: props.editStore.isFavorite ?? false,
-                        }}
-                        size='1.5em'
-                    />
-                </button>
             </div>
         </div>
     );
