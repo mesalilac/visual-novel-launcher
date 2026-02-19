@@ -4,27 +4,38 @@ use serde::{Deserialize, Serialize};
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UpdateVisualNovelRequest {
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub title: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub description: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub cover_path: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub playtime: Option<i64>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub status: Option<VisualNovelStatus>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub is_favorite: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub notes: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub executable_path: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub launch_options: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub use_locale_emulator: Option<bool>,
-    #[serde(skip_serializing_if = "Vec::is_empty", default)]
+    #[specta(optional)]
+    #[serde(default)]
     pub tag_ids: Vec<String>,
 }
 
