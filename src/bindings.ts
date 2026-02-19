@@ -350,7 +350,7 @@ export type UpdateVisualNovelRequest = {
     notes: string | null;
     executablePath: string | null;
     launchOptions: string | null;
-    useLocaleEmulator: boolean;
+    useLocaleEmulator: boolean | null;
     tagIds: string[];
 };
 export type VisualNovel = {
