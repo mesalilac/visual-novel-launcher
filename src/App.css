@@ -100,6 +100,49 @@ textarea {
     }
 }
 
+input[type="checkbox"] {
+    transform: translateY(-0.075em);
+
+    display: grid;
+    place-content: center;
+
+    width: 1.15em;
+    height: 1.15em;
+    margin: 0;
+    padding: 0;
+    border: 0.15em solid currentcolor;
+    border-radius: 0.15em;
+
+    font: inherit;
+    color: currentcolor;
+
+    appearance: none;
+
+    &::before {
+        content: "";
+
+        transform: scale(0);
+
+        width: 0.65em;
+        height: 0.65em;
+
+        box-shadow: inset 1em 1em var(--s-color-background-brand);
+
+        transition: 120ms transform ease-in-out;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    &:checked::before {
+        transform-origin: bottom left;
+        transform: scale(1);
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    }
+}
+
 select {
     cursor: pointer;
 
