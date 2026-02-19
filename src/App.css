@@ -236,3 +236,15 @@ button {
     border-color: var(--s-color-border-danger);
     color: var(--s-color-foreground-danger);
 }
+
+.favorite-icon {
+    color: var(--s-color-background-danger);
+
+    & > path {
+        transition: fill 0.1s ease-in-out;
+    }
+
+    &.active {
+        fill: var(--s-color-background-danger);
+    }
+}
