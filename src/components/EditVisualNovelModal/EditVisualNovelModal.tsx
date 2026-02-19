@@ -113,7 +113,7 @@ const LabeledField = (props: {
     children: JSX.Element;
 }) => {
     return (
-        <div class='flex-column'>
+        <div class='flex-column flex-1'>
             <h4 title={props.title}>{toTitleCase(props.name)}:</h4>
             {props.children}
         </div>
@@ -150,100 +150,113 @@ const Content = (props: {
                         value={props.editStore.title ?? props.vn.title}
                     />
                 </LabeledField>
-                <LabeledField name='description'>
-                    <textarea
-                        class='edit-visual-novel-modal__content__description'
-                        onChange={(e) =>
-                            props.setEditStore('description', e.target.value)
-                        }
-                        placeholder='Description...'
-                        value={
-                            props.editStore.description ??
-                            props.vn.description ??
-                            ''
-                        }
-                    />
-                </LabeledField>
-                <LabeledField name='status'>
-                    <select
-                        onChange={(e) => {
-                            props.setEditStore(
-                                'status',
-                                e.target.value as VisualNovelStatus,
-                            );
-                        }}
-                        value={props.editStore.status ?? props.vn.status}
-                    >
-                        <For each={VisualNovelStatusList}>
-                            {(status) => (
-                                <option value={status}>{status}</option>
-                            )}
-                        </For>
-                    </select>
-                </LabeledField>
-                <LabeledField name='playtime'>
-                    <input
-                        onChange={(e) =>
-                            props.setEditStore(
-                                'playtime',
-                                e.target.valueAsNumber,
-                            )
-                        }
-                        placeholder='Playtime...'
-                        type='number'
-                        value={props.editStore.playtime ?? props.vn.playtime}
-                    />
-                </LabeledField>
-                <LabeledField name='notes'>
-                    <textarea
-                        class='edit-visual-novel-modal__content__description'
-                        onChange={(e) =>
-                            props.setEditStore('notes', e.target.value)
-                        }
-                        placeholder='Notes...'
-                        value={props.editStore.notes ?? props.vn.notes ?? ''}
-                    />
-                </LabeledField>
-            </Block>
-            <Block title='installation & launch'>
-                <LabeledField name='use locale emulator'>
-                    <input
-                        checked={
-                            props.editStore.useLocaleEmulator ??
-                            props.vn.useLocaleEmulator
-                        }
-                        class='self-start'
-                        onChange={(e) =>
-                            props.setEditStore(
-                                'useLocaleEmulator',
-                                e.target.checked,
-                            )
-                        }
-                        type='checkbox'
-                    />
-                </LabeledField>
-                <LabeledField name='executable path'>
-                    <div class='flex-row'>
+                <div class='flex-row'>
+                    <LabeledField name='status'>
+                        <select
+                            onChange={(e) => {
+                                props.setEditStore(
+                                    'status',
+                                    e.target.value as VisualNovelStatus,
+                                );
+                            }}
+                            value={props.editStore.status ?? props.vn.status}
+                        >
+                            <For each={VisualNovelStatusList}>
+                                {(status) => (
+                                    <option value={status}>{status}</option>
+                                )}
+                            </For>
+                        </select>
+                    </LabeledField>
+                    <LabeledField name='playtime'>
                         <input
-                            class='flex-grow'
                             onChange={(e) =>
                                 props.setEditStore(
-                                    'executablePath',
+                                    'playtime',
+                                    e.target.valueAsNumber,
+                                )
+                            }
+                            placeholder='Playtime...'
+                            type='number'
+                            value={
+                                props.editStore.playtime ?? props.vn.playtime
+                            }
+                        />
+                    </LabeledField>
+                </div>
+                <div class='flex-row'>
+                    <LabeledField name='description'>
+                        <textarea
+                            class='edit-visual-novel-modal__content__description'
+                            onChange={(e) =>
+                                props.setEditStore(
+                                    'description',
                                     e.target.value,
                                 )
                             }
-                            placeholder='path/to/game.exe'
-                            type='text'
+                            placeholder='Description...'
                             value={
-                                props.editStore.executablePath ??
-                                props.vn.executablePath
+                                props.editStore.description ??
+                                props.vn.description ??
+                                ''
                             }
                         />
-                        <button onClick={handleBrowseExe} type='button'>
-                            Browse
-                        </button>
-                    </div>
-                </LabeledField>
+                    </LabeledField>
+                    <LabeledField name='notes'>
+                        <textarea
+                            class='edit-visual-novel-modal__content__description'
+                            onChange={(e) =>
+                                props.setEditStore('notes', e.target.value)
+                            }
+                            placeholder='Notes...'
+                            value={
+                                props.editStore.notes ?? props.vn.notes ?? ''
+                            }
+                        />
+                    </LabeledField>
+                </div>
+            </Block>
+            <Block title='installation & launch'>
+                <div class='flex-row'>
+                    <LabeledField name='use locale emulator'>
+                        <input
+                            checked={
+                                props.editStore.useLocaleEmulator ??
+                                props.vn.useLocaleEmulator
+                            }
+                            class='self-start'
+                            onChange={(e) =>
+                                props.setEditStore(
+                                    'useLocaleEmulator',
+                                    e.target.checked,
+                                )
+                            }
+                            type='checkbox'
+                        />
+                    </LabeledField>
+                    <LabeledField name='executable path'>
+                        <div class='flex-row'>
+                            <input
+                                class='flex-grow'
+                                onChange={(e) =>
+                                    props.setEditStore(
+                                        'executablePath',
+                                        e.target.value,
+                                    )
+                                }
+                                placeholder='path/to/game.exe'
+                                type='text'
+                                value={
+                                    props.editStore.executablePath ??
+                                    props.vn.executablePath
+                                }
+                            />
+                            <button onClick={handleBrowseExe} type='button'>
+                                Browse
+                            </button>
+                        </div>
+                    </LabeledField>
+                </div>
                 <LabeledField name='launch options'>
                     <input
                         onChange={(e) =>
