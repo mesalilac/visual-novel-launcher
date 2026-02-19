@@ -300,22 +300,24 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     const { setIsOpen } = useModalContext();
 
     const [editStore, setEditStore] = createStore<EditStore>({
-        rawImgSrc: null,
-        title: null,
-        description: null,
-        status: null,
-        playtime: null,
-        isFavorite: null,
-        notes: null,
-        executablePath: null,
-        launchOptions: null,
-        useLocaleEmulator: null,
+        rawImgSrc: props.vn.coverPath,
+        title: props.vn.title,
+        description: props.vn.description,
+        status: props.vn.status,
+        playtime: props.vn.playtime,
+        isFavorite: props.vn.isFavorite,
+        notes: props.vn.notes,
+        executablePath: props.vn.executablePath,
+        launchOptions: props.vn.launchOptions,
+        useLocaleEmulator: props.vn.useLocaleEmulator,
         tags: [],
     });
 
     const handleOnAction = () => {
         setIsOpen(false);
     };
+
+    // TODO: add TagsPicker
 
     return (
         <div class='flex-column height-100'>
