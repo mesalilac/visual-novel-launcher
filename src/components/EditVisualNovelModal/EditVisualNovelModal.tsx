@@ -279,7 +279,7 @@ const Content = (props: {
     );
 };
 
-type EditStore = {
+export type EditStore = {
     rawImgSrc?: string | null;
     title?: string | null;
     description?: string | null;
