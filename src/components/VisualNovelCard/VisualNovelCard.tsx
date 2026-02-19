@@ -17,6 +17,7 @@ import {
     IconClock,
     IconEditPencilLine01,
     IconFolderOpen,
+    IconHeart01,
     IconMoreVertical,
     IconPause,
     IconPlay,
@@ -198,6 +199,40 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
         setShowEditModal(true);
     };
 
+    const handleToggleFavorite = async () => {
+        // TODO: update is not working
+        const res = await commands
+            .updateVisualNovel(props.vn.id, {
+                coverPath: props.vn.coverPath,
+                description: props.vn.description,
+                executablePath: props.vn.executablePath,
+                launchOptions: props.vn.launchOptions,
+                playtime: props.vn.playtime,
+                status: props.vn.status,
+                title: props.vn.title,
+                notes: props.vn.notes,
+                useLocaleEmulator: props.vn.useLocaleEmulator,
+                tagIds: [],
+                isFavorite: !props.vn.isFavorite,
+            })
+            .catch(handleIpcError);
+
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
+        }
+
+        globalData.resources.vns.mutate((prev) => {
+            if (!prev) return;
+
+            return prev.map((vn) => {
+                return vn.id === props.vn.id ? { ...vn } : vn;
+            });
+        });
+    };
+
     const [showPopoverMenu, setShowPopoverMenu] = createSignal(false);
 
     let popoverMenuRef: HTMLButtonElement | undefined;
@@ -312,48 +347,59 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                         </span>
                     </div>
                 </div>
-                <Switch>
-                    <Match
-                        when={
-                            !props.vn.isMissing &&
-                            props.vn.id !== globalData.store.gameState?.vnId
-                        }
-                    >
-                        <button
-                            class='visual-novel-card__button playable'
-                            disabled={globalData.store.gameState !== null}
-                            onClick={launchGame}
-                            type='button'
+                <div class='flex-row'>
+                    <Switch>
+                        <Match
+                            when={
+                                !props.vn.isMissing &&
+                                props.vn.id !== globalData.store.gameState?.vnId
+                            }
                         >
-                            <IconPlay /> Play
-                        </button>
-                    </Match>
-                    <Match
-                        when={
-                            !props.vn.isMissing &&
-                            props.vn.id === globalData.store.gameState?.vnId
-                        }
-                    >
-                        <button
-                            class='visual-novel-card__button running'
-                            onClick={closeGame}
-                            type='button'
+                            <button
+                                class='flex-grow visual-novel-card__button playable'
+                                disabled={globalData.store.gameState !== null}
+                                onClick={launchGame}
+                                type='button'
+                            >
+                                <IconPlay /> Play
+                            </button>
+                        </Match>
+                        <Match
+                            when={
+                                !props.vn.isMissing &&
+                                props.vn.id === globalData.store.gameState?.vnId
+                            }
                         >
-                            <IconPause />
-                            {runningSince()}
-                        </button>
-                    </Match>
-                    <Match when={props.vn.isMissing}>
-                        <button
-                            class='visual-novel-card__button missing-on-disk'
-                            disabled={props.vn.isMissing}
-                            type='button'
-                        >
-                            <IconTriangleWarning />
-                            Missing on disk
-                        </button>
-                    </Match>
-                </Switch>
+                            <button
+                                class='flex-grow visual-novel-card__button running'
+                                onClick={closeGame}
+                                type='button'
+                            >
+                                <IconPause />
+                                {runningSince()}
+                            </button>
+                        </Match>
+                        <Match when={props.vn.isMissing}>
+                            <button
+                                class='flex-grow visual-novel-card__button missing-on-disk'
+                                disabled={props.vn.isMissing}
+                                type='button'
+                            >
+                                <IconTriangleWarning />
+                                Missing on disk
+                            </button>
+                        </Match>
+                    </Switch>
+                    <button onClick={handleToggleFavorite} type='button'>
+                        <IconHeart01
+                            class='favorite-icon'
+                            classList={{
+                                active: props.vn.isFavorite,
+                            }}
+                            size='1.5em'
+                        />
+                    </button>
+                </div>
             </div>
         </div>
     );
