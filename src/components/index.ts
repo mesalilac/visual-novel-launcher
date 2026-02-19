@@ -8,4 +8,5 @@ export * from './Nav/Nav';
 export * from './Popover/Popover';
 export * from './SettingsModal/SettingsModal';
 export * from './TagsManager/TagsManager';
+export * from './TagsPicker/TagsPicker';
 export * from './VisualNovelCard/VisualNovelCard';
