@@ -200,7 +200,6 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     };
 
     const handleToggleFavorite = async () => {
-        // FIXME: update is not working
         const res = await commands
             .updateVisualNovel(props.vn.id, {
                 isFavorite: !props.vn.isFavorite,
