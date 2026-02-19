@@ -13,7 +13,7 @@ pub struct UpdateVisualNovelRequest {
     pub notes: Option<String>,
     pub executable_path: Option<String>,
     pub launch_options: Option<String>,
-    pub use_locale_emulator: bool,
+    pub use_locale_emulator: Option<bool>,
     pub tag_ids: Vec<String>,
 }
 

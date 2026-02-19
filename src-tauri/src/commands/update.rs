@@ -20,6 +20,7 @@ struct VisualNovelChangeset {
     #[diesel(treat_none_as_null = true)]
     pub notes: Option<String>,
     pub executable_path: Option<String>,
+    pub use_locale_emulator: Option<bool>,
     #[diesel(treat_none_as_null = true)]
     pub launch_options: Option<String>,
 }
@@ -45,6 +46,7 @@ pub async fn update_visual_novel(
         playtime: payload.playtime,
         status: payload.status,
         is_favorite: payload.is_favorite,
+        use_locale_emulator: payload.use_locale_emulator,
         notes: normalize_optional_string(payload.notes),
         executable_path: payload.executable_path.map(|s| s.trim().into()),
         launch_options: normalize_optional_string(payload.launch_options),
