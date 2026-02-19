@@ -4,7 +4,8 @@
     border: 0;
     border-radius: var(--s-size-radius-lg);
 
-    background-color: var(--s-color-background-surface-1);
+    background-color: hsl(from var(--s-color-background-surface-1) h s l / 80%);
+    backdrop-filter: blur(var(--s-size-blur));
     box-shadow: 0 0 30px 0 rgb(0 0 0 / 30%);
 
     /* &:not(:popover-open) {} */
