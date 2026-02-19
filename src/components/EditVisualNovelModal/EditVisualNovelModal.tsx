@@ -2,7 +2,7 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { createSignal, For, type JSX } from 'solid-js';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
 import type { VisualNovel, VisualNovelStatus } from '@/bindings';
-import { ModalDismissButton, useModalContext } from '@/components';
+import { ModalDismissButton, TagsPicker, useModalContext } from '@/components';
 import './EditVisualNovelModal.css';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
@@ -271,6 +271,9 @@ const Content = (props: {
                         }
                     />
                 </LabeledField>
+            </Block>
+            <Block title='tags'>
+                <TagsPicker />
             </Block>
         </div>
     );
