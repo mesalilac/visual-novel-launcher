@@ -351,7 +351,7 @@ export type UpdateVisualNovelRequest = {
     executablePath?: string | null;
     launchOptions?: string | null;
     useLocaleEmulator?: boolean | null;
-    tagIds?: string[];
+    tagIds?: string[] | null;
 };
 export type VisualNovel = {
     id: string;
