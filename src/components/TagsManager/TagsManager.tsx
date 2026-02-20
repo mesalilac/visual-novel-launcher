@@ -208,7 +208,7 @@ export const TagsManager = () => {
 
     return (
         <div class='flex-column surface-2 padding-sm radius-lg'>
-            <div class='flex-row'>
+            <div class='flex-row padding-sm'>
                 <input
                     class='flex-grow'
                     onInput={(e) => setSearchQuery(e.target.value)}
@@ -267,7 +267,7 @@ export const TagsManager = () => {
                 />
             </div>
             <div class='divider' />
-            <div class='flex-row overflow-auto'>
+            <div class='flex-row padding-sm overflow-auto'>
                 <Show when={searchQuery()}>
                     <button
                         class='button-primary'
