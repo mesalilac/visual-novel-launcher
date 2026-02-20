@@ -77,6 +77,9 @@ export const MainContent = () => {
         });
 
         return filtered.sort((a, b) => {
+            if (a.isFavorite && !b.isFavorite) return -1;
+            if (!a.isFavorite && b.isFavorite) return 1;
+
             let result = 0;
 
             switch (sortBy) {
