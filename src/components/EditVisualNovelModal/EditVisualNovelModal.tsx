@@ -290,14 +290,14 @@ export type EditStore = {
     executablePath?: string | null;
     launchOptions?: string | null;
     useLocaleEmulator?: boolean | null;
-    tagsIds?: string[];
+    tagIds?: string[];
 };
 
 export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     const { setIsOpen } = useModalContext();
 
     const [editStore, setEditStore] = createStore<EditStore>({
-        tagsIds: props.vn.tags.map((tag) => tag.id),
+        tagIds: props.vn.tags.map((tag) => tag.id),
     });
 
     const handleOnAction = () => {
