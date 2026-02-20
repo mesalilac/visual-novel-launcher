@@ -1,12 +1,18 @@
 import { open } from '@tauri-apps/plugin-dialog';
-import { createSignal, For, type JSX } from 'solid-js';
+import { createEffect, createSignal, For, type JSX, onMount } from 'solid-js';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
-import type { VisualNovel, VisualNovelStatus } from '@/bindings';
+import type {
+    Tag,
+    TagWithVisualNovels,
+    VisualNovel,
+    VisualNovelStatus,
+} from '@/bindings';
 import { ModalDismissButton, TagsPicker, useModalContext } from '@/components';
 import './EditVisualNovelModal.css';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
 import { VisualNovelStatusList } from '@/consts';
+import { useGlobalData } from '@/store';
 import { toTitleCase } from '@/utils';
 
 const Header = () => {
@@ -273,7 +279,10 @@ const Content = (props: {
                 </LabeledField>
             </Block>
             <Block title='tags'>
-                <TagsPicker />
+                <TagsPicker
+                    editStore={props.editStore}
+                    setEditStore={props.setEditStore}
+                />
             </Block>
         </div>
     );
@@ -290,15 +299,30 @@ export type EditStore = {
     executablePath?: string | null;
     launchOptions?: string | null;
     useLocaleEmulator?: boolean | null;
-    tagIds?: string[];
+    tags?: TagWithVisualNovels[];
 };
 
 export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
+    const globalData = useGlobalData();
     const { setIsOpen } = useModalContext();
 
-    const [editStore, setEditStore] = createStore<EditStore>({
-        tagIds: props.vn.tags.map((tag) => tag.id),
-    });
+    const [editStore, setEditStore] = createStore<EditStore>();
+
+    createEffect(
+        () => {
+            if (globalData.resources.tags.get.state === 'ready') {
+                setEditStore(
+                    'tags',
+                    globalData.resources.tags
+                        .get()
+                        .filter((tag) =>
+                            props.vn.tags.some((x) => x.id === tag.id),
+                        ),
+                );
+            }
+        },
+        { once: true },
+    );
 
     const handleOnAction = () => {
         setIsOpen(false);
