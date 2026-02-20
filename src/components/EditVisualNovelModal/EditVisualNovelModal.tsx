@@ -307,21 +307,21 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
 
     const [editStore, setEditStore] = createStore<EditStore>();
 
-    createEffect(
-        () => {
-            if (globalData.resources.tags.get.state === 'ready') {
-                setEditStore(
-                    'tags',
-                    globalData.resources.tags
-                        .get()
-                        .filter((tag) =>
-                            props.vn.tags.some((x) => x.id === tag.id),
-                        ),
-                );
-            }
-        },
-        { once: true },
-    );
+    createEffect(() => {
+        if (
+            globalData.resources.tags.get.state === 'ready' &&
+            editStore.tags?.length === 0
+        ) {
+            setEditStore(
+                'tags',
+                globalData.resources.tags
+                    .get()
+                    .filter((tag) =>
+                        props.vn.tags.some((x) => x.id === tag.id),
+                    ),
+            );
+        }
+    });
 
     const handleOnAction = () => {
         setIsOpen(false);

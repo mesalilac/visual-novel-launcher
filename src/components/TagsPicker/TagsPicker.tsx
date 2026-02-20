@@ -153,11 +153,8 @@ export const TagsPicker = (props: {
             return [...prev, res.data];
         });
 
-        props.setEditStore('tags', (prev) => {
-            if (!prev) return;
-
-            return [...prev, res.data];
-        });
+        props.setEditStore('tags', [...(props.editStore.tags || []), res.data]);
+        setSearchQuery('');
     };
 
     return (
