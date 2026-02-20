@@ -1,8 +1,7 @@
 import { open } from '@tauri-apps/plugin-dialog';
-import { createEffect, createSignal, For, type JSX, onMount } from 'solid-js';
+import { createEffect, createSignal, For, type JSX } from 'solid-js';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
 import type {
-    Tag,
     TagWithVisualNovels,
     VisualNovel,
     VisualNovelStatus,
@@ -327,8 +326,6 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     const handleOnAction = () => {
         setIsOpen(false);
     };
-
-    // TODO: add TagsPicker
 
     return (
         <div class='flex-column height-100'>
