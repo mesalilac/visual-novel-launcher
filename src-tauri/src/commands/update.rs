@@ -2,7 +2,7 @@ use super::prelude::*;
 use crate::utils::db::normalize_optional_string;
 use crate::APP_SETTINGS_ID;
 use diesel::{
-    dsl::{exists, select},
+    dsl::{delete, exists, select},
     insert_into, update,
 };
 
@@ -52,28 +52,35 @@ pub async fn update_visual_novel(
         .set(&vn_changeset)
         .execute(&mut conn)?;
 
-    for tag in payload.tag_ids {
-        let tag_exists = select(exists(
-            vn_tag_dsl::visual_novels_tags.filter(
-                vn_tag_dsl::visual_novel_id
-                    .eq(&id)
-                    .and(vn_tag_dsl::tag_id.eq(&tag)),
-            ),
-        ))
-        .get_result::<bool>(&mut conn)?;
+    if let Some(tags) = payload.tag_ids {
+        if tags.len() > 0 {
+            for tag in tags {
+                let tag_exists = select(exists(
+                    vn_tag_dsl::visual_novels_tags.filter(
+                        vn_tag_dsl::visual_novel_id
+                            .eq(&id)
+                            .and(vn_tag_dsl::tag_id.eq(&tag)),
+                    ),
+                ))
+                .get_result::<bool>(&mut conn)?;
 
-        if tag_exists {
-            continue;
+                if tag_exists {
+                    continue;
+                }
+
+                let new_tag_junction = VisualNovelTagEntity {
+                    visual_novel_id: id.clone(),
+                    tag_id: tag,
+                };
+
+                insert_into(vn_tag_dsl::visual_novels_tags)
+                    .values(&new_tag_junction)
+                    .execute(&mut conn)?;
+            }
+        } else {
+            delete(vn_tag_dsl::visual_novels_tags.filter(vn_tag_dsl::visual_novel_id.eq(&id)))
+                .execute(&mut conn)?;
         }
-
-        let new_tag_junction = VisualNovelTagEntity {
-            visual_novel_id: id.clone(),
-            tag_id: tag,
-        };
-
-        insert_into(vn_tag_dsl::visual_novels_tags)
-            .values(&new_tag_junction)
-            .execute(&mut conn)?;
     }
 
     let vn_entity = vn_dsl::visual_novels

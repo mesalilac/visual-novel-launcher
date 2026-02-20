@@ -36,7 +36,7 @@ pub struct UpdateVisualNovelRequest {
     pub use_locale_emulator: Option<bool>,
     #[specta(optional)]
     #[serde(default)]
-    pub tag_ids: Vec<String>,
+    pub tag_ids: Option<Vec<String>>,
 }
 
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
