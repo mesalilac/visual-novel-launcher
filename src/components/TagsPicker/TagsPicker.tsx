@@ -164,7 +164,7 @@ export const TagsPicker = (props: {
                     class='flex-grow'
                     onInput={(e) => setSearchQuery(e.target.value)}
                     placeholder='Search...'
-                    type='text'
+                    type='search'
                     value={searchQuery()}
                 />
                 <span class='flex-row gap-sm surface-3 padding-sm radius-md'>
