@@ -51,7 +51,7 @@ const SideBar = (props: {
     );
 
     const handleResetImg = () => {
-        props.setEditStore('rawImgSrc', props.vn.coverPath);
+        props.setEditStore('coverPath', props.vn.coverPath);
         setPreviewImgSrc(
             props.vn.coverPath
                 ? convertFileSrc(props.vn.coverPath)
@@ -69,7 +69,7 @@ const SideBar = (props: {
 
         if (!path) return;
 
-        props.setEditStore('rawImgSrc', path);
+        props.setEditStore('coverPath', path);
         setPreviewImgSrc(convertFileSrc(path));
     };
 
@@ -288,7 +288,7 @@ const Content = (props: {
 };
 
 export type EditStore = {
-    rawImgSrc?: string | null;
+    coverPath?: string | null;
     title?: string | null;
     description?: string | null;
     status?: VisualNovelStatus | null;
@@ -298,7 +298,7 @@ export type EditStore = {
     executablePath?: string | null;
     launchOptions?: string | null;
     useLocaleEmulator?: boolean | null;
-    tags?: TagWithVisualNovels[];
+    tagIds?: TagWithVisualNovels[];
 };
 
 export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
@@ -310,10 +310,10 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     createEffect(() => {
         if (
             globalData.resources.tags.get.state === 'ready' &&
-            editStore.tags?.length === 0
+            editStore.tagIds?.length === 0
         ) {
             setEditStore(
-                'tags',
+                'tagIds',
                 globalData.resources.tags
                     .get()
                     .filter((tag) =>

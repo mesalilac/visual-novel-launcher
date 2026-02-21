@@ -23,20 +23,20 @@ const TagItem = (props: {
     setEditStore: SetStoreFunction<EditStore>;
 }) => {
     const isSelected = () => {
-        return props.editStore.tags?.some((x) => x.id === props.tag.id);
+        return props.editStore.tagIds?.some((x) => x.id === props.tag.id);
     };
 
     const addTag = () => {
-        props.setEditStore('tags', [
-            ...(props.editStore.tags || []),
+        props.setEditStore('tagIds', [
+            ...(props.editStore.tagIds || []),
             props.tag,
         ]);
     };
 
     const removeTag = () => {
         props.setEditStore(
-            'tags',
-            props.editStore.tags?.filter((x) => x.id !== props.tag.id),
+            'tagIds',
+            props.editStore.tagIds?.filter((x) => x.id !== props.tag.id),
         );
     };
 
@@ -108,8 +108,12 @@ export const TagsPicker = (props: {
         const direction = searchSortDirection();
 
         return list.sort((a, b) => {
-            const aSelected = props.editStore.tags?.some((x) => x.id === a.id);
-            const bSelected = props.editStore.tags?.some((x) => x.id === b.id);
+            const aSelected = props.editStore.tagIds?.some(
+                (x) => x.id === a.id,
+            );
+            const bSelected = props.editStore.tagIds?.some(
+                (x) => x.id === b.id,
+            );
 
             if (aSelected && !bSelected) return -1;
             if (!aSelected && bSelected) return 1;
@@ -153,7 +157,10 @@ export const TagsPicker = (props: {
             return [...prev, res.data];
         });
 
-        props.setEditStore('tags', [...(props.editStore.tags || []), res.data]);
+        props.setEditStore('tagIds', [
+            ...(props.editStore.tagIds || []),
+            res.data,
+        ]);
         setSearchQuery('');
     };
 
