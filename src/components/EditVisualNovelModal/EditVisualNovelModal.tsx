@@ -1,10 +1,11 @@
 import { open } from '@tauri-apps/plugin-dialog';
 import { createEffect, createSignal, For, type JSX } from 'solid-js';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
-import type {
-    TagWithVisualNovels,
-    VisualNovel,
-    VisualNovelStatus,
+import {
+    commands,
+    type TagWithVisualNovels,
+    type VisualNovel,
+    type VisualNovelStatus,
 } from '@/bindings';
 import { ModalDismissButton, TagsPicker, useModalContext } from '@/components';
 import './EditVisualNovelModal.css';
@@ -12,7 +13,7 @@ import { convertFileSrc } from '@tauri-apps/api/core';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
 import { VisualNovelStatusList } from '@/consts';
 import { useGlobalData } from '@/store';
-import { toTitleCase } from '@/utils';
+import { handleIpcError, reportIpcError, toTitleCase } from '@/utils';
 
 const Header = () => {
     return (
@@ -323,8 +324,40 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
         }
     });
 
-    const handleOnAction = () => {
+    const handleOnAction = async () => {
         setIsOpen(false);
+
+        const res = await commands
+            .updateVisualNovel(props.vn.id, {
+                coverPath: editStore.coverPath,
+                title: editStore.title,
+                description: editStore.description,
+                status: editStore.status,
+                playtime: editStore.playtime,
+                isFavorite: editStore.isFavorite,
+                notes: editStore.notes,
+                executablePath: editStore.executablePath,
+                launchOptions: editStore.launchOptions,
+                useLocaleEmulator: editStore.useLocaleEmulator,
+                tagIds: editStore.tagIds?.map((tag) => tag.id),
+            })
+            .catch(handleIpcError);
+
+        if (!res) return;
+
+        if (res.status === 'error') {
+            reportIpcError(res.error);
+            return;
+        }
+
+        globalData.resources.vns.mutate((prev) => {
+            if (!prev) return;
+
+            return prev.map((vn) => {
+                if (vn.id === props.vn.id) return res.data;
+                return vn;
+            });
+        });
     };
 
     return (
