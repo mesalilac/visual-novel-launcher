@@ -9,8 +9,8 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-    * Interface
-    * ```
+* Interface
+* ```
     *     ████████████████    
     *   ██                ██  
     *   █          ██  ██  █  
