@@ -25,6 +25,21 @@ struct VisualNovelChangeset {
     pub launch_options: Option<String>,
 }
 
+impl VisualNovelChangeset {
+    pub fn is_empty(&self) -> bool {
+        self.title.is_none()
+            && self.description.is_none()
+            && self.cover_path.is_none()
+            && self.playtime.is_none()
+            && self.status.is_none()
+            && self.is_favorite.is_none()
+            && self.notes.is_none()
+            && self.executable_path.is_none()
+            && self.use_locale_emulator.is_none()
+            && self.launch_options.is_none()
+    }
+}
+
 fn resolve_cover_path(cover_path: Option<String>, vn_dir_path: String) -> Option<String> {
     let source_path_str = cover_path.as_ref()?;
 
@@ -88,9 +103,11 @@ pub async fn update_visual_novel(
         launch_options: normalize_optional_string(payload.launch_options),
     };
 
-    update(vn_dsl::visual_novels.find(&id))
-        .set(&vn_changeset)
-        .execute(&mut conn)?;
+    if !vn_changeset.is_empty() {
+        update(vn_dsl::visual_novels.find(&id))
+            .set(&vn_changeset)
+            .execute(&mut conn)?;
+    }
 
     if let Some(tags) = payload.tag_ids {
         if tags.len() > 0 {
