@@ -312,7 +312,7 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     createEffect(() => {
         if (
             globalData.resources.tags.get.state === 'ready' &&
-            editStore.tagIds?.length === 0
+            editStore.tagIds === undefined
         ) {
             setEditStore(
                 'tagIds',
@@ -348,6 +348,7 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
 
         if (res.status === 'error') {
             reportIpcError(res.error);
+            setIsOpen(true);
             return;
         }
 
