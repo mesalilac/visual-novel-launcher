@@ -303,9 +303,7 @@ export const useVnEditStoreContext = () => {
     const context = useContext(EditVnStoreContext);
 
     if (!context) {
-        throw new Error(
-            'useVnEditStoreContext must be used within a EditVnStoreContext',
-        );
+        throw new Error("can't find EditVnStoreContext");
     }
 
     return context;
