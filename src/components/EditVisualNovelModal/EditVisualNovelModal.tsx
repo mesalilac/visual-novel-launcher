@@ -63,6 +63,7 @@ const SideBar = (props: {
     const handleBrowseImg = async () => {
         const path = await open({
             title: 'Select cover image',
+            defaultPath: props.vn.dirPath,
             filters: [
                 { name: 'Image', extensions: ['png', 'jpg', 'jpeg', 'webp'] },
             ],
