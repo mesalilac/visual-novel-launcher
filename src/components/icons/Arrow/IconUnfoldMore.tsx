@@ -8,7 +8,15 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** Arrow */
+/**
+    * Arrow
+    * ```
+    *           ████          
+    *         ██    ██        
+    *         ██    ██        
+    *           ████          
+    * ```
+    */
 export const IconUnfoldMore = (props: IconProps) => {
     return (
         <svg

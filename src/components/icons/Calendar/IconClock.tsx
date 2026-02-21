@@ -8,7 +8,22 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** Calendar */
+/**
+    * Calendar
+    * ```
+    *           ████          
+    *       ██        ██      
+    *     ██            ██    
+    *    ██      ██      ██   
+    *   ██       ██       ██  
+    *   ██       ██████   ██  
+    *   ██                ██  
+    *    ██              ██   
+    *     ██            ██    
+    *       ██        ██      
+    *           ████          
+    * ```
+    */
 export const IconClock = (props: IconProps) => {
     return (
         <svg

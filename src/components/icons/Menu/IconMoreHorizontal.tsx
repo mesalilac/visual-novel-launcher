@@ -8,7 +8,12 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** Menu */
+/**
+    * Menu
+    * ```
+    *     ████  ████  ████    
+    * ```
+    */
 export const IconMoreHorizontal = (props: IconProps) => {
     return (
         <svg

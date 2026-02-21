@@ -8,7 +8,16 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** Warning */
+/**
+    * Warning
+    * ```
+    *            ██           
+    *            ██           
+    *            ██           
+    *            ██           
+    *            ██           
+    * ```
+    */
 export const IconWarning = (props: IconProps) => {
     return (
         <svg

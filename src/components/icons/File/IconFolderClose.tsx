@@ -8,7 +8,20 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** File */
+/**
+    * File
+    * ```
+    *    █████████            
+    *   ███████████████████   
+    *   ██                ██  
+    *   ██                ██  
+    *   ██      ████      ██  
+    *   ██      ████      ██  
+    *   ██                ██  
+    *   ██                ██  
+    *    ██████████████████   
+    * ```
+    */
 export const IconFolderClose = (props: IconProps) => {
     return (
         <svg

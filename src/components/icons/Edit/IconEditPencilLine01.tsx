@@ -8,7 +8,20 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** Edit */
+/**
+    * Edit
+    * ```
+    *                ██       
+    *              ██  ██     
+    *            ███    ██    
+    *          ██  ██  ██     
+    *        ██     ███       
+    *      ██      ██         
+    *    ██      ██           
+    *    ██     █             
+    *    █████████████████    
+    * ```
+    */
 export const IconEditPencilLine01 = (props: IconProps) => {
     return (
         <svg

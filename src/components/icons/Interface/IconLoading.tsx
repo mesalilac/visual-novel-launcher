@@ -8,7 +8,11 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** Interface */
+/**
+    * Interface
+    * ```
+    * ```
+    */
 export const IconLoading = (props: IconProps) => {
     return (
         <svg

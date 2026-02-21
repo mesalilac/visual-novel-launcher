@@ -8,7 +8,17 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
     size?: string;
 }
 
-/** Interface */
+/**
+    * Interface
+    * ```
+    *                ███      
+    *              ██   ██    
+    *               █   ██    
+    *     ██   █              
+    *     ██   ██             
+    *       ███               
+    * ```
+    */
 export const IconSlider01 = (props: IconProps) => {
     return (
         <svg
