@@ -9,16 +9,16 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Arrow
-* ```
-    *              ██         
-    *              ██         
-    *              ██████     
-    *      ██████             
-    *          ██             
-    *          ██             
-    * ```
-    */
+ * Arrow
+ * ```
+ *              ██         
+ *              ██         
+ *              ██████     
+ *      ██████             
+ *          ██             
+ *          ██             
+ * ```
+ */
 export const IconShrink = (props: IconProps) => {
     return (
         <svg

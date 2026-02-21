@@ -9,11 +9,11 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Edit
-* ```
-    *       ████████████      
-    * ```
-    */
+ * Edit
+ * ```
+ *       ████████████      
+ * ```
+ */
 export const IconRemoveMinus = (props: IconProps) => {
     return (
         <svg

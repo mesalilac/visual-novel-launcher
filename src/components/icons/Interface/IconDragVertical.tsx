@@ -9,15 +9,15 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Interface
-* ```
-    *         ██    ██        
-    *        ████  ████       
-    *        ████  ████       
-    *        ████  ████       
-    *         ██    ██        
-    * ```
-    */
+ * Interface
+ * ```
+ *         ██    ██        
+ *        ████  ████       
+ *        ████  ████       
+ *        ████  ████       
+ *         ██    ██        
+ * ```
+ */
 export const IconDragVertical = (props: IconProps) => {
     return (
         <svg

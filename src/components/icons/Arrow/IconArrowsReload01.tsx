@@ -9,18 +9,18 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Arrow
-* ```
-    *                   ██    
-    *         ████████  ██    
-    *      ██         ████    
-    *     ██        █████     
-    *      █████        ██    
-    *     ████         ██     
-    *     ██  ████████        
-    *     ██                  
-    * ```
-    */
+ * Arrow
+ * ```
+ *                   ██    
+ *         ████████  ██    
+ *      ██         ████    
+ *     ██        █████     
+ *      █████        ██    
+ *     ████         ██     
+ *     ██  ████████        
+ *     ██                  
+ * ```
+ */
 export const IconArrowsReload01 = (props: IconProps) => {
     return (
         <svg

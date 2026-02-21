@@ -9,20 +9,20 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Calendar
-* ```
-    *        ██      ██       
-    *     ███  ██████  ███    
-    *    ██              ██   
-    *    ██████████████████   
-    *    ██              ██   
-    *    ██              ██   
-    *    ██              ██   
-    *    ██              ██   
-    *    ██              ██   
-    *     ████████████████    
-    * ```
-    */
+ * Calendar
+ * ```
+ *        ██      ██       
+ *     ███  ██████  ███    
+ *    ██              ██   
+ *    ██████████████████   
+ *    ██              ██   
+ *    ██              ██   
+ *    ██              ██   
+ *    ██              ██   
+ *    ██              ██   
+ *     ████████████████    
+ * ```
+ */
 export const IconCalendar = (props: IconProps) => {
     return (
         <svg

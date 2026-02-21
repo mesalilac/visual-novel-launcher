@@ -9,19 +9,19 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Interface
-* ```
-    *         ████████        
-    *         ██    ██        
-    *         ██    ███████   
-    *         ██    ██    ██  
-    *   ██    ██    ██    ██  
-    *   ██    ██    ██    ██  
-    *   ██    ██    ██    ██  
-    *   ██    ██    ██    ██  
-    *   ████████████████████  
-    * ```
-    */
+ * Interface
+ * ```
+ *         ████████        
+ *         ██    ██        
+ *         ██    ███████   
+ *         ██    ██    ██  
+ *   ██    ██    ██    ██  
+ *   ██    ██    ██    ██  
+ *   ██    ██    ██    ██  
+ *   ██    ██    ██    ██  
+ *   ████████████████████  
+ * ```
+ */
 export const IconChartBarVertical01 = (props: IconProps) => {
     return (
         <svg

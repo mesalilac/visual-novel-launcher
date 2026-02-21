@@ -9,21 +9,21 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Interface
-* ```
-    *         ████            
-    *      ██      ██         
-    *    ██          ██       
-    *   ██            ██      
-    *   ██            ██      
-    *    █            █       
-    *    ██          ██       
-    *      ██      ████       
-    *          ██      ██     
-    *                   ██    
-    *                     █   
-    * ```
-    */
+ * Interface
+ * ```
+ *         ████            
+ *      ██      ██         
+ *    ██          ██       
+ *   ██            ██      
+ *   ██            ██      
+ *    █            █       
+ *    ██          ██       
+ *      ██      ████       
+ *          ██      ██     
+ *                   ██    
+ *                     █   
+ * ```
+ */
 export const IconSearchMagnifyingGlass = (props: IconProps) => {
     return (
         <svg

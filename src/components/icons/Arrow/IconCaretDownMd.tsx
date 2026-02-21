@@ -9,13 +9,13 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Arrow
-* ```
-    *         █      █        
-    *          ██  ██         
-    *            ██           
-    * ```
-    */
+ * Arrow
+ * ```
+ *         █      █        
+ *          ██  ██         
+ *            ██           
+ * ```
+ */
 export const IconCaretDownMd = (props: IconProps) => {
     return (
         <svg

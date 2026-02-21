@@ -9,13 +9,13 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Menu
-* ```
-    *      ██████████████     
-    *      ██████████████     
-    *      ██████████████     
-    * ```
-    */
+ * Menu
+ * ```
+ *      ██████████████     
+ *      ██████████████     
+ *      ██████████████     
+ * ```
+ */
 export const IconHamburgerMd = (props: IconProps) => {
     return (
         <svg

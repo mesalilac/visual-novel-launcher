@@ -9,21 +9,21 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Arrow
-* ```
-    *           ████          
-    *       ██        ██      
-    *     ██            ██    
-    *    ██      ██      ██   
-    *   ██     ██████     ██  
-    *   ██       ██       ██  
-    *   ██       ██       ██  
-    *    ██      ██      ██   
-    *     ██            ██    
-    *       ██        ██      
-    *           ████          
-    * ```
-    */
+ * Arrow
+ * ```
+ *           ████          
+ *       ██        ██      
+ *     ██            ██    
+ *    ██      ██      ██   
+ *   ██     ██████     ██  
+ *   ██       ██       ██  
+ *   ██       ██       ██  
+ *    ██      ██      ██   
+ *     ██            ██    
+ *       ██        ██      
+ *           ████          
+ * ```
+ */
 export const IconArrowCircleUp = (props: IconProps) => {
     return (
         <svg

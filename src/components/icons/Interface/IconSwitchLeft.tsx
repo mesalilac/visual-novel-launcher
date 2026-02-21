@@ -9,17 +9,17 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Interface
-* ```
-    *     ████████████████    
-    *   ██                ██  
-    *   █  ██  ██          █  
-    *  ██ ██    ██         ██ 
-    *   █  ██  ██          █  
-    *   ██                ██  
-    *     ████████████████    
-    * ```
-    */
+ * Interface
+ * ```
+ *     ████████████████    
+ *   ██                ██  
+ *   █  ██  ██          █  
+ *  ██ ██    ██         ██ 
+ *   █  ██  ██          █  
+ *   ██                ██  
+ *     ████████████████    
+ * ```
+ */
 export const IconSwitchLeft = (props: IconProps) => {
     return (
         <svg

@@ -9,21 +9,21 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Warning
-* ```
-    *           ████          
-    *       ██        ██      
-    *     ██            ██    
-    *    ██              ██   
-    *   ██          █     ██  
-    *   ██     █  ██      ██  
-    *   ██      ██        ██  
-    *    ██              ██   
-    *     ██            ██    
-    *       ██        ██      
-    *           ████          
-    * ```
-    */
+ * Warning
+ * ```
+ *           ████          
+ *       ██        ██      
+ *     ██            ██    
+ *    ██              ██   
+ *   ██          █     ██  
+ *   ██     █  ██      ██  
+ *   ██      ██        ██  
+ *    ██              ██   
+ *     ██            ██    
+ *       ██        ██      
+ *           ████          
+ * ```
+ */
 export const IconCircleCheck = (props: IconProps) => {
     return (
         <svg

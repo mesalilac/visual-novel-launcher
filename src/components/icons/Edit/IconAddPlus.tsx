@@ -9,17 +9,17 @@ interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
 }
 
 /**
-* Edit
-* ```
-    *            ██           
-    *            ██           
-    *            ██           
-    *       ████████████      
-    *            ██           
-    *            ██           
-    *            ██           
-    * ```
-    */
+ * Edit
+ * ```
+ *            ██           
+ *            ██           
+ *            ██           
+ *       ████████████      
+ *            ██           
+ *            ██           
+ *            ██           
+ * ```
+ */
 export const IconAddPlus = (props: IconProps) => {
     return (
         <svg
