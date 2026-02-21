@@ -1,5 +1,12 @@
 import { open } from '@tauri-apps/plugin-dialog';
-import { createEffect, createSignal, For, type JSX } from 'solid-js';
+import {
+    createContext,
+    createEffect,
+    createSignal,
+    For,
+    type JSX,
+    useContext,
+} from 'solid-js';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
 import {
     commands,
@@ -42,17 +49,15 @@ const Footer = (props: { onSave: () => void }) => {
     );
 };
 
-const SideBar = (props: {
-    vn: VisualNovel;
-    editStore: EditStore;
-    setEditStore: SetStoreFunction<EditStore>;
-}) => {
+const SideBar = (props: { vn: VisualNovel }) => {
+    const editStore = useVnEditStoreContext();
+
     const [previewImgSrc, setPreviewImgSrc] = createSignal(
         props.vn.coverPath ? convertFileSrc(props.vn.coverPath) : defaultCover,
     );
 
     const handleResetImg = () => {
-        props.setEditStore('coverPath', props.vn.coverPath);
+        editStore.set('coverPath', props.vn.coverPath);
         setPreviewImgSrc(
             props.vn.coverPath
                 ? convertFileSrc(props.vn.coverPath)
@@ -71,7 +76,7 @@ const SideBar = (props: {
 
         if (!path) return;
 
-        props.setEditStore('coverPath', path);
+        editStore.set('coverPath', path);
         setPreviewImgSrc(convertFileSrc(path));
     };
 
@@ -127,11 +132,9 @@ const LabeledField = (props: {
     );
 };
 
-const Content = (props: {
-    vn: VisualNovel;
-    editStore: EditStore;
-    setEditStore: SetStoreFunction<EditStore>;
-}) => {
+const Content = (props: { vn: VisualNovel }) => {
+    const editStore = useVnEditStoreContext();
+
     const handleBrowseExe = async () => {
         const path = await open({
             title: 'Select game executable',
@@ -141,7 +144,7 @@ const Content = (props: {
 
         if (!path) return;
 
-        props.setEditStore('executablePath', path);
+        editStore.set('executablePath', path);
     };
 
     return (
@@ -149,24 +152,22 @@ const Content = (props: {
             <Block title='properties'>
                 <LabeledField name='title'>
                     <input
-                        onChange={(e) =>
-                            props.setEditStore('title', e.target.value)
-                        }
+                        onChange={(e) => editStore.set('title', e.target.value)}
                         placeholder='Title...'
                         type='text'
-                        value={props.editStore.title ?? props.vn.title}
+                        value={editStore.get.title ?? props.vn.title}
                     />
                 </LabeledField>
                 <div class='flex-row'>
                     <LabeledField name='status'>
                         <select
                             onChange={(e) => {
-                                props.setEditStore(
+                                editStore.set(
                                     'status',
                                     e.target.value as VisualNovelStatus,
                                 );
                             }}
-                            value={props.editStore.status ?? props.vn.status}
+                            value={editStore.get.status ?? props.vn.status}
                         >
                             <For each={VisualNovelStatusList}>
                                 {(status) => (
@@ -178,16 +179,14 @@ const Content = (props: {
                     <LabeledField name='playtime'>
                         <input
                             onChange={(e) =>
-                                props.setEditStore(
+                                editStore.set(
                                     'playtime',
                                     e.target.valueAsNumber,
                                 )
                             }
                             placeholder='Playtime...'
                             type='number'
-                            value={
-                                props.editStore.playtime ?? props.vn.playtime
-                            }
+                            value={editStore.get.playtime ?? props.vn.playtime}
                         />
                     </LabeledField>
                 </div>
@@ -196,14 +195,11 @@ const Content = (props: {
                         <textarea
                             class='edit-visual-novel-modal__content__description'
                             onChange={(e) =>
-                                props.setEditStore(
-                                    'description',
-                                    e.target.value,
-                                )
+                                editStore.set('description', e.target.value)
                             }
                             placeholder='Description...'
                             value={
-                                props.editStore.description ??
+                                editStore.get.description ??
                                 props.vn.description ??
                                 ''
                             }
@@ -213,12 +209,10 @@ const Content = (props: {
                         <textarea
                             class='edit-visual-novel-modal__content__description'
                             onChange={(e) =>
-                                props.setEditStore('notes', e.target.value)
+                                editStore.set('notes', e.target.value)
                             }
                             placeholder='Notes...'
-                            value={
-                                props.editStore.notes ?? props.vn.notes ?? ''
-                            }
+                            value={editStore.get.notes ?? props.vn.notes ?? ''}
                         />
                     </LabeledField>
                 </div>
@@ -228,12 +222,12 @@ const Content = (props: {
                     <LabeledField name='use locale emulator'>
                         <input
                             checked={
-                                props.editStore.useLocaleEmulator ??
+                                editStore.get.useLocaleEmulator ??
                                 props.vn.useLocaleEmulator
                             }
                             class='self-start'
                             onChange={(e) =>
-                                props.setEditStore(
+                                editStore.set(
                                     'useLocaleEmulator',
                                     e.target.checked,
                                 )
@@ -246,7 +240,7 @@ const Content = (props: {
                             <input
                                 class='flex-grow'
                                 onChange={(e) =>
-                                    props.setEditStore(
+                                    editStore.set(
                                         'executablePath',
                                         e.target.value,
                                     )
@@ -254,7 +248,7 @@ const Content = (props: {
                                 placeholder='path/to/game.exe'
                                 type='text'
                                 value={
-                                    props.editStore.executablePath ??
+                                    editStore.get.executablePath ??
                                     props.vn.executablePath
                                 }
                             />
@@ -267,12 +261,12 @@ const Content = (props: {
                 <LabeledField name='launch options'>
                     <input
                         onChange={(e) =>
-                            props.setEditStore('launchOptions', e.target.value)
+                            editStore.set('launchOptions', e.target.value)
                         }
                         placeholder='--windowed'
                         type='text'
                         value={
-                            props.editStore.launchOptions ??
+                            editStore.get.launchOptions ??
                             props.vn.launchOptions ??
                             ''
                         }
@@ -280,16 +274,13 @@ const Content = (props: {
                 </LabeledField>
             </Block>
             <Block title='tags'>
-                <TagsPicker
-                    editStore={props.editStore}
-                    setEditStore={props.setEditStore}
-                />
+                <TagsPicker />
             </Block>
         </div>
     );
 };
 
-export type EditStore = {
+export type EditVnStore = {
     coverPath?: string | null;
     title?: string | null;
     description?: string | null;
@@ -303,11 +294,28 @@ export type EditStore = {
     tagIds?: TagWithVisualNovels[];
 };
 
+const EditVnStoreContext = createContext<{
+    get: EditVnStore;
+    set: SetStoreFunction<EditVnStore>;
+}>();
+
+export const useVnEditStoreContext = () => {
+    const context = useContext(EditVnStoreContext);
+
+    if (!context) {
+        throw new Error(
+            'useVnEditStoreContext must be used within a EditVnStoreContext',
+        );
+    }
+
+    return context;
+};
+
 export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     const globalData = useGlobalData();
     const { setIsOpen } = useModalContext();
 
-    const [editStore, setEditStore] = createStore<EditStore>();
+    const [editStore, setEditStore] = createStore<EditVnStore>();
 
     createEffect(() => {
         if (
@@ -363,22 +371,18 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     };
 
     return (
-        <div class='flex-column height-100'>
-            <Header />
-            <div class='edit-visual-novel-modal'>
-                <SideBar
-                    editStore={editStore}
-                    setEditStore={setEditStore}
-                    vn={props.vn}
-                />
-                <div class='divider-vertical' />
-                <Content
-                    editStore={editStore}
-                    setEditStore={setEditStore}
-                    vn={props.vn}
-                />
+        <EditVnStoreContext.Provider
+            value={{ get: editStore, set: setEditStore }}
+        >
+            <div class='flex-column height-100'>
+                <Header />
+                <div class='edit-visual-novel-modal'>
+                    <SideBar vn={props.vn} />
+                    <div class='divider-vertical' />
+                    <Content vn={props.vn} />
+                </div>
+                <Footer onSave={handleOnAction} />
             </div>
-            <Footer onSave={handleOnAction} />
-        </div>
+        </EditVnStoreContext.Provider>
     );
 };
