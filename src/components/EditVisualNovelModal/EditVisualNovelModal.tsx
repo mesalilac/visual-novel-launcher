@@ -85,17 +85,17 @@ const SideBar = (props: {
             <div class='flex-row'>
                 <button
                     class='flex-grow'
-                    onClick={handleBrowseImg}
-                    type='button'
-                >
-                    Browse
-                </button>
-                <button
-                    class='flex-grow'
                     onClick={handleResetImg}
                     type='button'
                 >
                     Reset
+                </button>
+                <button
+                    class='flex-grow button-primary'
+                    onClick={handleBrowseImg}
+                    type='button'
+                >
+                    Browse
                 </button>
             </div>
         </div>
