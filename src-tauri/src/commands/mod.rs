@@ -33,9 +33,7 @@ impl From<diesel::result::Error> for CommandError {
 
 impl From<diesel::r2d2::PoolError> for CommandError {
     fn from(error: diesel::r2d2::PoolError) -> Self {
-        match error {
-            _ => CommandError::Database(error.to_string()),
-        }
+        CommandError::Database(error.to_string())
     }
 }
 

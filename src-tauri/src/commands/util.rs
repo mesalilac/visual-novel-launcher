@@ -115,33 +115,33 @@ pub async fn util_launch_visual_novel(
     let use_locale_emulator = vn.use_locale_emulator && settings.use_locale_emulator;
 
     let launch_options_string = vn.launch_options.unwrap_or_default();
-    let launch_options = shell_words::split(&launch_options_string).map_err(|e| {
-        CommandError::LaunchFailure(format!("Invalid launch options: {}", e.to_string()))
-    })?;
+    let launch_options = shell_words::split(&launch_options_string)
+        .map_err(|e| CommandError::LaunchFailure(format!("Invalid launch options: {e}")))?;
 
     let locale_exe_path = settings.locale_emulator_executable_path.map(PathBuf::from);
     let locale_option_string = settings.locale_emulator_launch_options.unwrap_or_default();
-    let locale_launch_options = shell_words::split(&locale_option_string).map_err(|e| {
-        CommandError::LaunchFailure(format!("Invalid launch options: {}", e.to_string()))
-    })?;
+    let locale_launch_options = shell_words::split(&locale_option_string)
+        .map_err(|e| CommandError::LaunchFailure(format!("Invalid launch options: {e}")))?;
 
-    let mut child = if use_locale_emulator && locale_exe_path.is_some() {
-        let locale_exe_path = locale_exe_path.unwrap();
+    let mut child = if let Some(locale_exe_path) = locale_exe_path {
+        if use_locale_emulator {
+            if !locale_exe_path.exists() {
+                return Err(CommandError::LaunchFailure(format!(
+                    "Locale emulator executable does not exist: {}",
+                    locale_exe_path.to_string_lossy()
+                )));
+            }
 
-        if !locale_exe_path.exists() {
-            return Err(CommandError::LaunchFailure(format!(
-                "Locale emulator executable does not exist: {}",
-                locale_exe_path.to_string_lossy()
-            )));
+            Command::new(&locale_exe_path)
+                .args(&locale_launch_options)
+                .arg(exe_path)
+                .args(&launch_options)
+                .spawn()?
+        } else {
+            Command::new(exe_path).args(&launch_options).spawn()?
         }
-
-        Command::new(&locale_exe_path)
-            .args(&locale_launch_options)
-            .arg(&exe_path)
-            .args(&launch_options)
-            .spawn()?
     } else {
-        Command::new(&exe_path).args(&launch_options).spawn()?
+        Command::new(exe_path).args(&launch_options).spawn()?
     };
 
     let pid = child.id();
@@ -156,19 +156,20 @@ pub async fn util_launch_visual_novel(
         let duration_seconds = (end_timestamp.0 / 1000) - (start_timestamp.0 / 1000);
         let new_total_seconds = duration_seconds + vn.playtime;
 
-        if let Ok(_) = update(visual_novels::table.find(&vn.id))
+        if update(visual_novels::table.find(&vn.id))
             .set((
                 visual_novels::playtime.eq(new_total_seconds),
                 visual_novels::last_time_played_at.eq(end_timestamp),
             ))
             .execute(&mut conn)
+            .is_ok()
         {
             let new_play_session = PlaySessionEntity {
                 id: nanoid!(),
                 visual_novel_id: vn.id.clone(),
                 started_time: start_timestamp,
                 ended_time: end_timestamp,
-                duration_seconds: duration_seconds,
+                duration_seconds,
             };
 
             insert_into(play_sessions::table)

@@ -58,6 +58,7 @@ where
 
 #[derive(
     specta::Type,
+    Default,
     Debug,
     Clone,
     PartialEq,
@@ -68,6 +69,7 @@ where
 )]
 #[diesel(sql_type = Text)]
 pub enum VisualNovelStatus {
+    #[default]
     Backlog,
     Playing,
     Finished,
@@ -106,11 +108,5 @@ where
             "Dropped" => Ok(Self::Dropped),
             _ => Err("Unrecognized status variant".into()),
         }
-    }
-}
-
-impl Default for VisualNovelStatus {
-    fn default() -> Self {
-        Self::Backlog
     }
 }

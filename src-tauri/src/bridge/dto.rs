@@ -87,7 +87,7 @@ impl VisualNovel {
             is_missing: entity.is_missing,
             use_locale_emulator: entity.use_locale_emulator,
             created_at: entity.created_at,
-            tags: tags_entity.into_iter().map(|e| Tag::from_db(e)).collect(),
+            tags: tags_entity.into_iter().map(Tag::from_db).collect(),
         }
     }
 }

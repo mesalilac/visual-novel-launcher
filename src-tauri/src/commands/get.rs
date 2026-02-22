@@ -86,8 +86,8 @@ pub async fn get_tags(state: AppState<'_>) -> CommandResult<Vec<TagWithVisualNov
                 .map(|(_, vn)| {
                     let tags_list: Vec<TagEntity> = tags_for_vns
                         .iter()
-                        .cloned()
                         .filter(|x| x.0.visual_novel_id == vn.id)
+                        .cloned()
                         .map(|x| x.1)
                         .collect();
 
@@ -125,7 +125,7 @@ pub async fn get_play_sessions(state: AppState<'_>) -> CommandResult<Vec<PlaySes
 
     let data = play_sessions_list
         .into_iter()
-        .map(|e| PlaySession::from_db(e))
+        .map(PlaySession::from_db)
         .collect::<Vec<PlaySession>>();
 
     Ok(data)

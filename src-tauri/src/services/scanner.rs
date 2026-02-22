@@ -100,7 +100,7 @@ pub fn sync_library(conn: &mut SqliteConnection) -> Result<(), diesel::result::E
         for vn in vns {
             let path_exists = Path::new(&vn.dir_path).exists();
 
-            if path_exists != !vn.is_missing {
+            if path_exists == vn.is_missing {
                 let new_missing_status = !path_exists;
 
                 let result = diesel::update(visual_novels::table.find(&vn.id))

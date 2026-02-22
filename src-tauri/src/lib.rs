@@ -61,10 +61,7 @@ pub fn biome(file: &Path) -> io::Result<()> {
         println!("Stdout: {}", out_message);
         println!("Stderr: {}", error_message);
 
-        return Err(io::Error::new(
-            io::ErrorKind::Other,
-            format!("Biomejs failed: {}", error_message),
-        ));
+        return Err(io::Error::other(format!("Biomejs failed: {error_message}")));
     }
 
     Ok(())
