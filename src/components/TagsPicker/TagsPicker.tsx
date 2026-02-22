@@ -5,7 +5,6 @@ import {
     IconArrowReload02,
     IconRemoveMinus,
     IconTag,
-    useVnEditStoreContext,
 } from '@/components';
 import { type SortDirectionType, sortDirectionList } from '@/consts';
 import { useGlobalData } from '@/store';
@@ -16,21 +15,22 @@ import { handleIpcError, reportIpcError } from '@/utils';
 const sortByList = ['Relevance', 'Name', 'Date Added'] as const;
 type SortByType = (typeof sortByList)[number];
 
-const TagItem = (props: { tag: TagWithVisualNovels }) => {
-    const editStore = useVnEditStoreContext();
-
+const TagItem = (props: {
+    tag: TagWithVisualNovels;
+    tagIds: TagWithVisualNovels[] | undefined;
+    onChange: (tagIds: TagWithVisualNovels[]) => void;
+}) => {
     const isSelected = () => {
-        return editStore.get.tagIds?.some((x) => x.id === props.tag.id);
+        return props.tagIds?.some((x) => x.id === props.tag.id);
     };
 
     const addTag = () => {
-        editStore.set('tagIds', [...(editStore.get.tagIds || []), props.tag]);
+        props.onChange([...(props.tagIds || []), props.tag]);
     };
 
     const removeTag = () => {
-        editStore.set(
-            'tagIds',
-            editStore.get.tagIds?.filter((x) => x.id !== props.tag.id),
+        props.onChange(
+            props.tagIds?.filter((x) => x.id !== props.tag.id) || [],
         );
     };
 
@@ -72,11 +72,17 @@ const TagItem = (props: { tag: TagWithVisualNovels }) => {
     );
 };
 
-export const TagsPicker = () => {
+/**
+ * Custom tags picker
+ * @example onChange={(tags) => editStore.set('tagIds', tags)}
+                    tagIds={editStore.get.tagIds}
+ */
+export const TagsPicker = (props: {
+    tagIds: TagWithVisualNovels[] | undefined;
+    onChange: (tagIds: TagWithVisualNovels[]) => void;
+}) => {
     const globalData = useGlobalData();
     const tagsWithVns = globalData.resources.tags;
-
-    const editStore = useVnEditStoreContext();
 
     const [searchQuery, setSearchQuery] = createSignal('');
 
@@ -100,8 +106,8 @@ export const TagsPicker = () => {
         const direction = searchSortDirection();
 
         return list.sort((a, b) => {
-            const aSelected = editStore.get.tagIds?.some((x) => x.id === a.id);
-            const bSelected = editStore.get.tagIds?.some((x) => x.id === b.id);
+            const aSelected = props.tagIds?.some((x) => x.id === a.id);
+            const bSelected = props.tagIds?.some((x) => x.id === b.id);
 
             if (aSelected && !bSelected) return -1;
             if (!aSelected && bSelected) return 1;
@@ -145,7 +151,7 @@ export const TagsPicker = () => {
             return [...prev, res.data];
         });
 
-        editStore.set('tagIds', [...(editStore.get.tagIds || []), res.data]);
+        props.onChange([...(props.tagIds || []), res.data]);
         setSearchQuery('');
     };
 
@@ -220,7 +226,15 @@ export const TagsPicker = () => {
                         <IconAddPlus /> {searchQuery()}
                     </button>
                 </Show>
-                <For each={sortedTags()}>{(tag) => <TagItem tag={tag} />}</For>
+                <For each={sortedTags()}>
+                    {(tag) => (
+                        <TagItem
+                            onChange={props.onChange}
+                            tag={tag}
+                            tagIds={props.tagIds}
+                        />
+                    )}
+                </For>
             </div>
         </div>
     );

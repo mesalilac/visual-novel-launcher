@@ -275,7 +275,10 @@ const Content = (props: { vn: VisualNovel }) => {
                 </LabeledField>
             </Block>
             <Block title='tags'>
-                <TagsPicker />
+                <TagsPicker
+                    onChange={(tags) => editStore.set('tagIds', tags)}
+                    tagIds={editStore.get.tagIds}
+                />
             </Block>
         </div>
     );
@@ -300,7 +303,7 @@ const EditVnStoreContext = createContext<{
     set: SetStoreFunction<EditVnStore>;
 }>();
 
-export const useVnEditStoreContext = () => {
+const useVnEditStoreContext = () => {
     const context = useContext(EditVnStoreContext);
 
     if (!context) {
