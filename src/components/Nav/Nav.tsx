@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { createEffect, createSignal, onCleanup, onMount } from 'solid-js';
+import { createEffect, createSignal, onCleanup } from 'solid-js';
 import { commands } from '@/bindings';
 import {
     IconAddPlus,
