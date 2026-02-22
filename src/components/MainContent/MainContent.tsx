@@ -3,6 +3,7 @@ import {
     createMemo,
     For,
     Match,
+    onCleanup,
     onMount,
     Switch,
 } from 'solid-js';
@@ -10,8 +11,11 @@ import { events } from '@/bindings';
 import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
 import './MainContent.css';
+import gsap from 'gsap';
 
 export const MainContent = () => {
+    let gridRef: HTMLDivElement | undefined;
+
     const globalData = useGlobalData();
     const vns = globalData.resources.vns;
 
@@ -37,6 +41,30 @@ export const MainContent = () => {
                 globalData.resources.playSessions.refetch();
             }
         });
+    });
+
+    createEffect(() => {
+        const list = vns.get();
+
+        if (vns.get.state === 'ready' && list && list.length > 0) {
+            const ctx = gsap.context(() => {
+                gsap.from('.visual-novel-card', {
+                    x: -100,
+                    y: 30,
+                    rotation: 2,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    stagger: {
+                        grid: 'auto',
+                        from: 'start',
+                        amount: 0.5,
+                    },
+                });
+            }, gridRef);
+
+            onCleanup(() => ctx.revert());
+        }
     });
 
     const sortedVns = createMemo(() => {
@@ -110,7 +138,7 @@ export const MainContent = () => {
                     {(vns) => (
                         <Switch>
                             <Match when={vns().length > 0}>
-                                <div class='cards-container'>
+                                <div class='cards-container' ref={gridRef}>
                                     <For each={vns()}>
                                         {(vn) => <VisualNovelCard vn={vn} />}
                                     </For>
