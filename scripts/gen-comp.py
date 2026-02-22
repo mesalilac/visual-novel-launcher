@@ -42,15 +42,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("component_name", type=str, help="Component name")
     parser.add_argument(
-        "--write", "-w", action="store_true", help="Write component to file"
+        "--dry-run",
+        "-d",
+        action="store_true",
+        help="Do a dry run and don't write to filesystem",
     )
     args = parser.parse_args()
     component_name: str = toPascalCase(args.component_name)
-    write_to_fs: bool = args.write
+    dry_run: bool = args.dry_run
 
     tsx = build_tsx(component_name)
 
-    if not write_to_fs:
+    if dry_run:
         print(tsx)
         return
 
