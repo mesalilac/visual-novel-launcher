@@ -16,6 +16,7 @@ import {
 } from '@/bindings';
 import {
     Divider,
+    IconEditPencilLine01,
     IconFolderOpen,
     IconSave,
     ModalDismissButton,
@@ -132,11 +133,15 @@ const Block = (props: { title: string; children: JSX.Element }) => {
 const LabeledField = (props: {
     name: string;
     title?: string;
+    icon?: JSX.Element;
     children: JSX.Element;
 }) => {
     return (
         <div class='flex-column flex-1'>
-            <h4 title={props.title}>{toTitleCase(props.name)}:</h4>
+            <h4 class='flex-row' title={props.title}>
+                {props.icon}
+                {toTitleCase(props.name)}:
+            </h4>
             {props.children}
         </div>
     );
