@@ -64,14 +64,11 @@ pub mod prelude {
     pub use crate::commands::{CommandError, CommandResult};
     pub use crate::database::entities::*;
     pub use crate::database::types::{Timestamp, VisualNovelStatus};
+    pub use crate::schema::*;
     pub use diesel::prelude::*;
     pub use serde::Serialize;
     use tauri::State;
     pub use tauri_helper::auto_collect_command;
-
-    pub mod schema {
-        pub use crate::schema::*;
-    }
 
     pub type AppState<'a> = State<'a, crate::AppState>;
 }

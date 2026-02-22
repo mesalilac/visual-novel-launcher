@@ -9,10 +9,6 @@ pub async fn create_visual_novel(
     state: AppState<'_>,
     payload: CreateVisualNovelRequest,
 ) -> CommandResult<VisualNovel> {
-    use schema::tags::dsl as tag_dsl;
-    use schema::visual_novels::dsl as vn_dsl;
-    use schema::visual_novels_tags::dsl as vn_tag_dsl;
-
     let mut conn = state.pool.get()?;
 
     let new_vn = VisualNovelEntity {
@@ -33,21 +29,21 @@ pub async fn create_visual_novel(
         created_at: Timestamp::now(),
     };
 
-    insert_into(vn_dsl::visual_novels)
+    insert_into(visual_novels::table)
         .values(&new_vn)
         .execute(&mut conn)?;
 
     for tag_id in payload.tag_ids {
-        insert_into(vn_tag_dsl::visual_novels_tags)
+        insert_into(visual_novels_tags::table)
             .values((
-                vn_tag_dsl::visual_novel_id.eq(&new_vn.id),
-                vn_tag_dsl::tag_id.eq(&tag_id),
+                visual_novels_tags::visual_novel_id.eq(&new_vn.id),
+                visual_novels_tags::tag_id.eq(&tag_id),
             ))
             .execute(&mut conn)?;
     }
 
     let tags = VisualNovelTagEntity::belonging_to(&new_vn)
-        .inner_join(tag_dsl::tags)
+        .inner_join(tags::table)
         .select(TagEntity::as_select())
         .load::<TagEntity>(&mut conn)?;
 
@@ -63,8 +59,6 @@ pub async fn create_tag(
     state: AppState<'_>,
     payload: CreateTagRequest,
 ) -> CommandResult<TagWithVisualNovels> {
-    use schema::tags::dsl as tag_dsl;
-
     let mut conn = state.pool.get()?;
 
     let new_tag = TagEntity {
@@ -73,7 +67,7 @@ pub async fn create_tag(
         created_at: Timestamp::now(),
     };
 
-    let inserted_tag = insert_into(tag_dsl::tags)
+    let inserted_tag = insert_into(tags::table)
         .values(&new_tag)
         .get_result::<TagEntity>(&mut conn)?;
 

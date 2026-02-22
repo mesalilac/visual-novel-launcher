@@ -7,7 +7,7 @@ use diesel::{associations::HasTable, dsl::delete, insert_into, update};
 use nanoid::nanoid;
 
 #[derive(Debug, Clone, Serialize, AsChangeset)]
-#[diesel(table_name = schema::visual_novels)]
+#[diesel(table_name = visual_novels)]
 struct VisualNovelChangeset {
     pub title: Option<String>,
     pub description: Option<String>,
@@ -73,10 +73,6 @@ pub async fn update_visual_novel(
     id: String,
     payload: UpdateVisualNovelRequest,
 ) -> CommandResult<VisualNovel> {
-    use schema::tags::dsl as tag_dsl;
-    use schema::visual_novels::dsl as vn_dsl;
-    use schema::visual_novels_tags::dsl as vn_tag_dsl;
-
     let mut conn = state.pool.get()?;
 
     let vn_dir_path = VisualNovelEntity::table()
@@ -100,13 +96,13 @@ pub async fn update_visual_novel(
     };
 
     if !vn_changeset.is_empty() {
-        update(vn_dsl::visual_novels.find(&id))
+        update(visual_novels::table.find(&id))
             .set(&vn_changeset)
             .execute(&mut conn)?;
     }
 
     if let Some(tags) = payload.tag_ids {
-        delete(vn_tag_dsl::visual_novels_tags.filter(vn_tag_dsl::visual_novel_id.eq(&id)))
+        delete(visual_novels_tags::table.filter(visual_novels_tags::visual_novel_id.eq(&id)))
             .execute(&mut conn)?;
 
         for tag in tags {
@@ -115,19 +111,19 @@ pub async fn update_visual_novel(
                 tag_id: tag,
             };
 
-            insert_into(vn_tag_dsl::visual_novels_tags)
+            insert_into(visual_novels_tags::table)
                 .values(&new_tag_junction)
                 .execute(&mut conn)?;
         }
     }
 
-    let vn_entity = vn_dsl::visual_novels
+    let vn_entity = visual_novels::table
         .find(&id)
         .select(VisualNovelEntity::as_select())
         .first::<VisualNovelEntity>(&mut conn)?;
 
     let tags = VisualNovelTagEntity::belonging_to(&vn_entity)
-        .inner_join(tag_dsl::tags)
+        .inner_join(tags::table)
         .select(TagEntity::as_select())
         .load::<TagEntity>(&mut conn)?;
 
@@ -137,7 +133,7 @@ pub async fn update_visual_novel(
 }
 
 #[derive(Debug, Clone, Serialize, AsChangeset)]
-#[diesel(table_name = schema::tags)]
+#[diesel(table_name = tags)]
 struct TagChangeset {
     pub name: String,
 }
@@ -150,15 +146,13 @@ pub async fn update_tag(
     id: String,
     payload: UpdateTagRequest,
 ) -> CommandResult<Tag> {
-    use schema::tags::dsl as tag_dsl;
-
     let mut conn = state.pool.get()?;
 
     let tag_changeset = TagChangeset {
         name: payload.name.trim().into(),
     };
 
-    let tag_entity = update(tag_dsl::tags.find(&id))
+    let tag_entity = update(tags::table.find(&id))
         .set(&tag_changeset)
         .get_result::<TagEntity>(&mut conn)?;
 
@@ -168,7 +162,7 @@ pub async fn update_tag(
 }
 
 #[derive(Debug, Clone, Serialize, AsChangeset)]
-#[diesel(table_name = schema::settings)]
+#[diesel(table_name = settings)]
 struct SettingChangeset {
     #[diesel(treat_none_as_null = true)]
     pub library_path: Option<String>,
@@ -186,8 +180,6 @@ pub async fn update_settings(
     state: AppState<'_>,
     payload: UpdateSettingsRequest,
 ) -> CommandResult<Setting> {
-    use schema::settings::dsl as setting_dsl;
-
     let mut conn = state.pool.get()?;
 
     let setting_changeset = SettingChangeset {
@@ -201,7 +193,7 @@ pub async fn update_settings(
         ),
     };
 
-    let setting_entity = update(setting_dsl::settings.find(APP_SETTINGS_ID))
+    let setting_entity = update(settings::table.find(APP_SETTINGS_ID))
         .set(&setting_changeset)
         .get_result::<SettingEntity>(&mut conn)?;
 
