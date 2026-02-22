@@ -17,7 +17,7 @@ use specta_typescript::{BigIntExportBehavior, Typescript};
 use std::io;
 use std::process::Command;
 use tauri::Manager;
-use tauri_helper::{auto_collect_command, specta_collect_commands};
+use tauri_helper::auto_collect_command;
 use tauri_specta::{collect_commands, collect_events, Builder};
 
 use crate::events::GameClosed;
@@ -30,14 +30,6 @@ pub type DbPool = diesel::r2d2::Pool<diesel::r2d2::ConnectionManager<diesel::Sql
 
 pub struct AppState {
     pub pool: DbPool,
-}
-
-// Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-#[tauri::command]
-#[auto_collect_command]
-#[specta::specta]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
 pub fn biome(file: &Path) -> io::Result<()> {
