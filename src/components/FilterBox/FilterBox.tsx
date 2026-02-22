@@ -52,7 +52,7 @@ const TagsSelectMenu = () => {
         });
     });
 
-    const toggleSelectedTag = (id: string) => {
+    const toggleTagState = (id: string) => {
         if (globalData.store.vnsFilter.tagIds.includes(id)) {
             globalData.setStore('vnsFilter', 'tagIds', [
                 ...globalData.store.vnsFilter.tagIds.filter(
@@ -153,9 +153,7 @@ const TagsSelectMenu = () => {
                                         classList={{
                                             selected: isSelected(),
                                         }}
-                                        onClick={() =>
-                                            toggleSelectedTag(tag.id)
-                                        }
+                                        onClick={() => toggleTagState(tag.id)}
                                         type='button'
                                     >
                                         <Show
