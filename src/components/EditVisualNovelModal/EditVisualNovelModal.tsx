@@ -156,6 +156,7 @@ const Content = (props: { vn: VisualNovel }) => {
                     <input
                         onChange={(e) => editStore.set('title', e.target.value)}
                         placeholder='Title...'
+                        required={true}
                         type='text'
                         value={editStore.get.title ?? props.vn.title}
                     />
@@ -180,6 +181,7 @@ const Content = (props: { vn: VisualNovel }) => {
                     </LabeledField>
                     <LabeledField name='playtime'>
                         <input
+                            min={0}
                             onChange={(e) =>
                                 editStore.set(
                                     'playtime',
@@ -187,6 +189,7 @@ const Content = (props: { vn: VisualNovel }) => {
                                 )
                             }
                             placeholder='Playtime...'
+                            required={true}
                             type='number'
                             value={editStore.get.playtime ?? props.vn.playtime}
                         />
@@ -248,6 +251,7 @@ const Content = (props: { vn: VisualNovel }) => {
                                     )
                                 }
                                 placeholder='path/to/game.exe'
+                                required={true}
                                 type='text'
                                 value={
                                     editStore.get.executablePath ??
@@ -337,6 +341,13 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     });
 
     const handleOnAction = async () => {
+        if (
+            editStore.title?.trim() === '' ||
+            (editStore.playtime ?? 0) > 0 ||
+            editStore.executablePath?.trim() === ''
+        )
+            return;
+
         setIsOpen(false);
 
         const res = await commands
