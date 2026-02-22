@@ -7,6 +7,7 @@ import {
     For,
     Match,
     onCleanup,
+    Show,
     Switch,
 } from 'solid-js';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
@@ -270,9 +271,11 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 </div>
             </Popover>
             {/* FIXME: This creates a modal for every vn. it should be a single global edit modal */}
-            <Modal isOpen={showEditModal} setIsOpen={setShowEditModal}>
-                <EditVisualNovelModal vn={props.vn} />
-            </Modal>
+            <Show when={showEditModal()}>
+                <Modal isOpen={showEditModal} setIsOpen={setShowEditModal}>
+                    <EditVisualNovelModal vn={props.vn} />
+                </Modal>
+            </Show>
             <img
                 aria-label='Visual Novel Cover'
                 class='visual-novel-card__cover'

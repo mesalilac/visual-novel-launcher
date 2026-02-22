@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { createEffect, createSignal, onCleanup } from 'solid-js';
+import { createEffect, createSignal, onCleanup, Show } from 'solid-js';
 import { commands } from '@/bindings';
 import {
     IconAddPlus,
@@ -9,9 +9,8 @@ import {
     SettingsModal,
 } from '@/components';
 import { useGlobalData } from '@/store';
-
-import './Nav.css';
 import { handleIpcError, reportIpcError } from '@/utils';
+import './Nav.css';
 
 export const Nav = () => {
     const globalData = useGlobalData();
@@ -66,12 +65,14 @@ export const Nav = () => {
                     class='icon-clickable settings-icon'
                     onClick={() => setShowSettingsModal(true)}
                 />
-                <Modal
-                    isOpen={showSettingsModal}
-                    setIsOpen={setShowSettingsModal}
-                >
-                    <SettingsModal />
-                </Modal>
+                <Show when={showSettingsModal()}>
+                    <Modal
+                        isOpen={showSettingsModal}
+                        setIsOpen={setShowSettingsModal}
+                    >
+                        <SettingsModal />
+                    </Modal>
+                </Show>
             </div>
         </nav>
     );
