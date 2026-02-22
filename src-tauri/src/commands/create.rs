@@ -27,7 +27,7 @@ pub async fn create_visual_novel(
         last_time_played_at: None,
         status: payload.status.unwrap_or_default(),
         is_favorite: false,
-        notes: None,
+        notes: payload.notes.map(|s| s.trim().into()),
         dir_path: payload.dir_path.trim().into(),
         executable_path: payload.executable_path.trim().into(),
         launch_options: payload.launch_options.map(|s| s.trim().into()),
@@ -40,24 +40,13 @@ pub async fn create_visual_novel(
         .values(&new_vn)
         .execute(&mut conn)?;
 
-    for tag in payload.tags {
-        let junction_exists = select(exists(
-            vn_tag_dsl::visual_novels_tags.filter(
-                vn_tag_dsl::visual_novel_id
-                    .eq(&new_vn.id)
-                    .and(vn_tag_dsl::tag_id.eq(&tag.id)),
-            ),
-        ))
-        .get_result::<bool>(&mut conn)?;
-
-        if !junction_exists {
-            insert_into(vn_tag_dsl::visual_novels_tags)
-                .values((
-                    vn_tag_dsl::visual_novel_id.eq(&new_vn.id),
-                    vn_tag_dsl::tag_id.eq(&tag.id),
-                ))
-                .execute(&mut conn)?;
-        }
+    for tag_id in payload.tag_ids {
+        insert_into(vn_tag_dsl::visual_novels_tags)
+            .values((
+                vn_tag_dsl::visual_novel_id.eq(&new_vn.id),
+                vn_tag_dsl::tag_id.eq(&tag_id),
+            ))
+            .execute(&mut conn)?;
     }
 
     let tags = VisualNovelTagEntity::belonging_to(&new_vn)
