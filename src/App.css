@@ -100,7 +100,7 @@ textarea {
     }
 }
 
-input:required:invalid {
+input:invalid {
     border: var(--s-size-border-sm) solid var(--s-color-border-danger);
 }
 
