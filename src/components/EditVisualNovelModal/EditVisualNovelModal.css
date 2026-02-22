@@ -14,9 +14,20 @@
     gap: var(--s-size-gap-sm);
 
     & > img {
+        cursor: pointer;
+        user-select: none;
+
         flex-grow: 1;
+
         border-radius: var(--s-size-radius-lg);
+
         object-fit: cover;
+
+        transition: filter 0.2s ease-in-out;
+
+        &:hover {
+            filter: brightness(90%);
+        }
     }
 }
 

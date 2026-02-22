@@ -84,6 +84,7 @@ const SideBar = (props: { vn: VisualNovel }) => {
         <div class='edit-visual-novel-modal__sidebar'>
             <img
                 aria-label='Visual novel cover'
+                onClick={handleBrowseImg}
                 onError={() => setPreviewImgSrc(defaultCover)}
                 src={previewImgSrc()}
             />
