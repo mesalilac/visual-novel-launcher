@@ -1,4 +1,5 @@
 export * from './EditVisualNovelModal/EditVisualNovelModal';
+export * from './FilterBox/FilterBox';
 export * from './GeneralStats/GeneralStats';
 export * from './icons';
 export * from './LoadingDots/LoadingDots';
