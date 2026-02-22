@@ -11,6 +11,8 @@
 }
 
 .modal-body {
+    will-change: transform, opacity, filter;
+
     position: relative;
 
     width: 95vw;
@@ -43,30 +45,4 @@
             linear-gradient(hsl(0deg 0 0 / 50%)) padding-box;
         mask-composite: subtract;
     }
-}
-
-.modal-anim-enter-active {
-    transition: opacity 0.3s ease-out;
-
-    .modal-body {
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-}
-
-.modal-anim-exit-active {
-    transition: opacity 0.3s ease-out;
-
-    .modal-body {
-        transition: transform 0.3s ease-out;
-    }
-}
-
-.modal-anim-enter-from,
-.modal-anim-exit-to {
-    opacity: 0;
-}
-
-.modal-anim-enter-to .modal-body,
-.modal-anim-exit-from .modal-body {
-    transform: scale(0.9) translateY(10px);
 }

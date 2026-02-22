@@ -76,7 +76,52 @@ export const Modal = (props: {
 
     return (
         <Portal>
-            <Transition name='modal-anim'>
+            <Transition
+                onEnter={(el, done) => {
+                    const body = el.querySelector('.modal-body');
+
+                    const animation = body?.animate(
+                        [
+                            {
+                                transform: 'scale(0.95) translateY(24px)',
+                                filter: 'blur(2px)',
+                            },
+                            {
+                                transform: 'scale(1) translateY(0px)',
+                                filter: 'blur(0px)',
+                            },
+                        ],
+                        {
+                            duration: 60,
+                            easing: 'ease-in-out',
+                        },
+                    );
+
+                    animation?.finished.then(done);
+                }}
+                onExit={(el, done) => {
+                    const body = el.querySelector('.modal-body');
+
+                    const animation = body?.animate(
+                        [
+                            {
+                                transform: 'scale(1) translateY(0)',
+                                filter: 'blur(0px)',
+                            },
+                            {
+                                transform: 'scale(0.95) translateY(24px)',
+                                filter: 'blur(2px)',
+                            },
+                        ],
+                        {
+                            duration: 40,
+                            easing: 'ease-in-out',
+                        },
+                    );
+
+                    animation?.finished.then(done);
+                }}
+            >
                 <Show when={props.isOpen()}>
                     <div class='modal-container' onClick={close} role='none'>
                         <div
