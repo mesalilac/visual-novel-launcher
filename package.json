@@ -16,8 +16,7 @@
         "@tauri-apps/plugin-dialog": "~2.6.0",
         "@tauri-apps/plugin-opener": "^2",
         "gsap": "^3.14.2",
-        "solid-js": "^1.9.3",
-        "solid-transition-group": "^0.3.0"
+        "solid-js": "^1.9.3"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.3.11",
