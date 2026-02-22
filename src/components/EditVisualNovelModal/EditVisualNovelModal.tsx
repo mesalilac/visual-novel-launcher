@@ -16,6 +16,8 @@ import {
 } from '@/bindings';
 import {
     Divider,
+    IconFolderOpen,
+    IconSave,
     ModalDismissButton,
     TagsPicker,
     useModalContext,
@@ -47,7 +49,7 @@ const Footer = (props: { onSave: () => void }) => {
                     onClick={props.onSave}
                     type='button'
                 >
-                    Save
+                    <IconSave /> Save
                 </button>
             </div>
         </>
@@ -107,6 +109,7 @@ const SideBar = (props: { vn: VisualNovel }) => {
                     onClick={handleBrowseImg}
                     type='button'
                 >
+                    <IconFolderOpen />
                     Browse
                 </button>
             </div>

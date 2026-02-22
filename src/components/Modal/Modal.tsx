@@ -10,6 +10,7 @@ import { Portal } from 'solid-js/web';
 import { Transition } from 'solid-transition-group';
 
 import './Modal.css';
+import { IconCloseMd } from '@/components';
 
 type ModalContextData = {
     isOpen: Accessor<boolean>;
@@ -33,7 +34,11 @@ export const ModalDismissButton = (props: { children?: JSX.Element }) => {
 
     return (
         <button onClick={() => setIsOpen(false)} type='button'>
-            {props.children || 'Cancel'}
+            {props.children || (
+                <>
+                    <IconCloseMd /> Cancel
+                </>
+            )}
         </button>
     );
 };
