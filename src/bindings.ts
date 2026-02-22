@@ -278,7 +278,6 @@ export type CommandError =
     | { kind: 'Io'; message: string }
     | { kind: 'ScanFailure'; message: string }
     | { kind: 'LaunchFailure'; message: string }
-    | { kind: 'AlreadyRunning' }
     | { kind: 'Unknown'; message: string };
 export type CreateTagRequest = { name: string };
 export type CreateVisualNovelRequest = {
@@ -286,14 +285,12 @@ export type CreateVisualNovelRequest = {
     description: string | null;
     coverPath: string | null;
     playtime: number;
-    isFavorite: boolean;
     notes: string | null;
     dirPath: string;
     status: VisualNovelStatus | null;
     executablePath: string;
     launchOptions: string | null;
-    useLocaleEmulator: boolean;
-    tags: Tag[];
+    tagIds: string[];
 };
 export type GameClosed = {
     pid: number;
