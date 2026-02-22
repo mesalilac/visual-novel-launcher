@@ -87,6 +87,7 @@ const SideBar = (props: { vn: VisualNovel }) => {
                 onClick={handleBrowseImg}
                 onError={() => setPreviewImgSrc(defaultCover)}
                 src={previewImgSrc()}
+                title={props.vn.coverPath ?? 'No cover'}
             />
             <div class='flex-row'>
                 <button
