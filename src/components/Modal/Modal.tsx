@@ -1,16 +1,16 @@
+import gsap from 'gsap';
 import type { Accessor, JSX, Setter } from 'solid-js';
 import {
     createContext,
     createEffect,
+    createSignal,
     onCleanup,
     Show,
     useContext,
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { Transition } from 'solid-transition-group';
-
-import './Modal.css';
 import { IconCloseMd } from '@/components';
+import './Modal.css';
 
 type ModalContextData = {
     isOpen: Accessor<boolean>;
@@ -48,6 +48,11 @@ export const Modal = (props: {
     setIsOpen: Setter<boolean>;
     children: JSX.Element;
 }) => {
+    let modalOverlayRef: HTMLDivElement | undefined;
+    let modalContentRef: HTMLDivElement | undefined;
+
+    const [shouldRender, setShouldRender] = createSignal(false);
+
     const close = () => {
         props.setIsOpen(false);
     };
@@ -60,6 +65,28 @@ export const Modal = (props: {
 
     createEffect(() => {
         if (props.isOpen()) {
+            setShouldRender(true);
+            requestAnimationFrame(() => {
+                if (modalOverlayRef && modalContentRef) {
+                    gsap.timeline()
+                        .to(modalOverlayRef, {
+                            autoAlpha: 1,
+                            duration: 0.2,
+                            ease: 'power2.out',
+                        })
+                        .from(
+                            modalContentRef,
+                            {
+                                y: 20,
+                                autoAlpha: 0,
+                                duration: 0.2,
+                                ease: 'back.out(1.7)',
+                            },
+                            '-=0.2',
+                        );
+                }
+            });
+
             const originalOverflow = window.getComputedStyle(
                 document.body,
             ).overflow;
@@ -71,76 +98,55 @@ export const Modal = (props: {
                 document.body.style.overflow = originalOverflow;
                 document.removeEventListener('keydown', handleKeydown);
             });
+        } else {
+            if (modalOverlayRef && modalContentRef) {
+                gsap.timeline({
+                    onComplete: () => {
+                        setShouldRender(false);
+                    },
+                })
+                    .to(modalContentRef, {
+                        y: 20,
+                        opacity: 0,
+                        scale: 0.95,
+                        duration: 0.2,
+                        ease: 'power2.in',
+                    })
+                    .to(
+                        modalOverlayRef,
+                        { autoAlpha: 0, duration: 0.2 },
+                        '-=0.1',
+                    );
+            }
         }
     });
 
     return (
-        <Portal>
-            <Transition
-                onEnter={(el, done) => {
-                    const body = el.querySelector('.modal-body');
-
-                    const animation = body?.animate(
-                        [
-                            {
-                                transform: 'scale(0.95) translateY(24px)',
-                                filter: 'blur(2px)',
-                            },
-                            {
-                                transform: 'scale(1) translateY(0px)',
-                                filter: 'blur(0px)',
-                            },
-                        ],
-                        {
-                            duration: 60,
-                            easing: 'ease-in-out',
-                        },
-                    );
-
-                    animation?.finished.then(done);
-                }}
-                onExit={(el, done) => {
-                    const body = el.querySelector('.modal-body');
-
-                    const animation = body?.animate(
-                        [
-                            {
-                                transform: 'scale(1) translateY(0)',
-                                filter: 'blur(0px)',
-                            },
-                            {
-                                transform: 'scale(0.95) translateY(24px)',
-                                filter: 'blur(2px)',
-                            },
-                        ],
-                        {
-                            duration: 40,
-                            easing: 'ease-in-out',
-                        },
-                    );
-
-                    animation?.finished.then(done);
-                }}
-            >
-                <Show when={props.isOpen()}>
-                    <div class='modal-container' onClick={close} role='none'>
-                        <div
-                            class='modal-body'
-                            onClick={(e) => e.stopPropagation()}
-                            role='none'
+        <Show when={shouldRender()}>
+            <Portal>
+                <div
+                    class='modal-container'
+                    onClick={close}
+                    ref={modalOverlayRef}
+                    role='none'
+                >
+                    <div
+                        class='modal-body'
+                        onClick={(e) => e.stopPropagation()}
+                        ref={modalContentRef}
+                        role='none'
+                    >
+                        <ModalContext.Provider
+                            value={{
+                                isOpen: props.isOpen,
+                                setIsOpen: props.setIsOpen,
+                            }}
                         >
-                            <ModalContext.Provider
-                                value={{
-                                    isOpen: props.isOpen,
-                                    setIsOpen: props.setIsOpen,
-                                }}
-                            >
-                                {props.children}
-                            </ModalContext.Provider>
-                        </div>
+                            {props.children}
+                        </ModalContext.Provider>
                     </div>
-                </Show>
-            </Transition>
-        </Portal>
+                </div>
+            </Portal>
+        </Show>
     );
 };
