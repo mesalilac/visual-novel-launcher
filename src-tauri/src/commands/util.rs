@@ -20,7 +20,6 @@ use crate::APP_SETTINGS_ID;
 pub async fn util_scan_library(state: AppState<'_>) -> CommandResult<Vec<VisualNovel>> {
     use schema::settings::dsl as setting_dsl;
     use schema::tags::dsl as tag_dsl;
-    use schema::visual_novels::dsl as vn_dsl;
 
     let mut conn = state.pool.get()?;
 

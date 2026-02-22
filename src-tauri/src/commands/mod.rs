@@ -68,7 +68,7 @@ pub mod prelude {
     pub use crate::database::entities::*;
     pub use crate::database::types::{Timestamp, VisualNovelStatus};
     pub use diesel::prelude::*;
-    pub use serde::{Deserialize, Serialize};
+    pub use serde::Serialize;
     use tauri::State;
     pub use tauri_helper::auto_collect_command;
 
