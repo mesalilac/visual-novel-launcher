@@ -1,4 +1,5 @@
-import { createSignal } from 'solid-js';
+import { gsap } from 'gsap';
+import { createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { commands } from '@/bindings';
 import {
     IconAddPlus,
@@ -15,7 +16,11 @@ import { handleIpcError, reportIpcError } from '@/utils';
 export const Nav = () => {
     const globalData = useGlobalData();
     const vns = globalData.resources.vns;
+    const vnsTotalCounter = {
+        val: 0,
+    };
 
+    const [vnsCount, setVnsCount] = createSignal(0);
     const [showSettingsModal, setShowSettingsModal] = createSignal(false);
 
     const refresh = async () => {
@@ -31,11 +36,23 @@ export const Nav = () => {
         vns.refetch();
     };
 
+    createEffect(() => {
+        const total = globalData.store.vnsFilter.totalCount;
+
+        const tween = gsap.to(vnsTotalCounter, {
+            val: total,
+            duration: 0.3,
+            onUpdate: () => {
+                setVnsCount(Math.floor(vnsTotalCounter.val));
+            },
+        });
+
+        onCleanup(() => tween.kill());
+    });
+
     return (
         <nav class='flex-row justify-between'>
-            <h2>
-                Visual Novel library ({globalData.store.vnsFilter.totalCount})
-            </h2>
+            <h2>Visual Novel library ({vnsCount()})</h2>
             <div class='flex-row gap-lg'>
                 <IconArrowReload02
                     class='icon-clickable refresh-icon'
