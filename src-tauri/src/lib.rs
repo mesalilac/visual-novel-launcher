@@ -17,7 +17,6 @@ use specta_typescript::{BigIntExportBehavior, Typescript};
 use std::io;
 use std::process::Command;
 use tauri::Manager;
-use tauri_helper::auto_collect_command;
 use tauri_specta::{collect_commands, collect_events, Builder};
 
 use crate::events::GameClosed;
