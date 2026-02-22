@@ -53,9 +53,26 @@ export const Modal = (props: {
 
     const [shouldRender, setShouldRender] = createSignal(false);
 
-    const close = () => {
-        props.setIsOpen(false);
+    const animateOut = () => {
+        if (!modalOverlayRef || !modalContentRef) return;
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                setShouldRender(false);
+                props.setIsOpen(false);
+            },
+        });
+
+        tl.to(modalContentRef, {
+            y: 20,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.2,
+            ease: 'power2.in',
+        }).to(modalOverlayRef, { autoAlpha: 0, duration: 0.2 }, '-=0.1');
     };
+
+    const close = () => animateOut();
 
     const handleKeydown = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
@@ -99,25 +116,7 @@ export const Modal = (props: {
                 document.removeEventListener('keydown', handleKeydown);
             });
         } else {
-            if (modalOverlayRef && modalContentRef) {
-                gsap.timeline({
-                    onComplete: () => {
-                        setShouldRender(false);
-                    },
-                })
-                    .to(modalContentRef, {
-                        y: 20,
-                        opacity: 0,
-                        scale: 0.95,
-                        duration: 0.2,
-                        ease: 'power2.in',
-                    })
-                    .to(
-                        modalOverlayRef,
-                        { autoAlpha: 0, duration: 0.2 },
-                        '-=0.1',
-                    );
-            }
+            if (shouldRender()) animateOut();
         }
     });
 
