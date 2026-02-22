@@ -2,7 +2,7 @@ use crate::database::{
     entities::VisualNovelEntity,
     types::{Timestamp, VisualNovelStatus},
 };
-use crate::schema::visual_novels::dsl as vn_dsl;
+use crate::schema::visual_novels;
 use diesel::dsl::{exists, select};
 use diesel::prelude::*;
 use diesel::SqliteConnection;
@@ -76,12 +76,12 @@ pub fn scan_library(
         };
 
         let vn_exists = select(exists(
-            vn_dsl::visual_novels.filter(vn_dsl::dir_path.eq(&vn.dir_path)),
+            visual_novels::table.filter(visual_novels::dir_path.eq(&vn.dir_path)),
         ))
         .get_result::<bool>(conn)?;
 
         if !vn_exists {
-            let new_vn = diesel::insert_into(vn_dsl::visual_novels)
+            let new_vn = diesel::insert_into(visual_novels::table)
                 .values(vn)
                 .returning(VisualNovelEntity::as_returning())
                 .get_result(conn)?;
@@ -94,7 +94,7 @@ pub fn scan_library(
 }
 
 pub fn sync_library(conn: &mut SqliteConnection) -> Result<(), diesel::result::Error> {
-    let vns = vn_dsl::visual_novels.load::<VisualNovelEntity>(conn)?;
+    let vns = visual_novels::table.load::<VisualNovelEntity>(conn)?;
 
     conn.transaction(|conn| {
         for vn in vns {
@@ -103,8 +103,8 @@ pub fn sync_library(conn: &mut SqliteConnection) -> Result<(), diesel::result::E
             if path_exists != !vn.is_missing {
                 let new_missing_status = !path_exists;
 
-                let result = diesel::update(vn_dsl::visual_novels.find(&vn.id))
-                    .set(vn_dsl::is_missing.eq(new_missing_status))
+                let result = diesel::update(visual_novels::table.find(&vn.id))
+                    .set(visual_novels::is_missing.eq(new_missing_status))
                     .execute(conn);
 
                 match result {
