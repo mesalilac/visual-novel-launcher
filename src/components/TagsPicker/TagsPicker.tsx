@@ -1,6 +1,7 @@
 import { createMemo, createSignal, For, Show } from 'solid-js';
 import { commands, type TagWithVisualNovels } from '@/bindings';
 import {
+    Divider,
     IconAddPlus,
     IconArrowReload02,
     IconRemoveMinus,
@@ -215,7 +216,7 @@ export const TagsPicker = (props: {
                     onClick={refresh}
                 />
             </div>
-            <div class='divider' />
+            <Divider />
             <div class='flex-row padding-sm overflow-auto'>
                 <Show when={searchQuery()}>
                     <button

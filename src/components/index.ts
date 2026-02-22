@@ -1,3 +1,4 @@
+export * from './Divider/Divider';
 export * from './EditVisualNovelModal/EditVisualNovelModal';
 export * from './FilterBox/FilterBox';
 export * from './GeneralStats/GeneralStats';

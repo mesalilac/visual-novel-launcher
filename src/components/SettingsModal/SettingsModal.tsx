@@ -2,6 +2,7 @@ import { ask, open } from '@tauri-apps/plugin-dialog';
 import { createEffect, createSignal, Show } from 'solid-js';
 import { commands } from '@/bindings';
 import {
+    Divider,
     GeneralStats,
     ModalDismissButton,
     TagsManager,
@@ -151,7 +152,7 @@ export const SettingsModal = () => {
     return (
         <div class='flex-column height-100'>
             <h2>Settings</h2>
-            <div class='divider margin-bottom-lg' />
+            <Divider class='margin-bottom-lg' />
             <div class='flex-column overflow-auto padding-md'>
                 <Show when={settings.get.state === 'ready'}>
                     <div class='flex-column gap-lg margin-bottom-lg'>
@@ -248,7 +249,7 @@ export const SettingsModal = () => {
                     </div>
                 </Show>
             </div>
-            <div class='divider margin-top-auto' />
+            <Divider class='margin-top-auto' />
             <div class='flex-row self-end'>
                 <ModalDismissButton />
                 <button

@@ -14,7 +14,12 @@ import {
     type VisualNovel,
     type VisualNovelStatus,
 } from '@/bindings';
-import { ModalDismissButton, TagsPicker, useModalContext } from '@/components';
+import {
+    Divider,
+    ModalDismissButton,
+    TagsPicker,
+    useModalContext,
+} from '@/components';
 import './EditVisualNovelModal.css';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
@@ -26,7 +31,7 @@ const Header = () => {
     return (
         <>
             <h2>Edit Visual Novel</h2>
-            <div class='divider margin-bottom-lg' />
+            <Divider class='margin-bottom-lg' />
         </>
     );
 };
@@ -34,7 +39,7 @@ const Header = () => {
 const Footer = (props: { onSave: () => void }) => {
     return (
         <>
-            <div class='divider margin-top-auto' />
+            <Divider class='margin-top-auto' />
             <div class='flex-row self-end'>
                 <ModalDismissButton />
                 <button
@@ -114,7 +119,7 @@ const Block = (props: { title: string; children: JSX.Element }) => {
         <div class='edit-visual-novel-modal__block'>
             <div class='flex-column'>
                 <h3>{toTitleCase(props.title)}</h3>
-                <div class='divider margin-bottom-lg' />
+                <Divider class='margin-bottom-lg' />
             </div>
             <div class='flex-column gap-lg'>{props.children}</div>
         </div>
@@ -392,7 +397,7 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
                 <Header />
                 <div class='edit-visual-novel-modal'>
                     <SideBar vn={props.vn} />
-                    <div class='divider-vertical' />
+                    <Divider vertical />
                     <Content vn={props.vn} />
                 </div>
                 <Footer onSave={handleOnAction} />

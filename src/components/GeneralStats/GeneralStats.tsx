@@ -7,7 +7,7 @@ import type {
     GeneralStats as GeneralStatsType,
     VisualNovelStatus,
 } from '@/bindings';
-import { IconChartBarVertical01 } from '../icons';
+import { Divider, IconChartBarVertical01 } from '@/components';
 
 const StatsBlock = (props: {
     title: string;
@@ -158,7 +158,7 @@ export const GeneralStats = () => {
                                 <span class='text-truncate flex-row'>
                                     <IconChartBarVertical01 /> Status Overview
                                 </span>
-                                <div class='divider' />
+                                <Divider />
                                 <StatusChart stats={stats} />
                                 <StatusOverviewItem
                                     count={stats.playingCount}

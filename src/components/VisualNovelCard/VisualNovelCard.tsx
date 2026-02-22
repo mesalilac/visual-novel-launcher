@@ -12,6 +12,7 @@ import {
 import defaultCover from '@/assets/cover-image-placeholder.svg';
 import { commands, type VisualNovel } from '@/bindings';
 import {
+    Divider,
     EditVisualNovelModal,
     IconCalendar,
     IconClock,
@@ -313,7 +314,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                         )}
                     </For>
                 </div>
-                <div class='divider' />
+                <Divider />
                 <div class='flex-row'>
                     <div class='flex-row visual-novel-card__icon'>
                         <IconClock />

@@ -3,6 +3,7 @@ import './FilterBox.css';
 import { createMemo, For, Show } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import {
+    Divider,
     IconCaretDownMd,
     IconCaretUpMd,
     IconCheckboxCheck,
@@ -138,7 +139,7 @@ const TagsSelectMenu = () => {
                             <IconCheckboxUnchecked />
                         </button>
                     </div>
-                    <div class='divider' />
+                    <Divider />
                     <div class='multiselect-menu__list'>
                         <For each={sortedTags()}>
                             {(tag) => {
