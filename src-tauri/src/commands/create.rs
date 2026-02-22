@@ -1,8 +1,5 @@
 use super::prelude::*;
-use diesel::{
-    dsl::{exists, select},
-    insert_into,
-};
+use diesel::insert_into;
 use nanoid::nanoid;
 
 #[tauri::command]

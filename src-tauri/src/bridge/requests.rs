@@ -1,4 +1,4 @@
-use crate::{bridge::dto::Tag, database::types::VisualNovelStatus};
+use crate::database::types::VisualNovelStatus;
 use serde::{Deserialize, Serialize};
 
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
