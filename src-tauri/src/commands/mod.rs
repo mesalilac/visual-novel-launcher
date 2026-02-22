@@ -18,9 +18,6 @@ pub enum CommandError {
     #[error("Failed to launch game: {0}")]
     LaunchFailure(String),
 
-    #[error("Game is already running")]
-    AlreadyRunning,
-
     #[error("An unexpected error occurred: {0}")]
     Unknown(String),
 }
