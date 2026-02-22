@@ -122,8 +122,8 @@ export const Modal = (props: {
     });
 
     return (
-        <Show when={shouldRender()}>
-            <Portal>
+        <Portal>
+            <Show when={shouldRender()}>
                 <div
                     class='modal-container'
                     onClick={close}
@@ -146,7 +146,7 @@ export const Modal = (props: {
                         </ModalContext.Provider>
                     </div>
                 </div>
-            </Portal>
-        </Show>
+            </Show>
+        </Portal>
     );
 };
