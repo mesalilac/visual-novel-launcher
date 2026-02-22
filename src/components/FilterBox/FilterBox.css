@@ -1,0 +1,69 @@
+.multiselect-menu__trigger {
+    padding: var(--s-size-padding-sm) var(--s-size-padding-md);
+    border: var(--s-size-border-sm) solid var(--s-color-border-subtle);
+    border-radius: var(--s-size-radius-md);
+
+    color: var(--s-color-foreground-default);
+
+    background-color: hsl(from var(--s-color-background-surface-4) h s l / 40%);
+
+    &::placeholder {
+        color: var(--s-color-foreground-quaternary);
+    }
+
+    &:hover {
+        background-color: hsl(
+            from var(--s-color-background-surface-4-hovered) h s l /
+            40%
+        );
+    }
+}
+
+.multiselect__menu {
+    overscroll-behavior: contain;
+    max-height: 650px;
+    color: inherit;
+}
+
+.multiselect__menu__filter {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--s-size-gap-sm);
+    align-items: stretch;
+}
+
+.multiselect-menu__list {
+    scrollbar-gutter: stable;
+
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: var(--s-size-gap-sm);
+
+    padding: var(--s-size-padding-xs);
+}
+
+.multiselect-menu__item {
+    justify-content: flex-start;
+    text-wrap: nowrap;
+    background: none;
+    transition: none;
+
+    &.selected {
+        background-color: hsl(from var(--s-color-background-brand) h s l / 40%);
+
+        &:hover {
+            background-color: hsl(
+                from var(--s-color-background-brand-hovered) h s l /
+                40%
+            );
+        }
+
+        &:active {
+            background-color: hsl(
+                from var(--s-color-background-brand-pressed) h s l /
+                40%
+            );
+        }
+    }
+}
