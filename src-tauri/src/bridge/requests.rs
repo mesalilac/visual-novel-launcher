@@ -61,14 +61,12 @@ pub struct CreateVisualNovelRequest {
     pub description: Option<String>,
     pub cover_path: Option<String>,
     pub playtime: i64,
-    pub is_favorite: bool,
     pub notes: Option<String>,
     pub dir_path: String,
     pub status: Option<VisualNovelStatus>,
     pub executable_path: String,
     pub launch_options: Option<String>,
-    pub use_locale_emulator: bool,
-    pub tags: Vec<Tag>,
+    pub tag_ids: Vec<String>,
 }
 
 #[derive(specta::Type, Debug, Clone, Deserialize, Serialize)]
