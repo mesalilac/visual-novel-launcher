@@ -16,7 +16,6 @@ import {
 } from '@/bindings';
 import {
     Divider,
-    IconEditPencilLine01,
     IconFolderOpen,
     IconSave,
     ModalDismissButton,
