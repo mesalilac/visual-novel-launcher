@@ -236,11 +236,6 @@ button {
     margin: var(--s-size-margin-lg);
 }
 
-.input-error {
-    border-color: var(--s-color-border-danger);
-    color: var(--s-color-foreground-danger);
-}
-
 .favorite-icon {
     color: var(--s-color-background-danger);
 
