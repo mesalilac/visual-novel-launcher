@@ -4,10 +4,23 @@ import click
 
 from pathlib import Path
 from .logger import logger
+from enum import Enum, auto
 
 
 COMPONENTS_DIR_PATH = Path("src/components")
 INDEX_FILE_PATH = COMPONENTS_DIR_PATH / "index.ts"
+
+BASE_INDENT_BY = 4
+
+
+def get_indent(level: int) -> str:
+    return " " * BASE_INDENT_BY * level
+
+
+# TODO: add rest of types
+class ComponentType(Enum):
+    base = auto()  # Default generic type
+    void = auto()  # Component without children
 
 
 def toPascalCase(s: str) -> str:
@@ -16,16 +29,41 @@ def toPascalCase(s: str) -> str:
     return "".join(word.capitalize() for word in s.split())
 
 
-def build_tsx(comp_name: str) -> str:
-    indent = " " * 4
+def build_tsx(comp_name: str, type: ComponentType) -> str:
+    component_type_import_name = "Component"
+
+    if type == ComponentType.void:
+        component_type_import_name = "VoidComponent"
 
     buffer = StringIO()
 
+    buffer.write("import type {\n")
+    buffer.write(get_indent(1))
+    buffer.write(f"{component_type_import_name},\n")
+
+    if type != ComponentType.void:
+        buffer.write(get_indent(1))
+        buffer.write("JSX\n")
+    buffer.write("} from 'solid-js';\n")
+    buffer.write("\n")
+
     buffer.write(f"import './{comp_name}.css';\n")
     buffer.write("\n")
-    buffer.write(f"export const {comp_name} = () => {{\n")
-    buffer.write(indent)
-    buffer.write(f"return <>{comp_name} component</>;\n")
+
+    buffer.write("type Props = {\n")
+    buffer.write(get_indent(1))
+    buffer.write("ref?: HTMLDivElement | ((el: HTMLDivElement) => void);\n")
+    if type != ComponentType.void:
+        buffer.write(get_indent(1))
+        buffer.write("children?: JSX.Element;\n")
+    buffer.write("}\n")
+
+    buffer.write("\n")
+    buffer.write(
+        f"export const {comp_name}: {component_type_import_name}<Props> = (props: Props) => {{\n"
+    )
+    buffer.write(get_indent(1))
+    buffer.write(f"return <div>{comp_name} component</div>;\n")
     buffer.write("};\n")
 
     content = buffer.getvalue()
@@ -65,14 +103,25 @@ def init():
 
 @cli.command(help="Generate components")
 @click.argument("component_name", type=str)
-def gen(component_name: str):
+@click.option(
+    "--type",
+    "-t",
+    type=click.Choice(ComponentType),
+    default=ComponentType.base,
+    help="SolidJS Component Type",
+)
+def gen(component_name: str, type: ComponentType):
     if not COMPONENTS_DIR_PATH.exists():
         logger.error(f"Components directory not found at '{COMPONENTS_DIR_PATH}'")
         sys.exit(1)
 
     component_name = toPascalCase(component_name)
 
-    tsx = build_tsx(component_name)
+    tsx = build_tsx(component_name, type)
+
+    print(tsx)
+
+    sys.exit(0)
 
     component_path = COMPONENTS_DIR_PATH / component_name
 
