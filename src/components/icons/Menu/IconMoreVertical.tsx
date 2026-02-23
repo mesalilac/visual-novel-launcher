@@ -27,6 +27,7 @@ export const IconMoreVertical = (props: IconProps) => {
             height={props.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
+            ref={props.ref}
             {...props}
         >
             <path
