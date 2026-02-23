@@ -96,6 +96,7 @@ def gen(component_name: str):
         f.write(f"export * from './{component_name}/{component_name}';\n")
 
     logger.info(f"Component created '{component_path}'")
+    logger.info(f"Component added to index file '{INDEX_FILE_PATH}'")
 
 
 if __name__ == "__main__":
