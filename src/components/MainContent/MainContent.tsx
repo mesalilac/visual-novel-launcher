@@ -49,8 +49,7 @@ export const MainContent = () => {
         if (vns.get.state === 'ready' && list && list.length > 0) {
             const ctx = gsap.context(() => {
                 gsap.from('.visual-novel-card', {
-                    x: -100,
-                    y: 30,
+                    y: 100,
                     rotation: 2,
                     opacity: 0,
                     duration: 0.8,
