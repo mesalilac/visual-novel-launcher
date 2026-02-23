@@ -1,6 +1,7 @@
 import { useGlobalData } from '@/store';
 import './FilterBox.css';
-import { createMemo, For, Show } from 'solid-js';
+import gsap from 'gsap';
+import { createEffect, createMemo, For, Show } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import {
     Divider,
@@ -23,6 +24,7 @@ const TagsSelectMenu = () => {
     const globalData = useGlobalData();
 
     let popoverMenuRef: HTMLButtonElement | undefined;
+    let popoverRef!: HTMLDivElement;
 
     const [store, setStore] = createStore({
         open: false,
@@ -70,6 +72,17 @@ const TagsSelectMenu = () => {
         ]);
     };
 
+    createEffect(() => {
+        if (store.open) {
+            gsap.timeline().from(popoverRef, {
+                y: 20,
+                autoAlpha: 0,
+                duration: 0.2,
+                ease: 'circ',
+            });
+        }
+    });
+
     return (
         <>
             <button
@@ -104,7 +117,10 @@ const TagsSelectMenu = () => {
                 targetPositionArea='bottom center'
                 triggerElement={popoverMenuRef}
             >
-                <div class='flex-column multiselect__menu'>
+                <div
+                    class='flex-column margin-top-xs multiselect__menu'
+                    ref={popoverRef}
+                >
                     <div class='multiselect__menu__filter'>
                         <input
                             onInput={(e) =>
