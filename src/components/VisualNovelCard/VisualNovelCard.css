@@ -46,7 +46,8 @@
 
     width: 300px;
     height: 400px;
-    border-radius: var(--s-size-radius-lg);
+    border-top-left-radius: var(--s-size-radius-lg);
+    border-top-right-radius: var(--s-size-radius-lg);
 
     &.running {
         outline: var(--s-size-border-lg) solid var(--s-color-background-info);
