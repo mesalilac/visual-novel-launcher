@@ -286,7 +286,6 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     </button>
                 </div>
             </Popover>
-            {/* FIXME: This creates a modal for every vn. it should be a single global edit modal */}
             <Show when={showEditModal()}>
                 <Modal isOpen={showEditModal} setIsOpen={setShowEditModal}>
                     <EditVisualNovelModal vn={props.vn} />
