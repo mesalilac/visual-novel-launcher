@@ -1,5 +1,6 @@
 import './Select.css';
 import gsap from 'gsap';
+import { Flip } from 'gsap/Flip';
 import {
     createEffect,
     createMemo,
@@ -48,6 +49,8 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
     let searchInputRef!: HTMLInputElement;
     let popoverTriggerRef!: HTMLButtonElement;
     let popoverContentRef!: HTMLDivElement;
+
+    const selectMenuItemClassName = '.select-menu__item';
 
     const [isOpen, setIsOpen] = createSignal(false);
     const [searchQuery, setSearchQuery] = createSignal('');
@@ -124,6 +127,36 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
             setSearchQuery('');
         }
     });
+
+    const handleOptionClick = (value: string) => {
+        const state = Flip.getState(selectMenuItemClassName);
+
+        props.onToggle(value);
+
+        if (isAutoClose()) {
+            closeMenu();
+        } else {
+            Flip.from(state, {
+                duration: 0.2,
+                ease: 'power2.inOut',
+                stagger: 0.02,
+                scale: true,
+                onEnter: (el) =>
+                    gsap.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1 }),
+                onLeave: (el) => gsap.to(el, { autoAlpha: 1 }),
+                onStart: () => {
+                    gsap.set(selectMenuItemClassName, {
+                        pointerEvents: 'none',
+                    });
+                },
+                onComplete: () => {
+                    gsap.set(selectMenuItemClassName, {
+                        pointerEvents: 'auto',
+                    });
+                },
+            });
+        }
+    };
 
     return (
         <>
@@ -258,14 +291,11 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                                                     option.value,
                                                 ),
                                             }}
+                                            data-flip-id={option.value}
                                             disabled={option.disabled}
-                                            onClick={() => {
-                                                props.onToggle(option.value);
-
-                                                if (isAutoClose()) {
-                                                    closeMenu();
-                                                }
-                                            }}
+                                            onClick={() =>
+                                                handleOptionClick(option.value)
+                                            }
                                             type='button'
                                         >
                                             <Show
