@@ -1,6 +1,7 @@
 import './VisualNovelCard.css';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { ask } from '@tauri-apps/plugin-dialog';
+import gsap from 'gsap';
 import {
     createEffect,
     createSignal,
@@ -227,6 +228,18 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     const [showPopoverMenu, setShowPopoverMenu] = createSignal(false);
 
     let popoverMenuRef: HTMLButtonElement | undefined;
+    let popoverRef!: HTMLDivElement;
+
+    createEffect(() => {
+        if (showPopoverMenu()) {
+            gsap.timeline().from(popoverRef, {
+                y: 20,
+                autoAlpha: 0,
+                duration: 0.2,
+                ease: 'circ',
+            });
+        }
+    });
 
     return (
         <div
@@ -258,7 +271,10 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 targetPositionArea='bottom center'
                 triggerElement={popoverMenuRef}
             >
-                <div class='flex-column visual-novel-card__menu'>
+                <div
+                    class='flex-column visual-novel-card__menu'
+                    ref={popoverRef}
+                >
                     <button onClick={handleOpenFolder} type='button'>
                         <IconFolderOpen /> Open Folder
                     </button>
