@@ -35,6 +35,8 @@ def build_tsx(comp_name: str, type: ComponentType) -> str:
 
     if type == ComponentType.void:
         component_type_import_name = "VoidComponent"
+    if type == ComponentType.parent:
+        component_type_import_name = "ParentComponent"
 
     buffer = StringIO()
 
