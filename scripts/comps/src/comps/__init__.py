@@ -53,9 +53,6 @@ def build_tsx(comp_name: str, type: ComponentType) -> str:
     buffer.write("type Props = {\n")
     buffer.write(get_indent(1))
     buffer.write("ref?: HTMLDivElement | ((el: HTMLDivElement) => void);\n")
-    if type != ComponentType.void:
-        buffer.write(get_indent(1))
-        buffer.write("children?: JSX.Element;\n")
     buffer.write("}\n")
 
     buffer.write("\n")
