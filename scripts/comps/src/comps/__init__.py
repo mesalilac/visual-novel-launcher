@@ -99,18 +99,24 @@ def init():
     default=ComponentType.base,
     help="SolidJS Component Type",
 )
-def gen(component_name: str, type: ComponentType):
-    if not COMPONENTS_DIR_PATH.exists():
-        logger.error(f"Components directory not found at '{COMPONENTS_DIR_PATH}'")
-        sys.exit(1)
-
+@click.option(
+    "--dry-run",
+    type=bool,
+    is_flag=True,
+    help="Print generated code without writing to filesystem",
+)
+def gen(component_name: str, type: ComponentType, dry_run: bool):
     component_name = toPascalCase(component_name)
 
     tsx = build_tsx(component_name, type)
 
-    print(tsx)
+    if dry_run:
+        print(tsx)
+        sys.exit(0)
 
-    sys.exit(0)
+    if not COMPONENTS_DIR_PATH.exists():
+        logger.error(f"Components directory not found at '{COMPONENTS_DIR_PATH}'")
+        sys.exit(1)
 
     component_path = COMPONENTS_DIR_PATH / component_name
 
