@@ -41,10 +41,6 @@ def build_tsx(comp_name: str, type: ComponentType) -> str:
     buffer.write("import type {\n")
     buffer.write(get_indent(1))
     buffer.write(f"{component_type_import_name},\n")
-
-    if type != ComponentType.void:
-        buffer.write(get_indent(1))
-        buffer.write("JSX\n")
     buffer.write("} from 'solid-js';\n")
     buffer.write("\n")
 
