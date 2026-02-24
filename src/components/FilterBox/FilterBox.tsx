@@ -1,17 +1,6 @@
 import { useGlobalData } from '@/store';
 import './FilterBox.css';
-import gsap from 'gsap';
-import { createEffect, createMemo, For, Show } from 'solid-js';
-import { createStore } from 'solid-js/store';
-import {
-    Divider,
-    IconCaretDownMd,
-    IconCaretUpMd,
-    IconCheckboxCheck,
-    IconCheckboxUnchecked,
-    Popover,
-    Select,
-} from '@/components';
+import { Select } from '@/components';
 import {
     type SortByStatusType,
     type SortByType,
@@ -64,73 +53,48 @@ export const FilterBox = () => {
                     placeholder='Select tags'
                     selected={globalData.store.vnsFilter.tagIds}
                 />
-                <select
-                    onChange={(e) =>
+                <Select
+                    onToggle={(value) =>
                         globalData.setStore(
                             'vnsFilter',
                             'status',
-                            e.target.value as SortByStatusType,
+                            value as SortByStatusType,
                         )
                     }
-                >
-                    <For each={sortByStatusList}>
-                        {(status) => (
-                            <option
-                                selected={
-                                    status === globalData.store.vnsFilter.status
-                                }
-                                value={status}
-                            >
-                                {status}
-                            </option>
-                        )}
-                    </For>
-                </select>
-                <select
-                    onChange={(e) =>
+                    options={sortByStatusList.map((x) => ({
+                        value: x,
+                    }))}
+                    placeholder='Status'
+                    selected={globalData.store.vnsFilter.status}
+                />
+                <Select
+                    onToggle={(value) => {
                         globalData.setStore(
                             'vnsFilter',
                             'sortBy',
-                            e.target.value as SortByType,
-                        )
-                    }
-                >
-                    <For each={sortByList}>
-                        {(status) => (
-                            <option
-                                selected={
-                                    status === globalData.store.vnsFilter.sortBy
-                                }
-                                value={status}
-                            >
-                                {status}
-                            </option>
-                        )}
-                    </For>
-                </select>
-                <select
-                    onChange={(e) =>
+                            value as SortByType,
+                        );
+                    }}
+                    options={sortByList.map((x) => ({
+                        value: x,
+                    }))}
+                    placeholder='Sort by'
+                    selected={globalData.store.vnsFilter.sortBy}
+                />
+                <Select
+                    onToggle={(value) => {
                         globalData.setStore(
                             'vnsFilter',
                             'sortDirection',
-                            e.target.value as SortDirectionType,
-                        )
-                    }
-                >
-                    <For each={sortDirectionList}>
-                        {(option) => (
-                            <option
-                                selected={
-                                    option ===
-                                    globalData.store.vnsFilter.sortDirection
-                                }
-                                value={option}
-                            >
-                                {option}
-                            </option>
-                        )}
-                    </For>
-                </select>
+                            value as SortDirectionType,
+                        );
+                    }}
+                    options={sortDirectionList.map((x) => ({
+                        value: x,
+                    }))}
+                    placeholder='Sort direction'
+                    selected={globalData.store.vnsFilter.sortDirection}
+                />
             </div>
         </div>
     );
