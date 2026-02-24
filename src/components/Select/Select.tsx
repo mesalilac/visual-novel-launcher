@@ -16,9 +16,7 @@ import {
 } from 'solid-js';
 import {
     Divider,
-    IconAddPlus,
     IconCaretDownMd,
-    IconCaretUpMd,
     IconCheck,
     IconCheckboxCheck,
     IconCheckboxUnchecked,
