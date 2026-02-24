@@ -6,6 +6,7 @@ import {
     createMemo,
     createSignal,
     For,
+    type JSX,
     Match,
     mergeProps,
     onCleanup,
@@ -28,8 +29,9 @@ import {
 type SelectProps = {
     placeholder: string;
     options: {
-        value: string;
+        icon?: JSX.Element;
         label?: string;
+        value: string;
         disabled?: boolean;
     }[];
     selected: string | string[];
@@ -286,6 +288,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                                             type='button'
                                         >
                                             <div class='flex-row'>
+                                                {option.icon ?? null}
                                                 {option.label ?? option.value}
                                             </div>
                                             <Show
