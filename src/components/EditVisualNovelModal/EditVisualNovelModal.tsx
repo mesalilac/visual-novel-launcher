@@ -19,6 +19,7 @@ import {
     IconFolderOpen,
     IconSave,
     ModalDismissButton,
+    Select,
     TagsPicker,
     useModalContext,
 } from '@/components';
@@ -175,21 +176,18 @@ const Content = (props: { vn: VisualNovel }) => {
                 </LabeledField>
                 <div class='flex-row'>
                     <LabeledField name='status'>
-                        <select
-                            onChange={(e) => {
+                        <Select
+                            onToggle={(value) =>
                                 editStore.set(
                                     'status',
-                                    e.target.value as VisualNovelStatus,
-                                );
-                            }}
-                            value={editStore.get.status ?? props.vn.status}
-                        >
-                            <For each={VisualNovelStatusList}>
-                                {(status) => (
-                                    <option value={status}>{status}</option>
-                                )}
-                            </For>
-                        </select>
+                                    value as VisualNovelStatus,
+                                )
+                            }
+                            options={VisualNovelStatusList.map((x) => ({
+                                value: x,
+                            }))}
+                            selected={editStore.get.status ?? props.vn.status}
+                        />
                     </LabeledField>
                     <LabeledField name='playtime'>
                         <input

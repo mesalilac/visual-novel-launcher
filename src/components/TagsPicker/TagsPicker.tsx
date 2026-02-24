@@ -6,6 +6,7 @@ import {
     IconArrowReload02,
     IconRemoveMinus,
     IconTag,
+    Select,
 } from '@/components';
 import { type SortDirectionType, sortDirectionList } from '@/consts';
 import { useGlobalData } from '@/store';
@@ -177,40 +178,18 @@ export const TagsPicker = (props: {
                     <span>/</span>
                     <span>{tagsWithVns.get()?.length}</span>
                 </span>
-                <select
-                    onChange={(e) =>
-                        setSearchSortBy(e.target.value as SortByType)
+                <Select
+                    onToggle={(value) => setSearchSortBy(value as SortByType)}
+                    options={sortByList.map((x) => ({ value: x }))}
+                    selected={searchSortBy()}
+                />
+                <Select
+                    onToggle={(value) =>
+                        setSearchSortDirection(value as SortDirectionType)
                     }
-                >
-                    <For each={sortByList}>
-                        {(sortBy) => (
-                            <option
-                                selected={sortBy === searchSortBy()}
-                                value={sortBy}
-                            >
-                                {sortBy}
-                            </option>
-                        )}
-                    </For>
-                </select>
-                <select
-                    onChange={(e) =>
-                        setSearchSortDirection(
-                            e.target.value as SortDirectionType,
-                        )
-                    }
-                >
-                    <For each={sortDirectionList}>
-                        {(sortDir) => (
-                            <option
-                                selected={sortDir === searchSortDirection()}
-                                value={sortDir}
-                            >
-                                {sortDir}
-                            </option>
-                        )}
-                    </For>
-                </select>
+                    options={sortDirectionList.map((x) => ({ value: x }))}
+                    selected={searchSortDirection()}
+                />
                 <IconArrowReload02
                     class='icon-clickable refresh-icon'
                     onClick={refresh}
