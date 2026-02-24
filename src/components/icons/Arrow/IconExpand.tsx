@@ -2,23 +2,23 @@
 
 /** biome-ignore-all assist/source/useSortedAttributes: Auto generated */
 
-import type { JSX } from 'solid-js';
+import type { ComponentProps } from 'solid-js';
 
-interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+interface IconProps extends ComponentProps<'svg'> {
     size?: string;
 }
 
 /**
  * Arrow
  * ```
- *               █████     
- *                   ██    
- *                   ██    
- *                   ██    
- *     ██                  
- *     ██                  
- *     ██                  
- *      █████              
+ *               █████
+ *                   ██
+ *                   ██
+ *                   ██
+ *     ██
+ *     ██
+ *     ██
+ *      █████
  * ```
  */
 export const IconExpand = (props: IconProps) => {
