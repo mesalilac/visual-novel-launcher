@@ -50,8 +50,6 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
     let popoverTriggerRef!: HTMLButtonElement;
     let popoverContentRef!: HTMLDivElement;
 
-    const selectMenuItemClassName = '.select-menu__item';
-
     const [isOpen, setIsOpen] = createSignal(false);
     const [searchQuery, setSearchQuery] = createSignal('');
 
@@ -129,7 +127,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
     });
 
     const handleOptionClick = (value: string) => {
-        const state = Flip.getState(selectMenuItemClassName);
+        const state = Flip.getState('.select-menu__item', { simple: true });
 
         props.onToggle(value);
 
@@ -139,21 +137,11 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
             Flip.from(state, {
                 duration: 0.2,
                 ease: 'power2.inOut',
-                stagger: 0.02,
                 scale: true,
+                simple: true,
                 onEnter: (el) =>
                     gsap.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1 }),
                 onLeave: (el) => gsap.to(el, { autoAlpha: 1 }),
-                onStart: () => {
-                    gsap.set(selectMenuItemClassName, {
-                        pointerEvents: 'none',
-                    });
-                },
-                onComplete: () => {
-                    gsap.set(selectMenuItemClassName, {
-                        pointerEvents: 'auto',
-                    });
-                },
             });
         }
     };
