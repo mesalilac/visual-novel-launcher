@@ -1,3 +1,4 @@
+from comps.logger import logger
 import subprocess
 from comps.types import ComponentType
 from io import StringIO
@@ -47,11 +48,13 @@ class Tsx:
             input=text,
             capture_output=True,
             shell=True,
+            encoding="utf-8",
         )
 
         if p.returncode == 0:
             return p.stdout
         else:
+            logger.error(p)
             return text
 
     def build(self) -> str:
