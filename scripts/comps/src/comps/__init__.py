@@ -38,32 +38,32 @@ def build_tsx(comp_name: str, type: ComponentType) -> str:
     if type == ComponentType.parent:
         component_type_import_name = "ParentComponent"
 
-    buffer = StringIO()
+    b = StringIO()
 
-    buffer.write("import type {\n")
-    buffer.write(get_indent(1))
-    buffer.write(f"{component_type_import_name},\n")
-    buffer.write("} from 'solid-js';\n")
-    buffer.write("\n")
+    b.write("import type {\n")
+    b.write(get_indent(1))
+    b.write(f"{component_type_import_name},\n")
+    b.write("} from 'solid-js';\n")
+    b.write("\n")
 
-    buffer.write(f"import './{comp_name}.css';\n")
-    buffer.write("\n")
+    b.write(f"import './{comp_name}.css';\n")
+    b.write("\n")
 
-    buffer.write("type Props = {\n")
-    buffer.write(get_indent(1))
-    buffer.write("ref?: HTMLDivElement | ((el: HTMLDivElement) => void);\n")
-    buffer.write("}\n")
+    b.write("type Props = {\n")
+    b.write(get_indent(1))
+    b.write("ref?: HTMLDivElement | ((el: HTMLDivElement) => void);\n")
+    b.write("}\n")
 
-    buffer.write("\n")
-    buffer.write(
+    b.write("\n")
+    b.write(
         f"export const {comp_name}: {component_type_import_name}<Props> = (props: Props) => {{\n"
     )
-    buffer.write(get_indent(1))
-    buffer.write(f"return <div>{comp_name} component</div>;\n")
-    buffer.write("};\n")
+    b.write(get_indent(1))
+    b.write(f"return <div>{comp_name} component</div>;\n")
+    b.write("};\n")
 
-    content = buffer.getvalue()
-    buffer.close()
+    content = b.getvalue()
+    b.close()
     return content
 
 
