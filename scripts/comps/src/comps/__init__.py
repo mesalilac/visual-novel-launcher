@@ -1,63 +1,20 @@
-from io import StringIO
 import sys
 import click
 
 from pathlib import Path
 from .logger import logger
 from .types import ComponentType
+from .tsx import Tsx
 
 
 COMPONENTS_DIR_PATH = Path("src/components")
 INDEX_FILE_PATH = COMPONENTS_DIR_PATH / "index.ts"
-
-BASE_INDENT_BY = 4
-
-
-def get_indent(level: int) -> str:
-    return " " * BASE_INDENT_BY * level
 
 
 def toPascalCase(s: str) -> str:
     s = s.strip().lower().replace("-", " ").replace("_", " ")
 
     return "".join(word.capitalize() for word in s.split())
-
-
-def build_tsx(comp_name: str, type: ComponentType) -> str:
-    component_type_import_name = "Component"
-
-    if type == ComponentType.void:
-        component_type_import_name = "VoidComponent"
-    if type == ComponentType.parent:
-        component_type_import_name = "ParentComponent"
-
-    b = StringIO()
-
-    b.write("import type {\n")
-    b.write(get_indent(1))
-    b.write(f"{component_type_import_name},\n")
-    b.write("} from 'solid-js';\n")
-    b.write("\n")
-
-    b.write(f"import './{comp_name}.css';\n")
-    b.write("\n")
-
-    b.write("type Props = {\n")
-    b.write(get_indent(1))
-    b.write("ref?: HTMLDivElement | ((el: HTMLDivElement) => void);\n")
-    b.write("}\n")
-
-    b.write("\n")
-    b.write(
-        f"export const {comp_name}: {component_type_import_name}<Props> = (props: Props) => {{\n"
-    )
-    b.write(get_indent(1))
-    b.write(f"return <div>{comp_name} component</div>;\n")
-    b.write("};\n")
-
-    content = b.getvalue()
-    b.close()
-    return content
 
 
 @click.group()
@@ -108,7 +65,7 @@ def init():
 def gen(component_name: str, type: ComponentType, dry_run: bool):
     component_name = toPascalCase(component_name)
 
-    tsx = build_tsx(component_name, type)
+    tsx = Tsx(component_name, type).build()
 
     if dry_run:
         print(tsx)
