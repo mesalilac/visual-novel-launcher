@@ -221,23 +221,25 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                             type='search'
                             value={searchQuery()}
                         />
-                        <Show when={props.onSelectAll}>
-                            <button
-                                onClick={props.onSelectAll}
-                                title='Select all'
-                                type='button'
-                            >
-                                <IconCheckboxCheck />
-                            </button>
-                        </Show>
-                        <Show when={props.onDeselectAll}>
-                            <button
-                                onClick={props.onDeselectAll}
-                                title='Deselect all'
-                                type='button'
-                            >
-                                <IconCheckboxUnchecked />
-                            </button>
+                        <Show when={isMultiSelect()}>
+                            <Show when={props.onSelectAll}>
+                                <button
+                                    onClick={props.onSelectAll}
+                                    title='Select all'
+                                    type='button'
+                                >
+                                    <IconCheckboxCheck />
+                                </button>
+                            </Show>
+                            <Show when={props.onDeselectAll}>
+                                <button
+                                    onClick={props.onDeselectAll}
+                                    title='Deselect all'
+                                    type='button'
+                                >
+                                    <IconCheckboxUnchecked />
+                                </button>
+                            </Show>
                         </Show>
                         <Show
                             when={
