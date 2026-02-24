@@ -56,9 +56,12 @@ class Tsx:
 
     def build(self) -> str:
         comp_type = self.get_type()
+        has_children = self.type != ComponentType.void
 
         self.write_line("import type {")
         self.write_line(f"{comp_type},", 1)
+        if has_children:
+            self.write_line("JSX,", 1)
         self.write_line("} from 'solid-js';")
         self.empty_line()
 
@@ -67,15 +70,19 @@ class Tsx:
 
         self.write_line("type Props = {")
         self.write_line("ref?: HTMLDivElement | ((el: HTMLDivElement) => void);", 1)
+        if has_children:
+            self.write_line("children?: JSX.Element;", 1)
         self.write_line("}")
         self.empty_line()
 
         self.write_line(
             f"export const {self.name}: {comp_type}<Props> = (props: Props) => {{"
         )
-
-        self.write_line(f"return <div ref={{props.ref}}>{self.name} component</div>;")
-
+        self.write_line("return <div ref={props.ref}>", 1)
+        self.write_line(f"{self.name} component", 2)
+        if has_children:
+            self.write_line("{props.children}", 2)
+        self.write_line("</div>", 1)
         self.write_line("};")
 
         formatted = self.format()
