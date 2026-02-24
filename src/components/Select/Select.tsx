@@ -25,7 +25,7 @@ import {
 } from '@/components';
 
 type SelectProps = {
-    placeholder: string;
+    placeholder?: string;
     options: {
         icon?: JSX.Element;
         label?: string;
@@ -161,7 +161,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                 role='combobox'
                 type='button'
             >
-                <Switch fallback={props.placeholder}>
+                <Switch fallback={props.placeholder ?? 'Select an option'}>
                     <Match when={isMultiSelect()}>
                         <Show
                             fallback={<>{props.selected.length} selected</>}
