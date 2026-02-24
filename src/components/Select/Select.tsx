@@ -15,8 +15,10 @@ import {
 } from 'solid-js';
 import {
     Divider,
+    IconAddPlus,
     IconCaretDownMd,
     IconCaretUpMd,
+    IconCheck,
     IconCheckboxCheck,
     IconCheckboxUnchecked,
     IconCloseMd,
@@ -270,7 +272,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                                 <For each={sortedTags()}>
                                     {(option) => (
                                         <button
-                                            class='select-menu__item'
+                                            class='justify-between select-menu__item'
                                             classList={{
                                                 selected: isSelected(
                                                     option.value,
@@ -283,15 +285,14 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                                             }
                                             type='button'
                                         >
+                                            <div class='flex-row'>
+                                                {option.label ?? option.value}
+                                            </div>
                                             <Show
-                                                fallback={
-                                                    <IconCheckboxUnchecked />
-                                                }
                                                 when={isSelected(option.value)}
                                             >
-                                                <IconCheckboxCheck />
+                                                <IconCheck />
                                             </Show>
-                                            {option.label ?? option.value}
                                         </button>
                                     )}
                                 </For>
