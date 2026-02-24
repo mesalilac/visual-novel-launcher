@@ -1,3 +1,4 @@
+import subprocess
 from comps.types import ComponentType
 from io import StringIO
 
@@ -37,6 +38,22 @@ class Tsx:
             case _:
                 return "Component"
 
+    def format(self) -> str:
+        text = self.b.getvalue()
+
+        p = subprocess.run(
+            ["pnpm", "biome", "format", "--stdin-file-path", "filename.tsx"],
+            text=True,
+            input=text,
+            capture_output=True,
+            shell=True,
+        )
+
+        if p.returncode == 0:
+            return p.stdout
+        else:
+            return text
+
     def build(self) -> str:
         comp_type = self.get_type()
 
@@ -61,6 +78,7 @@ class Tsx:
 
         self.write_line("};")
 
-        content = self.b.getvalue()
+        formatted = self.format()
+
         self.b.close()
-        return content
+        return formatted
