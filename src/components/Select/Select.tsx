@@ -172,12 +172,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                         {props.selected}
                     </Match>
                 </Switch>
-                <Show
-                    fallback={<IconCaretDownMd size='1.5em' />}
-                    when={isOpen()}
-                >
-                    <IconCaretUpMd size='1.5em' />
-                </Show>
+                <IconCaretDownMd size='1.5em' />
             </button>
             <Popover
                 onOpenChange={(open) => {
