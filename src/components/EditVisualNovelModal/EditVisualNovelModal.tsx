@@ -16,8 +16,7 @@ import {
 import {
     Divider,
     IconFolderOpen,
-    IconSave,
-    ModalDismissButton,
+    ModalActionButtons,
     Select,
     TagsPicker,
     useModalContext,
@@ -34,24 +33,6 @@ const Header = () => {
         <>
             <h2>Edit Visual Novel</h2>
             <Divider class='margin-bottom-lg' />
-        </>
-    );
-};
-
-const Footer = (props: { onSave: () => void }) => {
-    return (
-        <>
-            <Divider class='margin-top-auto' />
-            <div class='flex-row self-end'>
-                <ModalDismissButton />
-                <button
-                    class='button-primary'
-                    onClick={props.onSave}
-                    type='button'
-                >
-                    <IconSave /> Save
-                </button>
-            </div>
         </>
     );
 };
@@ -404,7 +385,7 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
                     <Divider vertical />
                     <Content vn={props.vn} />
                 </div>
-                <Footer onSave={handleOnAction} />
+                <ModalActionButtons onAction={handleOnAction} />
             </div>
         </EditVnStoreContext.Provider>
     );

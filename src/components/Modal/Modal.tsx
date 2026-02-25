@@ -9,7 +9,7 @@ import {
     useContext,
 } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { IconCloseMd } from '@/components';
+import { Divider, IconCloseMd, IconSave } from '@/components';
 import './Modal.css';
 
 type ModalContextData = {
@@ -29,17 +29,37 @@ export const useModalContext = () => {
     return context;
 };
 
-export const ModalDismissButton = (props: { children?: JSX.Element }) => {
+export const ModalActionButtons = (props: {
+    onAction: () => void;
+    dismiss?: JSX.Element;
+    action?: JSX.Element;
+}) => {
     const { setIsOpen } = useModalContext();
 
     return (
-        <button onClick={() => setIsOpen(false)} type='button'>
-            {props.children || (
-                <>
-                    <IconCloseMd /> Cancel
-                </>
-            )}
-        </button>
+        <>
+            <Divider class='margin-top-auto' />
+            <div class='flex-row self-end'>
+                <button onClick={() => setIsOpen(false)} type='button'>
+                    {props.dismiss || (
+                        <>
+                            <IconCloseMd /> Cancel
+                        </>
+                    )}
+                </button>
+                <button
+                    class='button-primary'
+                    onClick={props.onAction}
+                    type='button'
+                >
+                    {props.action || (
+                        <>
+                            <IconSave /> Save
+                        </>
+                    )}
+                </button>
+            </div>
+        </>
     );
 };
 

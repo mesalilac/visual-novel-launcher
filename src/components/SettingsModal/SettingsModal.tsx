@@ -4,7 +4,7 @@ import { commands } from '@/bindings';
 import {
     Divider,
     GeneralStats,
-    ModalDismissButton,
+    ModalActionButtons,
     TagsManager,
     useModalContext,
 } from '@/components';
@@ -249,17 +249,7 @@ export const SettingsModal = () => {
                     </div>
                 </Show>
             </div>
-            <Divider class='margin-top-auto' />
-            <div class='flex-row self-end'>
-                <ModalDismissButton />
-                <button
-                    class={'button-primary'}
-                    onClick={handleOnAction}
-                    type='button'
-                >
-                    Save
-                </button>
-            </div>
+            <ModalActionButtons onAction={handleOnAction} />
         </div>
     );
 };
