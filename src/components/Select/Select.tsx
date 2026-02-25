@@ -167,7 +167,10 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                             fallback={<>{props.selected.length} selected</>}
                             when={props.placeholder}
                         >
-                            {props.placeholder} ({props.selected.length})
+                            <span>{props.placeholder}</span>
+                            <span class='select-menu__selected_count'>
+                                {props.selected.length}
+                            </span>
                         </Show>
                     </Match>
                     <Match when={!isMultiSelect() && props.selected}>

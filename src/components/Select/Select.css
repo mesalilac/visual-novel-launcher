@@ -25,6 +25,13 @@
     }
 }
 
+.select-menu__selected_count {
+    padding-right: var(--s-size-padding-md);
+    padding-left: var(--s-size-padding-md);
+    border-radius: var(--s-size-radius-round);
+    background-color: hsl(from var(--s-color-background-surface-4) h s l / 80%);
+}
+
 .select-menu {
     overscroll-behavior: contain;
     max-height: 650px;
