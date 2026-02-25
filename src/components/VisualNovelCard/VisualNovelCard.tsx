@@ -399,9 +399,13 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                             </button>
                         </Match>
                     </Switch>
-                    <button onClick={handleToggleFavorite} type='button'>
+                    <button
+                        class='favorite-button'
+                        onClick={handleToggleFavorite}
+                        type='button'
+                    >
                         <IconHeart01
-                            class='favorite-icon'
+                            class='favorite-button__icon'
                             classList={{
                                 active: props.vn.isFavorite,
                             }}

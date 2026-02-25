@@ -159,7 +159,7 @@ export const TagsPicker = (props: {
 
     return (
         <div class='flex-column surface-2 padding-sm radius-lg'>
-            <div class='flex-row padding-sm'>
+            <div class='flex-row align-stretch padding-sm'>
                 <input
                     class='flex-grow'
                     onInput={(e) => setSearchQuery(e.target.value)}
@@ -190,10 +190,12 @@ export const TagsPicker = (props: {
                     options={sortDirectionList.map((x) => ({ value: x }))}
                     selected={searchSortDirection()}
                 />
-                <IconArrowReload02
-                    class='icon-clickable refresh-icon'
-                    onClick={refresh}
-                />
+                <button class='refresh-button' type='button'>
+                    <IconArrowReload02
+                        class='refresh-button__icon'
+                        onClick={refresh}
+                    />
+                </button>
             </div>
             <Divider />
             <div class='flex-row padding-sm overflow-auto'>
