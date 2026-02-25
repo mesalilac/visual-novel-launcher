@@ -1,6 +1,7 @@
 import {
     createEffect,
     createMemo,
+    createSignal,
     For,
     Match,
     onCleanup,
@@ -18,6 +19,8 @@ export const MainContent = () => {
 
     const globalData = useGlobalData();
     const vns = globalData.resources.vns;
+
+    const [hasAnimated, setHasAnimated] = createSignal(false);
 
     onMount(() => {
         events.gameClosed.listen((e) => {
@@ -44,9 +47,7 @@ export const MainContent = () => {
     });
 
     createEffect(() => {
-        const list = vns.get();
-
-        if (vns.get.state === 'ready' && list && list.length > 0) {
+        if (vns.get.state === 'ready' && !hasAnimated()) {
             const ctx = gsap.context(() => {
                 gsap.from('.visual-novel-card', {
                     y: 100,
@@ -58,6 +59,9 @@ export const MainContent = () => {
                         grid: 'auto',
                         from: 'start',
                         amount: 0.5,
+                    },
+                    onComplete: () => {
+                        setHasAnimated(true);
                     },
                 });
             }, gridRef);
