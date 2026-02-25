@@ -6,6 +6,9 @@ from .logger import logger
 from .types import ComponentType
 from .tsx import Tsx
 
+BIOME_DISABLE_IMPORT_SORT = (
+    "/** biome-ignore-all assist/source/organizeImports: false */\n\n"
+)
 
 COMPONENTS_DIR_PATH = Path("src/components")
 INDEX_FILE_PATH = COMPONENTS_DIR_PATH / "index.ts"
@@ -42,7 +45,7 @@ def init():
     if not INDEX_FILE_PATH.exists():
         logger.info(f"Creating index file at '{INDEX_FILE_PATH}'")
         INDEX_FILE_PATH.write_text(
-            "/** biome-ignore-all assist/source/organizeImports: false */\n\n",
+            BIOME_DISABLE_IMPORT_SORT,
             encoding="utf-8",
         )
 
@@ -93,8 +96,15 @@ def gen(component_name: str, type: ComponentType, dry_run: bool):
     tsx_file = component_path / f"{component_name}.tsx"
     tsx_file.write_text(tsx, encoding="utf-8")
 
+    local_index_file = component_path / "index.ts"
+    local_index_file.touch()
+
+    with open(local_index_file, "a", encoding="utf-8") as f:
+        f.write(BIOME_DISABLE_IMPORT_SORT)
+        f.write(f"export * from './{component_name}';\n")
+
     with open(INDEX_FILE_PATH, "a", encoding="utf-8") as f:
-        f.write(f"export * from './{component_name}/{component_name}';\n")
+        f.write(f"export * from './{component_name}';\n")
 
     logger.info(f"Component created '{component_path}'")
     logger.info(f"Component added to index file '{INDEX_FILE_PATH}'")
