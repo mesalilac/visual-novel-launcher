@@ -1,11 +1,9 @@
 import {
-    type Accessor,
     createContext,
     createResource,
     type JSX,
     type Resource,
     type ResourceActions,
-    type Setter,
     useContext,
 } from 'solid-js';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
@@ -155,20 +153,3 @@ export function GlobalDataProvider(props: { children: JSX.Element }) {
         </GlobalContext.Provider>
     );
 }
-
-export type ModalContextData = {
-    isOpen: Accessor<boolean>;
-    setIsOpen: Setter<boolean>;
-};
-
-export const ModalContext = createContext<ModalContextData>();
-
-export const useModalContext = () => {
-    const context = useContext(ModalContext);
-
-    if (!context) {
-        throw new Error('useModalData must be used within a ModalContext');
-    }
-
-    return context;
-};

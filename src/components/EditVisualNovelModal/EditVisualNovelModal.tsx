@@ -19,12 +19,13 @@ import {
     ModalActionButtons,
     Select,
     TagsPicker,
+    useModalContext,
 } from '@/components';
 import './EditVisualNovelModal.css';
 import { convertFileSrc } from '@tauri-apps/api/core';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
 import { VisualNovelStatusList } from '@/consts';
-import { useGlobalData, useModalContext } from '@/store';
+import { useGlobalData } from '@/store';
 import { handleIpcError, reportIpcError, toTitleCase } from '@/utils';
 
 const Header = () => {

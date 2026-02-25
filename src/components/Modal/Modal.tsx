@@ -2,9 +2,14 @@ import gsap from 'gsap';
 import type { Accessor, JSX, Setter } from 'solid-js';
 import { createEffect, createSignal, onCleanup, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
-import { Divider, IconCloseMd, IconSave } from '@/components';
+import {
+    Divider,
+    IconCloseMd,
+    IconSave,
+    ModalContext,
+    useModalContext,
+} from '@/components';
 import './Modal.css';
-import { ModalContext, useModalContext } from '@/store';
 
 export const ModalActionButtons = (props: {
     onAction: () => void;

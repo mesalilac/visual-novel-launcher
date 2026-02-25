@@ -7,7 +7,7 @@ export * from './GeneralStats/GeneralStats';
 export * from './icons';
 export * from './LoadingDots/LoadingDots';
 export * from './MainContent/MainContent';
-export * from './Modal/Modal';
+export * from './Modal';
 export * from './Nav/Nav';
 export * from './Popover/Popover';
 export * from './SettingsModal/SettingsModal';
