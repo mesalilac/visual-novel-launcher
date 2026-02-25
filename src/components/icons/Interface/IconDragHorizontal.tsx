@@ -2,7 +2,7 @@
 
 /** biome-ignore-all assist/source/useSortedAttributes: Auto generated */
 
-import type { ComponentProps } from 'solid-js';
+import { type ComponentProps, splitProps } from 'solid-js';
 
 interface IconProps extends ComponentProps<'svg'> {
     size?: string;
@@ -18,16 +18,17 @@ interface IconProps extends ComponentProps<'svg'> {
  * ```
  */
 export const IconDragHorizontal = (props: IconProps) => {
+    const [pickedProps, otherProps] = splitProps(props, ['size']);
+
     return (
         <svg
             role='img'
             aria-label='Drag Horizontal'
-            width={props.size || '1em'}
-            height={props.size || '1em'}
+            width={pickedProps.size || '1em'}
+            height={pickedProps.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
-            ref={props.ref}
-            {...props}
+            {...otherProps}
         >
             <path
                 d='M18 14C17.4477 14 17 14.4477 17 15C17 15.5523 17.4477 16 18 16C18.5523 16 19 15.5523 19 15C19 14.4477 18.5523 14 18 14Z'

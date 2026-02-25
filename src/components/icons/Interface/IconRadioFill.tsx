@@ -2,7 +2,7 @@
 
 /** biome-ignore-all assist/source/useSortedAttributes: Auto generated */
 
-import type { ComponentProps } from 'solid-js';
+import { type ComponentProps, splitProps } from 'solid-js';
 
 interface IconProps extends ComponentProps<'svg'> {
     size?: string;
@@ -23,16 +23,17 @@ interface IconProps extends ComponentProps<'svg'> {
  * ```
  */
 export const IconRadioFill = (props: IconProps) => {
+    const [pickedProps, otherProps] = splitProps(props, ['size']);
+
     return (
         <svg
             role='img'
             aria-label='Radio Fill'
-            width={props.size || '1em'}
-            height={props.size || '1em'}
+            width={pickedProps.size || '1em'}
+            height={pickedProps.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
-            ref={props.ref}
-            {...props}
+            {...otherProps}
         >
             <path
                 d='M12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4Z'

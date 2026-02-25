@@ -2,7 +2,7 @@
 
 /** biome-ignore-all assist/source/useSortedAttributes: Auto generated */
 
-import type { ComponentProps } from 'solid-js';
+import { type ComponentProps, splitProps } from 'solid-js';
 
 interface IconProps extends ComponentProps<'svg'> {
     size?: string;
@@ -21,16 +21,17 @@ interface IconProps extends ComponentProps<'svg'> {
  * ```
  */
 export const IconSwitchLeft = (props: IconProps) => {
+    const [pickedProps, otherProps] = splitProps(props, ['size']);
+
     return (
         <svg
             role='img'
             aria-label='Switch Left'
-            width={props.size || '1em'}
-            height={props.size || '1em'}
+            width={pickedProps.size || '1em'}
+            height={pickedProps.size || '1em'}
             viewBox='0 0 24 24'
             fill='none'
-            ref={props.ref}
-            {...props}
+            {...otherProps}
         >
             <path
                 d='M8 18H16C19.3137 18 22 15.3137 22 12C22 8.68629 19.3137 6 16 6H8C4.68629 6 2 8.68629 2 12C2 15.3137 4.68629 18 8 18Z'
