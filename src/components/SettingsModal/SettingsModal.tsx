@@ -6,9 +6,8 @@ import {
     GeneralStats,
     ModalActionButtons,
     TagsManager,
-    useModalContext,
 } from '@/components';
-import { useGlobalData } from '@/store';
+import { useGlobalData, useModalContext } from '@/store';
 
 import './SettingsModal.css';
 import { handleIpcError, reportIpcError } from '@/utils';

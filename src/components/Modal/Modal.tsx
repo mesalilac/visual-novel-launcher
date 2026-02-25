@@ -1,33 +1,10 @@
 import gsap from 'gsap';
 import type { Accessor, JSX, Setter } from 'solid-js';
-import {
-    createContext,
-    createEffect,
-    createSignal,
-    onCleanup,
-    Show,
-    useContext,
-} from 'solid-js';
+import { createEffect, createSignal, onCleanup, Show } from 'solid-js';
 import { Portal } from 'solid-js/web';
 import { Divider, IconCloseMd, IconSave } from '@/components';
 import './Modal.css';
-
-type ModalContextData = {
-    isOpen: Accessor<boolean>;
-    setIsOpen: Setter<boolean>;
-};
-
-const ModalContext = createContext<ModalContextData>();
-
-export const useModalContext = () => {
-    const context = useContext(ModalContext);
-
-    if (!context) {
-        throw new Error('useModalData must be used within a ModalContext');
-    }
-
-    return context;
-};
+import { ModalContext, useModalContext } from '@/store';
 
 export const ModalActionButtons = (props: {
     onAction: () => void;
