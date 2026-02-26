@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
+import toast, { Toaster } from 'solid-toast';
 import { FilterBox, MainContent, Nav } from '@/components';
 import { GlobalDataProvider } from '@/store';
 
@@ -16,6 +17,16 @@ function App() {
                 <FilterBox />
                 <MainContent />
             </div>
+            <Toaster
+                toastOptions={{
+                    position: 'bottom-left',
+                    style: {
+                        'background-color':
+                            'var(--s-color-background-surface-1)',
+                        color: 'var(--s-color-foreground-default)',
+                    },
+                }}
+            />
         </GlobalDataProvider>
     );
 }
