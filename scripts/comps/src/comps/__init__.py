@@ -90,7 +90,7 @@ def gen(component_name: str, type: ComponentType, dry_run: bool):
 
     component_path.mkdir(parents=True)
 
-    css_file = component_path / f"{component_name}.css"
+    css_file = component_path / f"{component_name}.module.css"
     css_file.touch()
 
     tsx_file = component_path / f"{component_name}.tsx"

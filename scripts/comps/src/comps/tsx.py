@@ -68,7 +68,7 @@ class Tsx:
         self.write_line("} from 'solid-js';")
         self.empty_line()
 
-        self.write_line(f"import './{self.name}.css';")
+        self.write_line(f"import styles from './{self.name}.module.css';")
         self.empty_line()
 
         self.write_line("type Props = {")
