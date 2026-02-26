@@ -108,7 +108,10 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                     scale: 0.95,
                     duration: 0.2,
                     ease: 'circ.out',
-                    onStart: () => searchInputRef.focus(),
+                    onStart: () => {
+                        if (props.searchable && searchInputRef)
+                            searchInputRef.focus();
+                    },
                 });
             });
 
