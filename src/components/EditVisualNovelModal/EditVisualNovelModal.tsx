@@ -59,7 +59,7 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     return (
         <VisualNovelFormModal
             mode={{ type: 'edit', vn: props.vn }}
-            onSave={(form) => console.log(form)}
+            onSave={handleOnAction}
             title='Edit Visual Novel'
         />
     );
