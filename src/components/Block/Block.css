@@ -1,0 +1,9 @@
+.block {
+    display: flex;
+    flex-direction: column;
+
+    padding: var(--s-size-padding-md);
+    border-radius: var(--s-size-radius-lg);
+
+    background-color: var(--s-color-background-surface-2);
+}

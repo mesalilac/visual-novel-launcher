@@ -1,0 +1,24 @@
+import type { JSX, ParentComponent } from 'solid-js';
+
+import './LabeledField.css';
+import { toTitleCase } from '@/utils';
+
+type Props = {
+    name: string;
+    title?: string;
+    icon?: JSX.Element;
+    ref?: HTMLDivElement | ((el: HTMLDivElement) => void);
+    children: JSX.Element;
+};
+
+export const LabeledField: ParentComponent<Props> = (props: Props) => {
+    return (
+        <div class='flex-column flex-1' ref={props.ref}>
+            <h4 class='flex-row' title={props.title}>
+                {props.icon}
+                {toTitleCase(props.name)}:
+            </h4>
+            {props.children}
+        </div>
+    );
+};

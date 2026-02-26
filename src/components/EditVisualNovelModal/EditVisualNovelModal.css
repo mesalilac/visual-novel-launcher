@@ -39,16 +39,6 @@
     gap: 1rem;
 }
 
-.edit-visual-novel-modal__block {
-    display: flex;
-    flex-direction: column;
-
-    padding: var(--s-size-padding-md);
-    border-radius: var(--s-size-radius-lg);
-
-    background-color: var(--s-color-background-surface-2);
-}
-
 .edit-visual-novel-modal__content__description {
     resize: none;
     height: 150px;

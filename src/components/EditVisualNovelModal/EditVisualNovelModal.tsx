@@ -3,7 +3,6 @@ import {
     createContext,
     createEffect,
     createSignal,
-    type JSX,
     useContext,
 } from 'solid-js';
 import defaultCover from '@/assets/cover-image-placeholder.svg';
@@ -14,8 +13,10 @@ import {
     type VisualNovelStatus,
 } from '@/bindings';
 import {
+    Block,
     Divider,
     IconFolderOpen,
+    LabeledField,
     ModalActionButtons,
     Select,
     TagsPicker,
@@ -26,7 +27,7 @@ import { convertFileSrc } from '@tauri-apps/api/core';
 import { createStore, type SetStoreFunction } from 'solid-js/store';
 import { VisualNovelStatusList } from '@/consts';
 import { useGlobalData } from '@/store';
-import { handleIpcError, reportIpcError, toTitleCase } from '@/utils';
+import { handleIpcError, reportIpcError } from '@/utils';
 
 const Header = () => {
     return (
@@ -94,35 +95,6 @@ const SideBar = (props: { vn: VisualNovel }) => {
                     Browse
                 </button>
             </div>
-        </div>
-    );
-};
-
-const Block = (props: { title: string; children: JSX.Element }) => {
-    return (
-        <div class='edit-visual-novel-modal__block'>
-            <div class='flex-column'>
-                <h3>{toTitleCase(props.title)}</h3>
-                <Divider class='margin-bottom-lg' />
-            </div>
-            <div class='flex-column gap-lg'>{props.children}</div>
-        </div>
-    );
-};
-
-const LabeledField = (props: {
-    name: string;
-    title?: string;
-    icon?: JSX.Element;
-    children: JSX.Element;
-}) => {
-    return (
-        <div class='flex-column flex-1'>
-            <h4 class='flex-row' title={props.title}>
-                {props.icon}
-                {toTitleCase(props.name)}:
-            </h4>
-            {props.children}
         </div>
     );
 };

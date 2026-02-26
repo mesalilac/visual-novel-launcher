@@ -15,3 +15,5 @@ export * from './TagsManager';
 export * from './TagsPicker';
 export * from './VisualNovelCard';
 export * from './Select';
+export * from './Block';
+export * from './LabeledField';
