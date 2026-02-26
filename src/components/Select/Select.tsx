@@ -17,22 +17,72 @@ import {
 import { Divider, IconCaretDownMd, IconCheck, Popover } from '@/components';
 
 type Props = {
+    /**
+     * Placeholder text for select menu button
+     */
     placeholder?: string;
+    /**
+     * List of option objects
+     */
     options: {
+        /**
+         * Icon displayed to the left of the option
+         */
         icon?: JSX.Element;
+        /**
+         * Label displayed in place of the value
+         */
         label?: string;
+        /**
+         * The value of the option passed to `onChange` used as a label as a fallback
+         */
         value: string;
+        /**
+         * Whether the option is disabled
+         */
         disabled?: boolean;
     }[];
+    /**
+     * Selected option(s)
+     */
     selected: string | string[];
+    /**
+     * Whether to show search bar
+     * @default false
+     */
     searchable?: boolean;
+    /**
+     * Placeholder text when options array is empty
+     */
     emptyPlaceholder?: string;
+    /**
+     * Callback function when an option clicked
+     */
     onChange: (value: string) => void;
+    /**
+     * Callback function to select all options
+     */
     onSelectAll?: () => void;
+    /**
+     * Callback function to deselect all options
+     */
     onDeselectAll?: () => void;
+    /**
+     * Callback function to clear selected options
+     */
     onClearSelection?: () => void;
+    /**
+     * Whether the select menu button is disabled
+     */
     disabled?: boolean;
+    /**
+     * Whether to close the select menu when an option is selected
+     * @default true if `selected` is not an array
+     */
     closeOnSelect?: boolean;
+    /**
+     * Whether to pin selected options
+     */
     pinSelected?: boolean;
 };
 
