@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
-import toast, { Toaster } from 'solid-toast';
+import { Toaster } from 'solid-toast';
 import { FilterBox, MainContent, Nav } from '@/components';
 import { GlobalDataProvider } from '@/store';
 
