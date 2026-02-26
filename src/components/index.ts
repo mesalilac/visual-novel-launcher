@@ -17,3 +17,4 @@ export * from './VisualNovelCard';
 export * from './Select';
 export * from './Block';
 export * from './LabeledField';
+export * from './VisualNovelFormModal';
