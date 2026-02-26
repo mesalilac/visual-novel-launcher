@@ -2,6 +2,7 @@ import { gsap } from 'gsap';
 import { createEffect, createSignal, onCleanup, Show } from 'solid-js';
 import { commands } from '@/bindings';
 import {
+    CreateVisualNovelModal,
     IconAddPlus,
     IconArrowReload02,
     IconSettings,
@@ -21,6 +22,7 @@ export const Nav = () => {
 
     const [vnsCount, setVnsCount] = createSignal(0);
     const [showSettingsModal, setShowSettingsModal] = createSignal(false);
+    const [showCreateNewVnModal, setShowCreateNewVnModal] = createSignal(false);
 
     const refresh = async () => {
         const res = await commands.utilScanLibrary().catch(handleIpcError);
@@ -56,10 +58,22 @@ export const Nav = () => {
                 <button class='refresh-button' onClick={refresh} type='button'>
                     <IconArrowReload02 class='refresh-button__icon' />
                 </button>
-                <button class='button-primary' type='button'>
+                <button
+                    class='button-primary'
+                    onClick={() => setShowCreateNewVnModal(true)}
+                    type='button'
+                >
                     <IconAddPlus />
                     Add a Game
                 </button>
+                <Show when={showCreateNewVnModal()}>
+                    <Modal
+                        isOpen={showCreateNewVnModal}
+                        setIsOpen={setShowCreateNewVnModal}
+                    >
+                        <CreateVisualNovelModal />
+                    </Modal>
+                </Show>
                 <button
                     class='settings-button'
                     onClick={() => setShowSettingsModal(true)}

@@ -18,3 +18,4 @@ export * from './Select';
 export * from './Block';
 export * from './LabeledField';
 export * from './VisualNovelFormModal';
+export * from './CreateVisualNovelModal';
