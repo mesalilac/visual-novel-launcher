@@ -234,22 +234,22 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                         <Show when={isMultiSelect()}>
                             <Show when={props.onSelectAll}>
                                 <button
-                                    class='flex-grow'
+                                    class='button-primary select-menu__filter-button'
                                     onClick={props.onSelectAll}
                                     title='Select all'
                                     type='button'
                                 >
-                                    <IconCheckboxCheck />
+                                    Select All
                                 </button>
                             </Show>
                             <Show when={props.onDeselectAll}>
                                 <button
-                                    class='flex-grow'
+                                    class='button-primary select-menu__filter-button'
                                     onClick={props.onDeselectAll}
                                     title='Deselect all'
                                     type='button'
                                 >
-                                    <IconCheckboxUnchecked />
+                                    Deselect All
                                 </button>
                             </Show>
                         </Show>
@@ -261,12 +261,12 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                             }
                         >
                             <button
-                                class='flex-grow'
+                                class='button-primary select-menu__filter-button'
                                 onClick={props.onClearSelection}
                                 title='Clear selection'
                                 type='button'
                             >
-                                <IconCloseMd />
+                                Clear Selection
                             </button>
                         </Show>
                     </div>
