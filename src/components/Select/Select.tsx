@@ -196,72 +196,6 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                     class='flex-column margin-top-xs select-menu'
                     ref={popoverContentRef}
                 >
-                    <div class='select-menu__filter'>
-                        <Show when={props.searchable}>
-                            <input
-                                class='flex-grow'
-                                onInput={(e) => setSearchQuery(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (
-                                        e.key === 'Enter' &&
-                                        sortedTags().length > 0
-                                    ) {
-                                        props.onToggle(sortedTags()[0].value);
-
-                                        setSearchQuery('');
-
-                                        if (isAutoClose()) {
-                                            closeMenu();
-                                        }
-                                    } else if (e.key === 'Escape') {
-                                        closeMenu();
-                                    }
-                                }}
-                                placeholder='Search...'
-                                ref={searchInputRef}
-                                type='search'
-                                value={searchQuery()}
-                            />
-                        </Show>
-                        <Show when={isMultiSelect()}>
-                            <Show when={props.onSelectAll}>
-                                <button
-                                    class='button-primary select-menu__filter-button'
-                                    onClick={props.onSelectAll}
-                                    title='Select all'
-                                    type='button'
-                                >
-                                    Select All
-                                </button>
-                            </Show>
-                            <Show when={props.onDeselectAll}>
-                                <button
-                                    class='button-primary select-menu__filter-button'
-                                    onClick={props.onDeselectAll}
-                                    title='Deselect all'
-                                    type='button'
-                                >
-                                    Deselect All
-                                </button>
-                            </Show>
-                        </Show>
-                        <Show
-                            when={
-                                !isMultiSelect() &&
-                                props.selected &&
-                                props.onClearSelection
-                            }
-                        >
-                            <button
-                                class='button-primary select-menu__filter-button'
-                                onClick={props.onClearSelection}
-                                title='Clear selection'
-                                type='button'
-                            >
-                                Clear Selection
-                            </button>
-                        </Show>
-                    </div>
                     <Show
                         when={
                             props.searchable ||
@@ -270,6 +204,76 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                             props.onClearSelection
                         }
                     >
+                        <div class='select-menu__filter'>
+                            <Show when={props.searchable}>
+                                <input
+                                    class='flex-grow'
+                                    onInput={(e) =>
+                                        setSearchQuery(e.target.value)
+                                    }
+                                    onKeyDown={(e) => {
+                                        if (
+                                            e.key === 'Enter' &&
+                                            sortedTags().length > 0
+                                        ) {
+                                            props.onToggle(
+                                                sortedTags()[0].value,
+                                            );
+
+                                            setSearchQuery('');
+
+                                            if (isAutoClose()) {
+                                                closeMenu();
+                                            }
+                                        } else if (e.key === 'Escape') {
+                                            closeMenu();
+                                        }
+                                    }}
+                                    placeholder='Search...'
+                                    ref={searchInputRef}
+                                    type='search'
+                                    value={searchQuery()}
+                                />
+                            </Show>
+                            <Show when={isMultiSelect()}>
+                                <Show when={props.onSelectAll}>
+                                    <button
+                                        class='button-primary select-menu__filter-button'
+                                        onClick={props.onSelectAll}
+                                        title='Select all'
+                                        type='button'
+                                    >
+                                        Select All
+                                    </button>
+                                </Show>
+                                <Show when={props.onDeselectAll}>
+                                    <button
+                                        class='button-primary select-menu__filter-button'
+                                        onClick={props.onDeselectAll}
+                                        title='Deselect all'
+                                        type='button'
+                                    >
+                                        Deselect All
+                                    </button>
+                                </Show>
+                            </Show>
+                            <Show
+                                when={
+                                    !isMultiSelect() &&
+                                    props.selected &&
+                                    props.onClearSelection
+                                }
+                            >
+                                <button
+                                    class='button-primary select-menu__filter-button'
+                                    onClick={props.onClearSelection}
+                                    title='Clear selection'
+                                    type='button'
+                                >
+                                    Clear Selection
+                                </button>
+                            </Show>
+                        </div>
                         <Divider />
                     </Show>
                     <div class='select-menu__list'>

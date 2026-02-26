@@ -50,14 +50,9 @@
 }
 
 .select-menu__list {
-    scrollbar-gutter: stable;
-
     overflow-y: auto;
     display: flex;
     flex-flow: column nowrap;
-
-    /* gap: var(--s-size-gap-sm); */
-
     padding: var(--s-size-padding-xs);
 }
 
