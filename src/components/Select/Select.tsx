@@ -16,6 +16,25 @@ import {
 } from 'solid-js';
 import { Divider, IconCaretDownMd, IconCheck, Popover } from '@/components';
 
+type Option = {
+    /**
+     * Icon displayed to the left of the option
+     */
+    icon?: JSX.Element;
+    /**
+     * Label displayed in place of the value
+     */
+    label?: string;
+    /**
+     * The value of the option passed to `onChange` used as a label as a fallback
+     */
+    value: string;
+    /**
+     * Whether the option is disabled
+     */
+    disabled?: boolean;
+} & {};
+
 type Props = {
     /**
      * Placeholder text for select menu button
@@ -24,24 +43,7 @@ type Props = {
     /**
      * List of option objects
      */
-    options: {
-        /**
-         * Icon displayed to the left of the option
-         */
-        icon?: JSX.Element;
-        /**
-         * Label displayed in place of the value
-         */
-        label?: string;
-        /**
-         * The value of the option passed to `onChange` used as a label as a fallback
-         */
-        value: string;
-        /**
-         * Whether the option is disabled
-         */
-        disabled?: boolean;
-    }[];
+    options: Option[];
     /**
      * Selected option(s)
      */
