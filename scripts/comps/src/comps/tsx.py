@@ -74,7 +74,10 @@ class Tsx:
         self.write_line("type Props = {")
         self.write_line("ref?: HTMLDivElement | ((el: HTMLDivElement) => void);", 1)
         if has_children:
-            self.write_line("children?: JSX.Element;", 1)
+            if self.type == ComponentType.parent:
+                self.write_line("children: JSX.Element;", 1)
+            else:
+                self.write_line("children?: JSX.Element;", 1)
         self.write_line("}")
         self.empty_line()
 
