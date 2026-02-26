@@ -1,8 +1,7 @@
 import type { JSX, ParentComponent } from 'solid-js';
-
-import './Block.css';
 import { Divider } from '@/components';
 import { toTitleCase } from '@/utils';
+import styles from './Block.module.css';
 
 type Props = {
     title: string;
@@ -12,7 +11,7 @@ type Props = {
 
 export const Block: ParentComponent<Props> = (props: Props) => {
     return (
-        <div class='block' ref={props.ref}>
+        <div class={styles.block} ref={props.ref}>
             <div class='flex-column'>
                 <h3>{toTitleCase(props.title)}</h3>
                 <Divider class='margin-bottom-lg' />

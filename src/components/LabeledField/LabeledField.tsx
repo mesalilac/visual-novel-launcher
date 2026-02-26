@@ -1,7 +1,6 @@
 import type { JSX, ParentComponent } from 'solid-js';
-
-import './LabeledField.css';
 import { toTitleCase } from '@/utils';
+import styles from './LabeledField.module.css';
 
 type Props = {
     name: string;
