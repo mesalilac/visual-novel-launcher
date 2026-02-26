@@ -51,10 +51,14 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
 
     const isMultiSelect = () => Array.isArray(props.selected);
 
-    const isSelected = (value: string) => {
+    const selectedSet = createMemo(() => {
         return isMultiSelect()
-            ? props.selected.includes(value)
-            : props.selected === value;
+            ? new Set(props.selected)
+            : new Set([props.selected]);
+    });
+
+    const isSelected = (value: string) => {
+        return selectedSet().has(value);
     };
 
     const isAutoClose = () => !isMultiSelect() && props.closeOnSelect;
