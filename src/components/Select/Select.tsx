@@ -16,7 +16,7 @@ import {
 } from 'solid-js';
 import { Divider, IconCaretDownMd, IconCheck, Popover } from '@/components';
 
-type SelectProps = {
+type Props = {
     placeholder?: string;
     options: {
         icon?: JSX.Element;
@@ -36,7 +36,7 @@ type SelectProps = {
     pinSelected?: boolean;
 };
 
-export const Select: VoidComponent<SelectProps> = (rawProps) => {
+export const Select: VoidComponent<Props> = (rawProps) => {
     const props = mergeProps(
         { closeOnSelect: !Array.isArray(rawProps.selected), searchable: false },
         rawProps,
