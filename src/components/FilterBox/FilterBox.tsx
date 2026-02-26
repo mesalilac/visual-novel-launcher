@@ -25,10 +25,7 @@ export const FilterBox = () => {
             />
             <div class='flex-row'>
                 <Select
-                    onDeselectAll={() => {
-                        globalData.setStore('vnsFilter', 'tagIds', []);
-                    }}
-                    onToggle={(id) => {
+                    onChange={(id) => {
                         if (globalData.store.vnsFilter.tagIds.includes(id)) {
                             globalData.setStore('vnsFilter', 'tagIds', [
                                 ...globalData.store.vnsFilter.tagIds.filter(
@@ -43,6 +40,9 @@ export const FilterBox = () => {
                             id,
                         ]);
                     }}
+                    onDeselectAll={() => {
+                        globalData.setStore('vnsFilter', 'tagIds', []);
+                    }}
                     options={
                         globalData.resources.tags.get()?.map((tag) => ({
                             value: tag.id,
@@ -55,7 +55,7 @@ export const FilterBox = () => {
                     selected={globalData.store.vnsFilter.tagIds}
                 />
                 <Select
-                    onToggle={(value) =>
+                    onChange={(value) =>
                         globalData.setStore(
                             'vnsFilter',
                             'status',
@@ -69,7 +69,7 @@ export const FilterBox = () => {
                     selected={globalData.store.vnsFilter.status}
                 />
                 <Select
-                    onToggle={(value) => {
+                    onChange={(value) => {
                         globalData.setStore(
                             'vnsFilter',
                             'sortBy',
@@ -83,7 +83,7 @@ export const FilterBox = () => {
                     selected={globalData.store.vnsFilter.sortBy}
                 />
                 <Select
-                    onToggle={(value) => {
+                    onChange={(value) => {
                         globalData.setStore(
                             'vnsFilter',
                             'sortDirection',

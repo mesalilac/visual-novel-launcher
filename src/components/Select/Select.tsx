@@ -27,7 +27,7 @@ type SelectProps = {
     selected: string | string[];
     searchable?: boolean;
     emptyPlaceholder?: string;
-    onToggle: (value: string) => void;
+    onChange: (value: string) => void;
     onSelectAll?: () => void;
     onDeselectAll?: () => void;
     onClearSelection?: () => void;
@@ -132,7 +132,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
     const handleOptionClick = (value: string) => {
         const state = Flip.getState('.select-menu__item', { simple: true });
 
-        props.onToggle(value);
+        props.onChange(value);
 
         if (isAutoClose()) {
             closeMenu();
@@ -217,7 +217,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                                             e.key === 'Enter' &&
                                             sortedTags().length > 0
                                         ) {
-                                            props.onToggle(
+                                            props.onChange(
                                                 sortedTags()[0].value,
                                             );
 

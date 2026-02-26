@@ -157,7 +157,7 @@ const Content = (props: { vn: VisualNovel }) => {
                 <div class='flex-row'>
                     <LabeledField name='status'>
                         <Select
-                            onToggle={(value) =>
+                            onChange={(value) =>
                                 editStore.set(
                                     'status',
                                     value as VisualNovelStatus,

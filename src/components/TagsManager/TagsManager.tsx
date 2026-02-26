@@ -230,12 +230,12 @@ export const TagsManager = () => {
                     <span>{tagsWithVns.get()?.length}</span>
                 </span>
                 <Select
-                    onToggle={(value) => setSearchSortBy(value as SortByType)}
+                    onChange={(value) => setSearchSortBy(value as SortByType)}
                     options={sortByList.map((x) => ({ value: x }))}
                     selected={searchSortBy()}
                 />
                 <Select
-                    onToggle={(value) =>
+                    onChange={(value) =>
                         setSearchSortDirection(value as SortDirectionType)
                     }
                     options={sortDirectionList.map((x) => ({ value: x }))}
