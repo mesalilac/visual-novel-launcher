@@ -1,3 +1,4 @@
+import toast from 'solid-toast';
 import type { CommandError } from '@/bindings';
 
 export const toTitleCase = (str: string): string => {
@@ -10,8 +11,14 @@ export const toTitleCase = (str: string): string => {
 
 export const handleIpcError = (error: unknown) => {
     console.error(error);
+    toast.error(error instanceof Error ? error.message : String(error));
 };
 
 export const reportIpcError = (e: CommandError) => {
+    const kind = e.kind;
+    const message =
+        'message' in e ? e.message : 'No additional details available.';
+
     console.error(e);
+    toast.error(`${kind}: ${message}`);
 };
