@@ -262,7 +262,16 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                             </button>
                         </Show>
                     </div>
-                    <Divider />
+                    <Show
+                        when={
+                            props.searchable ||
+                            props.onSelectAll ||
+                            props.onDeselectAll ||
+                            props.onClearSelection
+                        }
+                    >
+                        <Divider />
+                    </Show>
                     <div class='select-menu__list'>
                         <Switch>
                             <Match
