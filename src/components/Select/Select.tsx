@@ -27,8 +27,6 @@ type SelectProps = {
     selected: string | string[];
     searchable?: boolean;
     emptyPlaceholder?: string;
-    open?: boolean;
-    onOpenChange?: (open: boolean) => void;
     onToggle: (value: string) => void;
     onSelectAll?: () => void;
     onDeselectAll?: () => void;
@@ -48,7 +46,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
     let popoverTriggerRef!: HTMLButtonElement;
     let popoverContentRef!: HTMLDivElement;
 
-    const [isOpen, setIsOpen] = createSignal(props.open ?? false);
+    const [isOpen, setIsOpen] = createSignal(false);
     const [searchQuery, setSearchQuery] = createSignal('');
 
     const isMultiSelect = () => Array.isArray(props.selected);
@@ -122,10 +120,6 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
         if (!isOpen()) {
             setSearchQuery('');
         }
-    });
-
-    createEffect(() => {
-        if (props.onOpenChange) props.onOpenChange(isOpen());
     });
 
     const handleOptionClick = (value: string) => {
