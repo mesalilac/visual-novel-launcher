@@ -33,6 +33,10 @@ type SelectProps = {
         disabled?: boolean;
     }[];
     selected: string | string[];
+    searchable?: boolean;
+    emptyPlaceholder?: string;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     onToggle: (value: string) => void;
     onSelectAll?: () => void;
     onDeselectAll?: () => void;
@@ -44,7 +48,7 @@ type SelectProps = {
 
 export const Select: VoidComponent<SelectProps> = (rawProps) => {
     const props = mergeProps(
-        { closeOnSelect: !Array.isArray(rawProps.selected) },
+        { closeOnSelect: !Array.isArray(rawProps.selected), searchable: false },
         rawProps,
     );
 
@@ -52,7 +56,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
     let popoverTriggerRef!: HTMLButtonElement;
     let popoverContentRef!: HTMLDivElement;
 
-    const [isOpen, setIsOpen] = createSignal(false);
+    const [isOpen, setIsOpen] = createSignal(props.open ?? false);
     const [searchQuery, setSearchQuery] = createSignal('');
 
     const isMultiSelect = () => Array.isArray(props.selected);
@@ -128,6 +132,10 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
         }
     });
 
+    createEffect(() => {
+        if (props.onOpenChange) props.onOpenChange(isOpen());
+    });
+
     const handleOptionClick = (value: string) => {
         const state = Flip.getState('.select-menu__item', { simple: true });
 
@@ -197,33 +205,36 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                     ref={popoverContentRef}
                 >
                     <div class='select-menu__filter'>
-                        <input
-                            class='flex-grow'
-                            onInput={(e) => setSearchQuery(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (
-                                    e.key === 'Enter' &&
-                                    sortedTags().length > 0
-                                ) {
-                                    props.onToggle(sortedTags()[0].value);
+                        <Show when={props.searchable}>
+                            <input
+                                class='flex-grow'
+                                onInput={(e) => setSearchQuery(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (
+                                        e.key === 'Enter' &&
+                                        sortedTags().length > 0
+                                    ) {
+                                        props.onToggle(sortedTags()[0].value);
 
-                                    setSearchQuery('');
+                                        setSearchQuery('');
 
-                                    if (isAutoClose()) {
+                                        if (isAutoClose()) {
+                                            closeMenu();
+                                        }
+                                    } else if (e.key === 'Escape') {
                                         closeMenu();
                                     }
-                                } else if (e.key === 'Escape') {
-                                    closeMenu();
-                                }
-                            }}
-                            placeholder='Search...'
-                            ref={searchInputRef}
-                            type='search'
-                            value={searchQuery()}
-                        />
+                                }}
+                                placeholder='Search...'
+                                ref={searchInputRef}
+                                type='search'
+                                value={searchQuery()}
+                            />
+                        </Show>
                         <Show when={isMultiSelect()}>
                             <Show when={props.onSelectAll}>
                                 <button
+                                    class='flex-grow'
                                     onClick={props.onSelectAll}
                                     title='Select all'
                                     type='button'
@@ -233,6 +244,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                             </Show>
                             <Show when={props.onDeselectAll}>
                                 <button
+                                    class='flex-grow'
                                     onClick={props.onDeselectAll}
                                     title='Deselect all'
                                     type='button'
@@ -249,6 +261,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                             }
                         >
                             <button
+                                class='flex-grow'
                                 onClick={props.onClearSelection}
                                 title='Clear selection'
                                 type='button'
@@ -269,7 +282,7 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                                 No results found for "{searchQuery()}"
                             </Match>
                             <Match when={sortedTags().length === 0}>
-                                No options
+                                {props.emptyPlaceholder ?? 'No options'}
                             </Match>
                             <Match when={sortedTags().length > 0}>
                                 <For each={sortedTags()}>

@@ -51,6 +51,7 @@ export const FilterBox = () => {
                     }
                     pinSelected={true}
                     placeholder='Select tags'
+                    searchable
                     selected={globalData.store.vnsFilter.tagIds}
                 />
                 <Select
