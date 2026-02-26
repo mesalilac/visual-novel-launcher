@@ -217,11 +217,11 @@ export const Select: VoidComponent<SelectProps> = (rawProps) => {
                                             e.key === 'Enter' &&
                                             sortedTags().length > 0
                                         ) {
-                                            props.onChange(
+                                            setSearchQuery('');
+
+                                            handleOptionClick(
                                                 sortedTags()[0].value,
                                             );
-
-                                            setSearchQuery('');
 
                                             if (isAutoClose()) {
                                                 closeMenu();
