@@ -14,15 +14,7 @@ import {
     Switch,
     type VoidComponent,
 } from 'solid-js';
-import {
-    Divider,
-    IconCaretDownMd,
-    IconCheck,
-    IconCheckboxCheck,
-    IconCheckboxUnchecked,
-    IconCloseMd,
-    Popover,
-} from '@/components';
+import { Divider, IconCaretDownMd, IconCheck, Popover } from '@/components';
 
 type SelectProps = {
     placeholder?: string;
