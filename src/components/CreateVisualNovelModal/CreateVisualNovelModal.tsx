@@ -1,4 +1,5 @@
 import type { Component, JSX } from 'solid-js';
+import toast from 'solid-toast';
 import { commands } from '@/bindings';
 import {
     useModalContext,
@@ -20,21 +21,34 @@ export const CreateVisualNovelModal: Component<Props> = (_props: Props) => {
     const { setIsOpen } = useModalContext();
 
     const handleOnAction = async (form: VisualNovelForm) => {
-        if (
-            form.title?.trim() === '' ||
-            (form.playtime ?? 0) > 0 ||
-            form.executablePath?.trim() === ''
-        )
+        if (!form.title) {
+            toast.error('Title is required');
             return;
-
-        if (
-            !form.title ||
-            !form.playtime ||
-            !form.dirPath ||
-            !form.status ||
-            !form.executablePath
-        )
+        }
+        if (form.title && form.title.trim() === '') {
+            toast.error("'Title' can't be empty");
             return;
+        }
+        if (form.playtime && form.playtime < 0) {
+            toast.error("'Playtime' must be greater than 0");
+            return;
+        }
+        if (!form.dirPath) {
+            toast.error("'Directory' Path is required");
+            return;
+        }
+        if (form.dirPath && form.dirPath.trim() === '') {
+            toast.error("'directory path' can't be empty");
+            return;
+        }
+        if (!form.executablePath) {
+            toast.error("'Executable' Path is required");
+            return;
+        }
+        if (form.executablePath && form.executablePath.trim() === '') {
+            toast.error("'executable path' can't be empty");
+            return;
+        }
 
         setIsOpen(false);
 
@@ -42,9 +56,9 @@ export const CreateVisualNovelModal: Component<Props> = (_props: Props) => {
             .createVisualNovel({
                 title: form.title,
                 description: form.description ?? null,
-                status: form.status,
+                status: form.status ?? 'Backlog',
                 coverPath: form.coverPath ?? null,
-                playtime: form.playtime,
+                playtime: form.playtime ?? 0,
                 notes: form.notes ?? null,
                 dirPath: form.dirPath,
                 executablePath: form.executablePath,
