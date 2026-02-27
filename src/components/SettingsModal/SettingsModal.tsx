@@ -2,8 +2,10 @@ import { ask, open } from '@tauri-apps/plugin-dialog';
 import { createEffect, createSignal, Show } from 'solid-js';
 import { commands } from '@/bindings';
 import {
+    Block,
     Divider,
     GeneralStats,
+    LabeledField,
     ModalActionButtons,
     TagsManager,
     useModalContext,
@@ -149,6 +151,110 @@ export const SettingsModal = () => {
         globalData.resources.vns.refetch();
     };
 
+    // return (
+    //     <div class='flex-column height-100'>
+    //         <h2>Settings</h2>
+    //         <Divider class='margin-bottom-lg' />
+    //         <div class='flex-column overflow-auto padding-md'>
+    //             <Show when={settings.get.state === 'ready'}>
+    //                 <div class='flex-column gap-lg margin-bottom-lg'>
+    //                     <div class='flex-column'>
+    //                         <span>Library Path</span>
+    //                         <div class='flex-row'>
+    //                             <input
+    //                                 class='flex-grow'
+    //                                 onChange={(e) =>
+    //                                     setLibraryPath(e.target.value.trim())
+    //                                 }
+    //                                 title={libraryPath() ?? ''}
+    //                                 type='text'
+    //                                 value={libraryPath() ?? ''}
+    //                             />
+    //                             <button onClick={pickLibraryPath} type='button'>
+    //                                 Browse
+    //                             </button>
+    //                         </div>
+    //                     </div>
+    //                     <div class='flex-row'>
+    //                         <span>Use Locale Emulator</span>
+    //                         <input
+    //                             checked={useLocaleEmulator() ?? true}
+    //                             onChange={(e) =>
+    //                                 setUseLocaleEmulator(e.target.checked)
+    //                             }
+    //                             type='checkbox'
+    //                         />
+    //                     </div>
+    //                     <div class='flex-column'>
+    //                         <span>Locale Emulator Executable Path</span>
+    //                         <div class='flex-row'>
+    //                             <input
+    //                                 class='flex-grow'
+    //                                 onChange={(e) =>
+    //                                     setLocaleEmulatorExecutablePath(
+    //                                         e.target.value.trim(),
+    //                                     )
+    //                                 }
+    //                                 title={localeEmulatorExecutablePath() ?? ''}
+    //                                 type='text'
+    //                                 value={localeEmulatorExecutablePath() ?? ''}
+    //                             />
+    //                             <button
+    //                                 onClick={pickLocaleEmulatorExecutablePath}
+    //                                 type='button'
+    //                             >
+    //                                 Browse
+    //                             </button>
+    //                         </div>
+    //                     </div>
+    //                     <div class='flex-column'>
+    //                         <span>Locale Emulator Launch Options</span>
+    //                         <input
+    //                             onChange={(e) =>
+    //                                 setLocaleEmulatorLaunchOptions(
+    //                                     e.target.value.trim(),
+    //                                 )
+    //                             }
+    //                             title={localeEmulatorLaunchOptions() ?? ''}
+    //                             type='text'
+    //                             value={localeEmulatorLaunchOptions() ?? ''}
+    //                         />
+    //                     </div>
+    //                     <div class='flex-column'>
+    //                         <span>Remove All Visual Novels</span>
+    //                         <button
+    //                             class='button-danger self-start'
+    //                             onClick={removeAllVisualNovels}
+    //                             type='button'
+    //                         >
+    //                             Remove
+    //                         </button>
+    //                     </div>
+    //                     <div class='flex-column'>
+    //                         <span>Remove All Tags</span>
+    //                         <button
+    //                             class='button-danger self-start'
+    //                             onClick={removeAllTags}
+    //                             type='button'
+    //                         >
+    //                             Remove
+    //                         </button>
+    //                     </div>
+    //                     <div>
+    //                         <span>General Stats</span>
+    //                         <GeneralStats />
+    //                     </div>
+    //                     <div class='flex-column'>
+    //                         <span>Manage Tags</span>
+    //                         <TagsManager />
+    //                     </div>
+    //                 </div>
+    //             </Show>
+    //         </div>
+    //         <ModalActionButtons onAction={handleOnAction} />
+    //     </div>
+    // );
+
     return (
         <div class='flex-column height-100'>
             <h2>Settings</h2>
@@ -156,96 +262,126 @@ export const SettingsModal = () => {
             <div class='flex-column overflow-auto padding-md'>
                 <Show when={settings.get.state === 'ready'}>
                     <div class='flex-column gap-lg margin-bottom-lg'>
-                        <div class='flex-column'>
-                            <span>Library Path</span>
-                            <div class='flex-row'>
-                                <input
-                                    class='flex-grow'
-                                    onChange={(e) =>
-                                        setLibraryPath(e.target.value.trim())
-                                    }
-                                    title={libraryPath() ?? ''}
-                                    type='text'
-                                    value={libraryPath() ?? ''}
-                                />
-                                <button onClick={pickLibraryPath} type='button'>
-                                    Browse
-                                </button>
+                        <Block title='library path'>
+                            <LabeledField name='path'>
+                                <div class='flex-row align-stretch'>
+                                    <input
+                                        class='flex-grow'
+                                        onChange={(e) =>
+                                            setLibraryPath(
+                                                e.target.value.trim(),
+                                            )
+                                        }
+                                        title={libraryPath() ?? ''}
+                                        type='text'
+                                        value={libraryPath() ?? ''}
+                                    />
+                                    <button
+                                        onClick={pickLibraryPath}
+                                        type='button'
+                                    >
+                                        Browse
+                                    </button>
+                                </div>
+                            </LabeledField>
+                        </Block>
+                        <Block title='locale emulator'>
+                            <div class='flex-row gap-xl'>
+                                <div>
+                                    <LabeledField inline name='enable'>
+                                        <input
+                                            checked={
+                                                useLocaleEmulator() ?? true
+                                            }
+                                            onChange={(e) =>
+                                                setUseLocaleEmulator(
+                                                    e.target.checked,
+                                                )
+                                            }
+                                            type='checkbox'
+                                        />
+                                    </LabeledField>
+                                </div>
+                                <LabeledField name='executable path'>
+                                    <div class='flex-row align-stretch'>
+                                        <input
+                                            class='flex-grow'
+                                            onChange={(e) =>
+                                                setLocaleEmulatorExecutablePath(
+                                                    e.target.value.trim(),
+                                                )
+                                            }
+                                            placeholder='path/to/locale-emulator.exe'
+                                            title={
+                                                localeEmulatorExecutablePath() ??
+                                                ''
+                                            }
+                                            type='text'
+                                            value={
+                                                localeEmulatorExecutablePath() ??
+                                                ''
+                                            }
+                                        />
+                                        <button
+                                            onClick={
+                                                pickLocaleEmulatorExecutablePath
+                                            }
+                                            type='button'
+                                        >
+                                            Browse
+                                        </button>
+                                    </div>
+                                </LabeledField>
+                                <LabeledField name='executable launch options'>
+                                    <input
+                                        onChange={(e) =>
+                                            setLocaleEmulatorLaunchOptions(
+                                                e.target.value.trim(),
+                                            )
+                                        }
+                                        placeholder='--windowed'
+                                        title={
+                                            localeEmulatorLaunchOptions() ?? ''
+                                        }
+                                        type='text'
+                                        value={
+                                            localeEmulatorLaunchOptions() ?? ''
+                                        }
+                                    />
+                                </LabeledField>
                             </div>
-                        </div>
-                        <div class='flex-row'>
-                            <span>Use Locale Emulator</span>
-                            <input
-                                checked={useLocaleEmulator() ?? true}
-                                onChange={(e) =>
-                                    setUseLocaleEmulator(e.target.checked)
-                                }
-                                type='checkbox'
-                            />
-                        </div>
-                        <div class='flex-column'>
-                            <span>Locale Emulator Executable Path</span>
+                        </Block>
+                        <Block title='clear storage'>
                             <div class='flex-row'>
-                                <input
-                                    class='flex-grow'
-                                    onChange={(e) =>
-                                        setLocaleEmulatorExecutablePath(
-                                            e.target.value.trim(),
-                                        )
-                                    }
-                                    title={localeEmulatorExecutablePath() ?? ''}
-                                    type='text'
-                                    value={localeEmulatorExecutablePath() ?? ''}
-                                />
-                                <button
-                                    onClick={pickLocaleEmulatorExecutablePath}
-                                    type='button'
+                                <LabeledField
+                                    inline
+                                    name='remove all visual novels'
                                 >
-                                    Browse
-                                </button>
+                                    <button
+                                        class='button-danger self-start'
+                                        onClick={removeAllVisualNovels}
+                                        type='button'
+                                    >
+                                        Remove
+                                    </button>
+                                </LabeledField>
+                                <LabeledField inline name='remove all tags'>
+                                    <button
+                                        class='button-danger self-start'
+                                        onClick={removeAllTags}
+                                        type='button'
+                                    >
+                                        Remove
+                                    </button>
+                                </LabeledField>
                             </div>
-                        </div>
-                        <div class='flex-column'>
-                            <span>Locale Emulator Launch Options</span>
-                            <input
-                                onChange={(e) =>
-                                    setLocaleEmulatorLaunchOptions(
-                                        e.target.value.trim(),
-                                    )
-                                }
-                                title={localeEmulatorLaunchOptions() ?? ''}
-                                type='text'
-                                value={localeEmulatorLaunchOptions() ?? ''}
-                            />
-                        </div>
-                        <div class='flex-column'>
-                            <span>Remove All Visual Novels</span>
-                            <button
-                                class='button-danger self-start'
-                                onClick={removeAllVisualNovels}
-                                type='button'
-                            >
-                                Remove
-                            </button>
-                        </div>
-                        <div class='flex-column'>
-                            <span>Remove All Tags</span>
-                            <button
-                                class='button-danger self-start'
-                                onClick={removeAllTags}
-                                type='button'
-                            >
-                                Remove
-                            </button>
-                        </div>
-                        <div>
-                            <span>General Stats</span>
+                        </Block>
+                        <Block title='general stats'>
                             <GeneralStats />
-                        </div>
-                        <div class='flex-column'>
-                            <span>Manage Tags</span>
+                        </Block>
+                        <Block title='manage tags'>
                             <TagsManager />
-                        </div>
+                        </Block>
                     </div>
                 </Show>
             </div>
