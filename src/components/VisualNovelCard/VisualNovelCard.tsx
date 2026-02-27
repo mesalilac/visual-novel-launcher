@@ -249,16 +249,6 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
             }}
         >
             <button
-                class='visual-novel-card__status'
-                classList={{
-                    [props.vn.status.toLowerCase()]: true,
-                }}
-                onClick={handleStatusClick}
-                type='button'
-            >
-                {props.vn.status}
-            </button>
-            <button
                 class='flex-row visual-novel-card__menu_trigger'
                 ref={popoverMenuRef}
                 type='button'
@@ -308,6 +298,16 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                     {props.vn.title}
                 </h3>
                 <div class='flex-row overflow-auto visual-novel-card__tags'>
+                    <button
+                        class='visual-novel-card__status'
+                        classList={{
+                            [props.vn.status.toLowerCase()]: true,
+                        }}
+                        onClick={handleStatusClick}
+                        type='button'
+                    >
+                        {props.vn.status}
+                    </button>
                     <For each={props.vn.tags}>
                         {(tag) => (
                             <button

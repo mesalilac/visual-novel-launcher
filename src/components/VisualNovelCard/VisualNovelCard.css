@@ -55,88 +55,40 @@
 }
 
 .visual-novel-card__status {
-    --alpha: 60%;
-    --black: 20%;
-    --white: 30%;
-    --playing-fg: color-mix(
-        in hsl,
-        var(--s-color-status-playing),
-        black var(--black)
-    );
-    --finished-fg: color-mix(
-        in hsl,
-        var(--s-color-status-finished),
-        black var(--black)
-    );
-    --dropped-fg: color-mix(
-        in hsl,
-        var(--s-color-status-dropped),
-        black var(--black)
-    );
-    --backlog-fg: color-mix(
-        in hsl,
-        var(--s-color-status-backlog),
-        black var(--black)
-    );
-    --playing-bg: color-mix(
-        in hsl,
-        var(--s-color-status-playing),
-        white var(--white)
-    );
-    --finished-bg: color-mix(
-        in hsl,
-        var(--s-color-status-finished),
-        white var(--white)
-    );
-    --dropped-bg: color-mix(
-        in hsl,
-        var(--s-color-status-dropped),
-        white var(--white)
-    );
-    --backlog-bg: color-mix(
-        in hsl,
-        var(--s-color-status-backlog),
-        white var(--white)
-    );
+    --playing-fg: var(--s-color-status-playing);
+    --finished-fg: var(--s-color-status-finished);
+    --dropped-fg: var(--s-color-status-dropped);
+    --backlog-fg: var(--s-color-status-backlog);
 
     user-select: none;
 
-    position: absolute;
-    z-index: 1;
-    top: 0.5rem;
-    left: 0.5rem;
-
-    padding: var(--s-size-padding-xs);
-    border: var(--s-size-border-sm) solid var(--s-color-border-default);
-    border-radius: var(--s-size-radius-lg);
+    padding: var(--s-size-padding-xxs);
+    border-radius: var(--s-size-radius-md);
 
     font-size: var(--s-size-font-3);
     font-weight: var(--fw-bold);
 
-    backdrop-filter: blur(var(--s-size-blur));
+    background-color: var(--s-color-background-surface-3);
+    outline: var(--s-size-border-md) solid var(--s-color-border-default);
 
     &.playing {
-        border-color: var(--playing-fg);
         color: var(--playing-fg);
-        background-color: hsl(from var(--playing-bg) h s l / var(--alpha));
+        outline-color: var(--playing-fg);
     }
 
     &.finished {
-        border-color: var(--finished-fg);
         color: var(--finished-fg);
-        background-color: hsl(from var(--finished-bg) h s l / var(--alpha));
+        outline-color: var(--finished-fg);
     }
 
     &.dropped {
-        border-color: var(--dropped-fg);
         color: var(--dropped-fg);
-        background-color: hsl(from var(--dropped-bg) h s l / var(--alpha));
+        outline-color: var(--dropped-fg);
     }
 
     &.backlog {
-        border-color: var(--backlog-fg);
         color: var(--backlog-fg);
-        background-color: hsl(from var(--backlog-bg) h s l / var(--alpha));
+        outline-color: var(--backlog-fg);
     }
 }
 
