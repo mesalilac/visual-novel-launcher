@@ -202,7 +202,7 @@ const TagManagedItem = (props: { tag: TagWithVisualNovels }) => {
 /**
  * Custom list to picker or manage Picker
  * @example onChange={(tags) => editStore.set('tagIds', tags)}
-                    tagIds={editStore.get.tagIds}
+                    tagIds={editStore.get.tagIds} type='picker'
  */
 export const TagsList = (props: {
     type: 'manage' | 'picker';
