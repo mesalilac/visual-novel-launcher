@@ -5,7 +5,7 @@ import { toTitleCase } from '@/utils';
 
 type Props = {
     name: string;
-    title?: string;
+    tooltip?: string;
     icon?: JSX.Element;
     inline?: boolean;
     ref?: HTMLDivElement | ((el: HTMLDivElement) => void);
@@ -18,7 +18,7 @@ export const LabeledField: ParentComponent<Props> = (props: Props) => {
             class={`flex-${props.inline ? 'row' : 'column'} flex-1`}
             ref={props.ref}
         >
-            <h4 class='flex-row' title={props.title}>
+            <h4 class='flex-row' title={props.tooltip}>
                 {props.icon}
                 {toTitleCase(props.name)}:
             </h4>
