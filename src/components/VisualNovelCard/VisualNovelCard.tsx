@@ -341,6 +341,7 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                             {(props.vn.playtime / 3600).toFixed(1)}h
                         </span>
                     </div>
+                    <Divider height='20px' vertical />
                     <div class='flex-row visual-novel-card__icon'>
                         <IconCalendar />
                         <span
