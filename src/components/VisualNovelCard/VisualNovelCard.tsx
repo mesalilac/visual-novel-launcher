@@ -301,16 +301,12 @@ export const VisualNovelCard = (props: { vn: VisualNovel }) => {
                 }}
             />
             <div class='flex-column visual-novel-card__info'>
-                <h3 class='visual-novel-card__title' title={props.vn.title}>
+                <h3
+                    class='visual-novel-card__title'
+                    title={`${props.vn.title}${props.vn.description ? `\n\n${props.vn.description}` : ''}`}
+                >
                     {props.vn.title}
                 </h3>
-                <p
-                    class='visual-novel-card__description'
-                    title={props.vn.description || ''}
-                >
-                    {props.vn.description}
-                </p>
-
                 <div class='flex-row overflow-auto visual-novel-card__tags'>
                     <For each={props.vn.tags}>
                         {(tag) => (
