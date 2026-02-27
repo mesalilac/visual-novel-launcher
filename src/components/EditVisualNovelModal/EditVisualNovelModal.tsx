@@ -1,3 +1,4 @@
+import toast from 'solid-toast';
 import { commands, type VisualNovel } from '@/bindings';
 import {
     useModalContext,
@@ -13,12 +14,22 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
     const { setIsOpen } = useModalContext();
 
     const handleOnAction = async (form: VisualNovelForm) => {
-        if (
-            form.title?.trim() === '' ||
-            (form.playtime ?? 0) > 0 ||
-            form.executablePath?.trim() === ''
-        )
+        if (form.title && form.title.trim() === '') {
+            toast.error("'Title' can't be empty");
             return;
+        }
+        if (form.playtime && form.playtime < 0) {
+            toast.error("'Playtime' must be greater than 0");
+            return;
+        }
+        if (form.dirPath && form.dirPath.trim() === '') {
+            toast.error("'Directory Path' can't be empty");
+            return;
+        }
+        if (form.executablePath && form.executablePath.trim() === '') {
+            toast.error("'Executable Path' can't be empty");
+            return;
+        }
 
         setIsOpen(false);
 
