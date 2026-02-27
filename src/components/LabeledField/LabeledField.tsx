@@ -4,7 +4,7 @@ import { toTitleCase } from '@/utils';
 // import styles from './LabeledField.module.css';
 
 type Props = {
-    name: string;
+    title: string;
     tooltip?: string;
     icon?: JSX.Element;
     inline?: boolean;
@@ -20,7 +20,7 @@ export const LabeledField: ParentComponent<Props> = (props: Props) => {
         >
             <h4 class='flex-row' title={props.tooltip}>
                 {props.icon}
-                {toTitleCase(props.name)}:
+                {toTitleCase(props.title)}:
             </h4>
             {props.children}
         </div>

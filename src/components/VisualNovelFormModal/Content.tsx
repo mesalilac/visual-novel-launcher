@@ -48,7 +48,7 @@ export const Content: VoidComponent = () => {
     return (
         <div class={styles.content}>
             <Block title='properties'>
-                <LabeledField name='title'>
+                <LabeledField title='title'>
                     <input
                         onChange={(e) =>
                             data.set('form', 'title', e.target.value)
@@ -65,7 +65,7 @@ export const Content: VoidComponent = () => {
                     />
                 </LabeledField>
                 <div class='flex-row'>
-                    <LabeledField name='status'>
+                    <LabeledField title='status'>
                         <Select
                             onChange={(value) =>
                                 data.set(
@@ -85,7 +85,7 @@ export const Content: VoidComponent = () => {
                             }
                         />
                     </LabeledField>
-                    <LabeledField name='playtime'>
+                    <LabeledField title='playtime'>
                         <input
                             min={0}
                             onChange={(e) =>
@@ -108,7 +108,7 @@ export const Content: VoidComponent = () => {
                     </LabeledField>
                 </div>
                 <div class='flex-row align-stretch'>
-                    <LabeledField name='description'>
+                    <LabeledField title='description'>
                         <textarea
                             class={styles.textarea}
                             onChange={(e) =>
@@ -123,7 +123,7 @@ export const Content: VoidComponent = () => {
                             }
                         />
                     </LabeledField>
-                    <LabeledField name='notes'>
+                    <LabeledField title='notes'>
                         <textarea
                             class={styles.textarea}
                             onChange={(e) =>
@@ -141,7 +141,7 @@ export const Content: VoidComponent = () => {
                 </div>
             </Block>
             <Block title='installation & launch'>
-                <LabeledField name='use locale emulator'>
+                <LabeledField title='use locale emulator'>
                     <input
                         checked={
                             data.get.form.useLocaleEmulator ??
@@ -161,7 +161,7 @@ export const Content: VoidComponent = () => {
                     />
                 </LabeledField>
                 <div class='flex-row'>
-                    <LabeledField name='directory path'>
+                    <LabeledField title='directory path'>
                         <div class='flex-row align-stretch'>
                             <input
                                 class='flex-grow'
@@ -183,7 +183,7 @@ export const Content: VoidComponent = () => {
                             </button>
                         </div>
                     </LabeledField>
-                    <LabeledField name='executable path'>
+                    <LabeledField title='executable path'>
                         <div class='flex-row align-stretch'>
                             <input
                                 class='flex-grow'
@@ -210,7 +210,7 @@ export const Content: VoidComponent = () => {
                         </div>
                     </LabeledField>
                 </div>
-                <LabeledField name='launch options'>
+                <LabeledField title='launch options'>
                     <input
                         onChange={(e) =>
                             data.set('form', 'launchOptions', e.target.value)

@@ -263,7 +263,7 @@ export const SettingsModal = () => {
                 <Show when={settings.get.state === 'ready'}>
                     <div class='flex-column gap-lg margin-bottom-lg'>
                         <Block title='library path'>
-                            <LabeledField name='path'>
+                            <LabeledField title='path'>
                                 <div class='flex-row align-stretch'>
                                     <input
                                         class='flex-grow'
@@ -288,7 +288,7 @@ export const SettingsModal = () => {
                         <Block title='locale emulator'>
                             <div class='flex-row gap-xl'>
                                 <div>
-                                    <LabeledField inline name='enable'>
+                                    <LabeledField inline title='enable'>
                                         <input
                                             checked={
                                                 useLocaleEmulator() ?? true
@@ -302,7 +302,7 @@ export const SettingsModal = () => {
                                         />
                                     </LabeledField>
                                 </div>
-                                <LabeledField name='executable path'>
+                                <LabeledField title='executable path'>
                                     <div class='flex-row align-stretch'>
                                         <input
                                             class='flex-grow'
@@ -332,7 +332,7 @@ export const SettingsModal = () => {
                                         </button>
                                     </div>
                                 </LabeledField>
-                                <LabeledField name='executable launch options'>
+                                <LabeledField title='executable launch options'>
                                     <input
                                         onChange={(e) =>
                                             setLocaleEmulatorLaunchOptions(
@@ -355,7 +355,7 @@ export const SettingsModal = () => {
                             <div class='flex-row'>
                                 <LabeledField
                                     inline
-                                    name='remove all visual novels'
+                                    title='remove all visual novels'
                                 >
                                     <button
                                         class='button-danger self-start'
@@ -365,7 +365,7 @@ export const SettingsModal = () => {
                                         Remove
                                     </button>
                                 </LabeledField>
-                                <LabeledField inline name='remove all tags'>
+                                <LabeledField inline title='remove all tags'>
                                     <button
                                         class='button-danger self-start'
                                         onClick={removeAllTags}
