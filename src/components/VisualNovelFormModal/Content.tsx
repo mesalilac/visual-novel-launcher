@@ -18,6 +18,15 @@ export const Content: VoidComponent = () => {
         if (!path) return;
 
         data.set('form', 'dirPath', path);
+
+        const dirName = path
+            .replace(/[\\/]+$/, '')
+            .split(/[\\/]/)
+            .pop();
+
+        if (dirName && !data.get.form.title) {
+            data.set('form', 'title', dirName);
+        }
     };
 
     const handleBrowseExe = async () => {
