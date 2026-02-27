@@ -22,7 +22,7 @@ export const CreateVisualNovelModal: Component<Props> = (_props: Props) => {
 
     const handleOnAction = async (form: VisualNovelForm) => {
         if (!form.title) {
-            toast.error('Title is required');
+            toast.error("'Title' is required");
             return;
         }
         if (form.title && form.title.trim() === '') {
@@ -34,19 +34,19 @@ export const CreateVisualNovelModal: Component<Props> = (_props: Props) => {
             return;
         }
         if (!form.dirPath) {
-            toast.error("'Directory' Path is required");
+            toast.error("'Directory Path' is required");
             return;
         }
         if (form.dirPath && form.dirPath.trim() === '') {
-            toast.error("'directory path' can't be empty");
+            toast.error("'Directory Path' can't be empty");
             return;
         }
         if (!form.executablePath) {
-            toast.error("'Executable' Path is required");
+            toast.error("'Executable Path' is required");
             return;
         }
         if (form.executablePath && form.executablePath.trim() === '') {
-            toast.error("'executable path' can't be empty");
+            toast.error("'Executable Path' can't be empty");
             return;
         }
 
