@@ -6,6 +6,7 @@ import {
     IconArrowReload02,
     IconCloseMd,
     IconEditPencilLine01,
+    IconRemoveMinus,
     IconSave,
     IconTag,
     IconTrashFull,
@@ -14,13 +15,70 @@ import {
 import { type SortDirectionType, sortDirectionList } from '@/consts';
 import { useGlobalData } from '@/store';
 
-import './TagsManager.css';
+import './TagsList.css';
 import { handleIpcError, reportIpcError } from '@/utils';
 
 const sortByList = ['Relevance', 'Name', 'Date Added'] as const;
 type SortByType = (typeof sortByList)[number];
 
-const TagItem = (props: { tag: TagWithVisualNovels }) => {
+const TagAddRemoveItem = (props: {
+    tag: TagWithVisualNovels;
+    tagIds: TagWithVisualNovels[] | undefined;
+    onChange: (tagIds: TagWithVisualNovels[]) => void;
+}) => {
+    const isSelected = () => {
+        return props.tagIds?.some((x) => x.id === props.tag.id);
+    };
+
+    const addTag = () => {
+        props.onChange([...(props.tagIds || []), props.tag]);
+    };
+
+    const removeTag = () => {
+        props.onChange(
+            props.tagIds?.filter((x) => x.id !== props.tag.id) || [],
+        );
+    };
+
+    return (
+        <div
+            class='flex-row gap-xl surface-3 padding-sm'
+            style={{
+                outline: isSelected()
+                    ? 'var(--s-size-border-md) solid var(--s-color-background-info)'
+                    : '',
+            }}
+        >
+            <div class='flex-row'>
+                <IconTag />
+                <span title={props.tag.name}>{props.tag.name}</span>
+                <div class='user-select-none surface-4 padding-sides-sm radius-round'>
+                    {props.tag.visualNovels.length}
+                </div>
+            </div>
+            <div class='flex-row'>
+                <Show
+                    fallback={
+                        <IconAddPlus
+                            class='icon-clickable'
+                            onClick={addTag}
+                            size='1.2em'
+                        />
+                    }
+                    when={isSelected()}
+                >
+                    <IconRemoveMinus
+                        class='icon-clickable'
+                        onClick={removeTag}
+                        size='1.2em'
+                    />
+                </Show>
+            </div>
+        </div>
+    );
+};
+
+const TagManagedItem = (props: { tag: TagWithVisualNovels }) => {
     const globalData = useGlobalData();
 
     let nameRef: HTMLSpanElement | undefined;
@@ -141,9 +199,17 @@ const TagItem = (props: { tag: TagWithVisualNovels }) => {
     );
 };
 
-export const TagsManager = () => {
+/**
+ * Custom list to picker or manage Picker
+ * @example onChange={(tags) => editStore.set('tagIds', tags)}
+                    tagIds={editStore.get.tagIds}
+ */
+export const TagsList = (props: {
+    type: 'manage' | 'picker';
+    tagIds?: TagWithVisualNovels[];
+    onChange: (tagIds: TagWithVisualNovels[]) => void;
+}) => {
     const globalData = useGlobalData();
-
     const tagsWithVns = globalData.resources.tags;
 
     const [searchQuery, setSearchQuery] = createSignal('');
@@ -168,6 +234,12 @@ export const TagsManager = () => {
         const direction = searchSortDirection();
 
         return list.sort((a, b) => {
+            const aSelected = props.tagIds?.some((x) => x.id === a.id);
+            const bSelected = props.tagIds?.some((x) => x.id === b.id);
+
+            if (aSelected && !bSelected) return -1;
+            if (!aSelected && bSelected) return 1;
+
             let result = 0;
 
             if (sortBy === 'Relevance') {
@@ -206,11 +278,16 @@ export const TagsManager = () => {
             if (!prev) return;
             return [...prev, res.data];
         });
+
+        setSearchQuery('');
+
+        if (props.type === 'picker' && props.onChange && props.tagIds)
+            props.onChange([...(props.tagIds || []), res.data]);
     };
 
     return (
         <div class='flex-column surface-2 padding-sm radius-lg'>
-            <div class='flex-row padding-sm'>
+            <div class='flex-row align-stretch padding-sm'>
                 <input
                     class='flex-grow'
                     onInput={(e) => setSearchQuery(e.target.value)}
@@ -241,10 +318,12 @@ export const TagsManager = () => {
                     options={sortDirectionList.map((x) => ({ value: x }))}
                     selected={searchSortDirection()}
                 />
-                <IconArrowReload02
-                    class='icon-clickable refresh-icon'
-                    onClick={refresh}
-                />
+                <button class='refresh-button' type='button'>
+                    <IconArrowReload02
+                        class='refresh-button__icon'
+                        onClick={refresh}
+                    />
+                </button>
             </div>
             <Divider />
             <div class='flex-row padding-sm overflow-auto'>
@@ -257,7 +336,20 @@ export const TagsManager = () => {
                         <IconAddPlus /> {searchQuery()}
                     </button>
                 </Show>
-                <For each={sortedTags()}>{(tag) => <TagItem tag={tag} />}</For>
+                <For each={sortedTags()}>
+                    {(tag) => (
+                        <Show
+                            fallback={<TagManagedItem tag={tag} />}
+                            when={props.type === 'picker'}
+                        >
+                            <TagAddRemoveItem
+                                onChange={props.onChange}
+                                tag={tag}
+                                tagIds={props.tagIds}
+                            />
+                        </Show>
+                    )}
+                </For>
             </div>
         </div>
     );

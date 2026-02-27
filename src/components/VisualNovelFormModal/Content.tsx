@@ -1,7 +1,7 @@
 import { open } from '@tauri-apps/plugin-dialog';
 import type { VoidComponent } from 'solid-js';
 import type { VisualNovelStatus } from '@/bindings';
-import { Block, LabeledField, Select, TagsPicker } from '@/components';
+import { Block, LabeledField, Select, TagsList } from '@/components';
 import { VisualNovelStatusList } from '@/consts';
 import { useVisualNovelStoreContext } from './context';
 import styles from './VisualNovelFormModal.module.css';
@@ -227,9 +227,10 @@ export const Content: VoidComponent = () => {
                 </LabeledField>
             </Block>
             <Block title='tags'>
-                <TagsPicker
+                <TagsList
                     onChange={(tags) => data.set('form', 'tagIds', tags)}
                     tagIds={data.get.form.tagIds}
+                    type='picker'
                 />
             </Block>
         </div>

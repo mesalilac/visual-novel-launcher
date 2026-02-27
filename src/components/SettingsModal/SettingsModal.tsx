@@ -7,7 +7,7 @@ import {
     GeneralStats,
     LabeledField,
     ModalActionButtons,
-    TagsManager,
+    TagsList,
     useModalContext,
 } from '@/components';
 import { useGlobalData } from '@/store';
@@ -380,7 +380,7 @@ export const SettingsModal = () => {
                             <GeneralStats />
                         </Block>
                         <Block title='manage tags'>
-                            <TagsManager />
+                            <TagsList onChange={() => {}} type='manage' />
                         </Block>
                     </div>
                 </Show>
