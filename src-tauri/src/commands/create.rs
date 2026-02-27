@@ -1,4 +1,5 @@
 use super::prelude::*;
+use crate::utils::fs::resolve_cover_path;
 use diesel::insert_into;
 use nanoid::nanoid;
 
@@ -11,17 +12,20 @@ pub async fn create_visual_novel(
 ) -> CommandResult<VisualNovel> {
     let mut conn = state.pool.get()?;
 
+    let dir_path: String = payload.dir_path.trim().into();
+    let cover_path: Option<String> = resolve_cover_path(payload.cover_path, dir_path.clone());
+
     let new_vn = VisualNovelEntity {
         id: nanoid!(),
         title: payload.title.trim().into(),
         description: payload.description.map(|s| s.trim().into()),
-        cover_path: payload.cover_path.map(|s| s.trim().into()),
+        cover_path,
         playtime: payload.playtime,
         last_time_played_at: None,
         status: payload.status.unwrap_or_default(),
         is_favorite: false,
         notes: payload.notes.map(|s| s.trim().into()),
-        dir_path: payload.dir_path.trim().into(),
+        dir_path,
         executable_path: payload.executable_path.trim().into(),
         launch_options: payload.launch_options.map(|s| s.trim().into()),
         is_missing: false,

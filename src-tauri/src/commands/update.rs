@@ -1,10 +1,8 @@
-use std::path::PathBuf;
-
 use super::prelude::*;
 use crate::utils::db::normalize_optional_string;
+use crate::utils::fs::resolve_cover_path;
 use crate::APP_SETTINGS_ID;
 use diesel::{associations::HasTable, dsl::delete, insert_into, update};
-use nanoid::nanoid;
 
 #[derive(Debug, Clone, Serialize, AsChangeset)]
 #[diesel(table_name = visual_novels)]
@@ -33,35 +31,6 @@ impl VisualNovelChangeset {
             && self.executable_path.is_none()
             && self.use_locale_emulator.is_none()
             && self.launch_options.is_none()
-    }
-}
-
-fn resolve_cover_path(cover_path: Option<String>, vn_dir_path: String) -> Option<String> {
-    let source_path_str = cover_path.as_ref()?;
-
-    let source_path = PathBuf::from(source_path_str);
-    let vn_dir_path = PathBuf::from(&vn_dir_path);
-
-    if source_path.parent() == Some(&vn_dir_path) {
-        return cover_path;
-    }
-
-    let ext = source_path
-        .extension()
-        .and_then(|s| s.to_str())
-        .unwrap_or("png");
-
-    let new_file_name = format!("{}.{}", nanoid!(), ext);
-
-    let dest_path = vn_dir_path.join(new_file_name);
-
-    if dest_path.exists() {
-        return cover_path;
-    }
-
-    match std::fs::copy(source_path, &dest_path) {
-        Ok(_) => Some(dest_path.to_string_lossy().to_string()),
-        Err(_) => cover_path,
     }
 }
 
