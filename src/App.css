@@ -22,10 +22,12 @@
 /* :root {
 } */
 
-html {
+body {
     scrollbar-gutter: stable;
 
     overscroll-behavior: none;
+
+    margin: var(--s-size-margin-lg);
 
     font-family: "Ioskeley Mono", monospace;
     line-height: 1.5;
@@ -233,7 +235,6 @@ button {
     display: flex;
     flex-direction: column;
     gap: var(--s-size-gap-lg);
-    margin: var(--s-size-margin-lg);
 }
 
 .favorite-button__icon {
