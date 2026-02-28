@@ -39,7 +39,7 @@ pub fn biome(file: &Path) -> io::Result<()> {
     };
 
     let process = Command::new(biome_bin)
-        .arg("format")
+        .arg("check")
         .arg("--write")
         .arg(file)
         .output();
