@@ -47,7 +47,7 @@ pub fn biome(file: &Path) -> io::Result<()> {
     let output = match process {
         Ok(out) => out,
         Err(e) => {
-            println!("Error: Failed to run pnpm: {e}");
+            println!("Error: Failed to run biome: {e}");
 
             return Err(e);
         }
