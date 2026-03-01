@@ -21,10 +21,12 @@
 
 /* :root {
 } */
+    
+html {
+    scrollbar-gutter: stable;
+}
 
 body {
-    scrollbar-gutter: stable;
-
     overscroll-behavior: none;
 
     margin: var(--s-size-margin-lg);
