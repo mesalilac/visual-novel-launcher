@@ -172,7 +172,10 @@ export const Content: VoidComponent = () => {
                                 placeholder='path/to/game/'
                                 required={true}
                                 type='text'
-                                value={data.get.form.dirPath ?? ''}
+                                value={data.get.form.dirPath ??
+                                    (data.get.mode.type === 'edit'
+                                        ? data.get.mode.vn.dirPath
+                                        : '')}
                             />
                             <button
                                 disabled={data.get.mode.type === 'edit'}
