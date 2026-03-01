@@ -79,7 +79,7 @@ export const SideBar: VoidComponent = () => {
             rotationY: tiltY,
             scale: 0.85,
             duration: 0.5,
-            boxShadow: '0 0 25px 10px rgb(0 0 0 / 60%)',
+            boxShadow: '0 0 30px 1px rgb(0 0 0 / 30%)',
             ease: 'power2.out',
         });
     };
