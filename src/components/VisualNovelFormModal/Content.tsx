@@ -45,6 +45,79 @@ export const Content: VoidComponent = () => {
         data.set('form', 'executablePath', path);
     };
 
+    const title = () => {
+        return (
+            data.get.form.title ??
+            (data.get.mode.type === 'edit' ? data.get.mode.vn.title : '')
+        );
+    };
+
+    const status = () => {
+        return (data.get.form.status ??
+            (data.get.mode.type === 'edit'
+                ? data.get.mode.vn.status
+                : 'Backlog')) as VisualNovelStatus;
+    };
+
+    const playtime = () => {
+        return (
+            data.get.form.playtime ??
+            (data.get.mode.type === 'edit' ? data.get.mode.vn.playtime : 0)
+        );
+    };
+
+    const description = () => {
+        return (
+            data.get.form.description ??
+            (data.get.mode.type === 'edit'
+                ? (data.get.mode.vn.description ?? '')
+                : '')
+        );
+    };
+
+    const notes = () => {
+        return (
+            data.get.form.notes ??
+            (data.get.mode.type === 'edit'
+                ? (data.get.mode.vn.notes ?? '')
+                : '')
+        );
+    };
+
+    const enableLocaleEmulator = () => {
+        return (
+            data.get.form.useLocaleEmulator ??
+            (data.get.mode.type === 'edit'
+                ? data.get.mode.vn.useLocaleEmulator
+                : true)
+        );
+    };
+
+    const dirPath = () => {
+        return (
+            data.get.form.dirPath ??
+            (data.get.mode.type === 'edit' ? data.get.mode.vn.dirPath : '')
+        );
+    };
+
+    const executablePath = () => {
+        return (
+            data.get.form.executablePath ??
+            (data.get.mode.type === 'edit'
+                ? data.get.mode.vn.executablePath
+                : '')
+        );
+    };
+
+    const launchOptions = () => {
+        return (
+            data.get.form.launchOptions ??
+            (data.get.mode.type === 'edit'
+                ? (data.get.mode.vn.launchOptions ?? '')
+                : '')
+        );
+    };
+
     return (
         <div class={styles.content}>
             <Block title='properties'>
@@ -55,13 +128,9 @@ export const Content: VoidComponent = () => {
                         }
                         placeholder='Title...'
                         required={true}
+                        title={title()}
                         type='text'
-                        value={
-                            data.get.form.title ??
-                            (data.get.mode.type === 'edit'
-                                ? data.get.mode.vn.title
-                                : '')
-                        }
+                        value={title()}
                     />
                 </LabeledField>
                 <div class='flex-row'>
@@ -77,12 +146,7 @@ export const Content: VoidComponent = () => {
                             options={VisualNovelStatusList.map((x) => ({
                                 value: x,
                             }))}
-                            selected={
-                                (data.get.form.status ??
-                                    (data.get.mode.type === 'edit'
-                                        ? data.get.mode.vn.status
-                                        : 'Backlog')) as VisualNovelStatus
-                            }
+                            selected={status()}
                         />
                     </LabeledField>
                     <LabeledField title='playtime'>
@@ -98,12 +162,7 @@ export const Content: VoidComponent = () => {
                             placeholder='Playtime...'
                             required={true}
                             type='number'
-                            value={
-                                data.get.form.playtime ??
-                                (data.get.mode.type === 'edit'
-                                    ? data.get.mode.vn.playtime
-                                    : 0)
-                            }
+                            value={playtime()}
                         />
                     </LabeledField>
                 </div>
@@ -115,12 +174,8 @@ export const Content: VoidComponent = () => {
                                 data.set('form', 'description', e.target.value)
                             }
                             placeholder='Description...'
-                            value={
-                                data.get.form.description ??
-                                (data.get.mode.type === 'edit'
-                                    ? (data.get.mode.vn.description ?? '')
-                                    : '')
-                            }
+                            title={description()}
+                            value={description()}
                         />
                     </LabeledField>
                     <LabeledField title='notes'>
@@ -130,25 +185,16 @@ export const Content: VoidComponent = () => {
                                 data.set('form', 'notes', e.target.value)
                             }
                             placeholder='Notes...'
-                            value={
-                                data.get.form.notes ??
-                                (data.get.mode.type === 'edit'
-                                    ? (data.get.mode.vn.notes ?? '')
-                                    : '')
-                            }
+                            title={notes()}
+                            value={notes()}
                         />
                     </LabeledField>
                 </div>
             </Block>
             <Block title='installation & launch'>
-                <LabeledField title='use locale emulator'>
+                <LabeledField title='enable locale emulator'>
                     <input
-                        checked={
-                            data.get.form.useLocaleEmulator ??
-                            (data.get.mode.type === 'edit'
-                                ? data.get.mode.vn.useLocaleEmulator
-                                : true)
-                        }
+                        checked={enableLocaleEmulator()}
                         class='self-start'
                         onChange={(e) =>
                             data.set(
@@ -171,11 +217,9 @@ export const Content: VoidComponent = () => {
                                 }
                                 placeholder='path/to/game/'
                                 required={true}
+                                title={dirPath()}
                                 type='text'
-                                value={data.get.form.dirPath ??
-                                    (data.get.mode.type === 'edit'
-                                        ? data.get.mode.vn.dirPath
-                                        : '')}
+                                value={dirPath()}
                             />
                             <button
                                 disabled={data.get.mode.type === 'edit'}
@@ -199,13 +243,9 @@ export const Content: VoidComponent = () => {
                                 }
                                 placeholder='path/to/game.exe'
                                 required={true}
+                                title={executablePath()}
                                 type='text'
-                                value={
-                                    data.get.form.executablePath ??
-                                    (data.get.mode.type === 'edit'
-                                        ? data.get.mode.vn.executablePath
-                                        : '')
-                                }
+                                value={executablePath()}
                             />
                             <button onClick={handleBrowseExe} type='button'>
                                 Browse
@@ -219,13 +259,9 @@ export const Content: VoidComponent = () => {
                             data.set('form', 'launchOptions', e.target.value)
                         }
                         placeholder='--windowed'
+                        title={launchOptions()}
                         type='text'
-                        value={
-                            data.get.form.launchOptions ??
-                            (data.get.mode.type === 'edit'
-                                ? (data.get.mode.vn.launchOptions ?? '')
-                                : '')
-                        }
+                        value={launchOptions()}
                     />
                 </LabeledField>
             </Block>
