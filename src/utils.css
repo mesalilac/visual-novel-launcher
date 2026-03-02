@@ -193,8 +193,24 @@
     overflow: hidden;
 }
 
+.overflow-x-hidden {
+    overflow-x: hidden;
+}
+
+.overflow-y-hidden {
+    overflow-y: hidden;
+}
+
 .overflow-auto {
     overflow: auto;
+}
+
+.overflow-x-auto {
+    overflow-x: auto;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
 }
 
 .cursor-pointer {
