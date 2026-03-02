@@ -426,6 +426,10 @@
     margin-right: var(--s-size-margin-xxl);
 }
 
+.margin-right-xxxl {
+    margin-right: var(--s-size-margin-xxxl);
+}
+
 .margin-bottom-none {
     margin-bottom: var(--s-size-margin-none);
 }
@@ -500,6 +504,10 @@
 
 .margin-left-xxl {
     margin-left: var(--s-size-margin-xxl);
+}
+
+.margin-left-xxxl {
+    margin-left: var(--s-size-margin-xxxl);
 }
 
 .padding-none {
