@@ -2,6 +2,7 @@ use super::prelude::*;
 use crate::utils::fs::resolve_cover_path;
 use diesel::insert_into;
 use nanoid::nanoid;
+use titlecase::Titlecase;
 
 #[tauri::command]
 #[auto_collect_command]
@@ -67,7 +68,7 @@ pub async fn create_tag(
 
     let new_tag = TagEntity {
         id: nanoid!(),
-        name: payload.name.trim().into(),
+        name: payload.name.trim().to_string().titlecase(),
         created_at: Timestamp::now(),
     };
 

@@ -4450,6 +4450,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "titlecase"
+version = "3.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eb567088a91d59b492520c8149e2be5ce10d5deb2d9a383f3378df3259679d40"
+dependencies = [
+ "regex",
+]
+
+[[package]]
 name = "tokio"
 version = "1.49.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4852,6 +4861,7 @@ dependencies = [
  "tauri-plugin-single-instance",
  "tauri-specta",
  "thiserror 2.0.18",
+ "titlecase",
  "walkdir",
 ]
 
