@@ -1,13 +1,9 @@
-use crate::database::{
-    entities::VisualNovelEntity,
-    types::{Timestamp, VisualNovelStatus},
-};
+use crate::database::entities::VisualNovelEntity;
 use crate::schema::visual_novels;
 use diesel::dsl::{exists, select};
 use diesel::prelude::*;
 use diesel::SqliteConnection;
 use std::{collections::HashSet, path::Path};
-use titlecase::Titlecase;
 use walkdir::WalkDir;
 
 pub fn scan_library(
@@ -58,23 +54,13 @@ pub fn scan_library(
             continue;
         };
 
-        let vn = VisualNovelEntity {
-            id: nanoid::nanoid!(),
-            title: entry.file_name().to_string_lossy().into_owned().titlecase(),
-            description: None,
-            cover_path: cover_image_path,
-            playtime: 0,
-            last_time_played_at: None,
-            status: VisualNovelStatus::Backlog,
-            is_favorite: false,
-            notes: None,
-            dir_path: entry.path().to_string_lossy().to_string(),
-            executable_path: exe_entry,
-            launch_options: None,
-            is_missing: false,
-            use_locale_emulator: true,
-            created_at: Timestamp::now(),
-        };
+        let mut vn = VisualNovelEntity::new(
+            entry.file_name().to_string_lossy().to_string(),
+            entry.path().to_string_lossy().to_string(),
+            exe_entry,
+        );
+
+        vn.cover_path = cover_image_path;
 
         let vn_exists = select(exists(
             visual_novels::table.filter(visual_novels::dir_path.eq(&vn.dir_path)),

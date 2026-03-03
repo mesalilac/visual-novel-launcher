@@ -1,4 +1,3 @@
-use nanoid::nanoid;
 use std::path::Path;
 use std::path::PathBuf;
 use std::process::Command;
@@ -164,13 +163,12 @@ pub async fn util_launch_visual_novel(
             .execute(&mut conn)
             .is_ok()
         {
-            let new_play_session = PlaySessionEntity {
-                id: nanoid!(),
-                visual_novel_id: vn.id.clone(),
-                started_time: start_timestamp,
-                ended_time: end_timestamp,
+            let new_play_session = PlaySessionEntity::new(
+                vn.id.clone(),
+                start_timestamp,
+                end_timestamp,
                 duration_seconds,
-            };
+            );
 
             insert_into(play_sessions::table)
                 .values(new_play_session)

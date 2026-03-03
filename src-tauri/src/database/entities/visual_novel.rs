@@ -19,3 +19,25 @@ pub struct VisualNovelEntity {
     pub use_locale_emulator: bool,
     pub created_at: Timestamp,
 }
+
+impl VisualNovelEntity {
+    pub fn new(title: String, dir_path: String, executable_path: String) -> Self {
+        Self {
+            id: nanoid!(),
+            title: title.trim().titlecase(),
+            description: None,
+            cover_path: None,
+            playtime: 0,
+            last_time_played_at: None,
+            status: VisualNovelStatus::default(),
+            is_favorite: false,
+            notes: None,
+            dir_path: dir_path.trim().into(),
+            executable_path: executable_path.trim().into(),
+            launch_options: None,
+            is_missing: false,
+            use_locale_emulator: true,
+            created_at: Timestamp::now(),
+        }
+    }
+}

@@ -7,3 +7,13 @@ pub struct TagEntity {
     pub name: String,
     pub created_at: Timestamp,
 }
+
+impl TagEntity {
+    pub fn new(name: String) -> Self {
+        Self {
+            id: nanoid!(),
+            name: name.trim().to_lowercase(),
+            created_at: Timestamp::now(),
+        }
+    }
+}
