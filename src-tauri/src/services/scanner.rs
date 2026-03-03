@@ -7,6 +7,7 @@ use diesel::dsl::{exists, select};
 use diesel::prelude::*;
 use diesel::SqliteConnection;
 use std::{collections::HashSet, path::Path};
+use titlecase::Titlecase;
 use walkdir::WalkDir;
 
 pub fn scan_library(
@@ -59,7 +60,7 @@ pub fn scan_library(
 
         let vn = VisualNovelEntity {
             id: nanoid::nanoid!(),
-            title: entry.file_name().to_string_lossy().into_owned(),
+            title: entry.file_name().to_string_lossy().into_owned().titlecase(),
             description: None,
             cover_path: cover_image_path,
             playtime: 0,

@@ -18,7 +18,7 @@ pub async fn create_visual_novel(
 
     let new_vn = VisualNovelEntity {
         id: nanoid!(),
-        title: payload.title.trim().into(),
+        title: payload.title.trim().to_string().titlecase(),
         description: payload.description.map(|s| s.trim().into()),
         cover_path,
         playtime: payload.playtime,
