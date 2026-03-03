@@ -65,6 +65,8 @@ export const EditVisualNovelModal = (props: { vn: VisualNovel }) => {
                 return vn;
             });
         });
+
+        globalData.resources.tags.refetch();
     };
 
     return (
