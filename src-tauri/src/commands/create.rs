@@ -68,7 +68,7 @@ pub async fn create_tag(
 
     let new_tag = TagEntity {
         id: nanoid!(),
-        name: payload.name.trim().to_string().titlecase(),
+        name: payload.name.trim().to_string(),
         created_at: Timestamp::now(),
     };
 
