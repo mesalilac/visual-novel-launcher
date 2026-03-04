@@ -99,7 +99,9 @@ pub async fn update_metadata(
 
                     let bytes = res.bytes().await.map_err(|_| ())?;
 
-                    let cover_path = Path::new(&vn.dir_path).join("vndb-image.jpg");
+                    let ext = thumbnail.split(".").last().unwrap_or("jpg");
+
+                    let cover_path = Path::new(&vn.dir_path).join(format!("cover.{ext}"));
 
                     if cover_path.exists() {
                         std::fs::remove_file(&cover_path).map_err(|_| ())?;
