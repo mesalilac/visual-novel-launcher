@@ -44,6 +44,16 @@ export const MainContent = () => {
                 globalData.resources.playSessions.refetch();
             }
         });
+
+        events.metadataUpdated.listen((e) => {
+            globalData.resources.vns.mutate((prev) => {
+                if (!prev) return;
+
+                return prev.map((vn) =>
+                    vn.id === e.payload.vn.id ? { ...e.payload.vn } : vn,
+                );
+            });
+        });
     });
 
     createEffect(() => {
