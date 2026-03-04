@@ -242,6 +242,7 @@ export const Select: VoidComponent<Props> = (rawProps) => {
                     closeMenu();
                 }}
                 open={isOpen()}
+                targetPosition='fixed'
                 targetPositionArea='bottom center'
                 triggerElement={popoverTriggerRef}
             >
