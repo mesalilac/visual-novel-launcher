@@ -1,24 +1,32 @@
-use nanoid::nanoid;
+use super::prelude::*;
+use crate::database::entities::VisualNovelTagEntity;
+use crate::events::GameClosed;
+use crate::events::MetadataUpdated;
+use crate::schema;
+use crate::services;
+use crate::vndb;
+use crate::APP_SETTINGS_ID;
+use diesel::associations::HasTable;
+use diesel::dsl::insert_into;
+use diesel::dsl::update;
 use std::path::Path;
 use std::path::PathBuf;
 use std::process::Command;
 use std::thread;
-
-use diesel::associations::HasTable;
-use diesel::dsl::insert_into;
-use diesel::dsl::update;
+use std::time::Duration;
+use tauri::async_runtime;
 use tauri_specta::Event;
-
-use super::prelude::*;
-use crate::events::GameClosed;
-use crate::services;
-use crate::APP_SETTINGS_ID;
+use vndb_api::client::VndbApiClient;
 
 #[tauri::command]
 #[auto_collect_command]
 #[specta::specta]
-pub async fn util_scan_library(state: AppState<'_>) -> CommandResult<Vec<VisualNovel>> {
+pub async fn util_scan_library(
+    state: AppState<'_>,
+    app_handle: tauri::AppHandle,
+) -> CommandResult<Vec<VisualNovel>> {
     let mut conn = state.pool.get()?;
+    let mut vndb_conn = state.pool.get()?;
 
     let setting = settings::table
         .find(APP_SETTINGS_ID)
@@ -26,6 +34,33 @@ pub async fn util_scan_library(state: AppState<'_>) -> CommandResult<Vec<VisualN
 
     if let Some(library_path) = setting.library_path {
         let vn_entities = services::scanner::scan_library(&mut conn, library_path)?;
+
+        let vns = vn_entities.clone();
+        async_runtime::spawn(async move {
+            let vndb_client = VndbApiClient::new(&String::new());
+            let vns_count = vns.len();
+            for (index, vn) in vns.into_iter().enumerate() {
+                if let Ok(updated_vn_entity) =
+                    vndb::update_metadata(&mut vndb_conn, &vndb_client, vn).await
+                {
+                    let tags = VisualNovelTagEntity::belonging_to(&updated_vn_entity)
+                        .inner_join(schema::tags::table)
+                        .select(TagEntity::as_select())
+                        .load::<TagEntity>(&mut vndb_conn)
+                        .unwrap_or(Vec::new());
+
+                    let updated_vn = VisualNovel::from_db(updated_vn_entity, tags);
+
+                    _ = MetadataUpdated {
+                        message: format!("Metadata updated, {} left", vns_count - (index + 1)),
+                        vn: updated_vn,
+                    }
+                    .emit(&app_handle);
+                }
+
+                std::thread::sleep(Duration::from_secs(2));
+            }
+        });
 
         let tags = VisualNovelTagEntity::belonging_to(&vn_entities)
             .inner_join(tags::table)
@@ -164,13 +199,12 @@ pub async fn util_launch_visual_novel(
             .execute(&mut conn)
             .is_ok()
         {
-            let new_play_session = PlaySessionEntity {
-                id: nanoid!(),
-                visual_novel_id: vn.id.clone(),
-                started_time: start_timestamp,
-                ended_time: end_timestamp,
+            let new_play_session = PlaySessionEntity::new(
+                vn.id.clone(),
+                start_timestamp,
+                end_timestamp,
                 duration_seconds,
-            };
+            );
 
             insert_into(play_sessions::table)
                 .values(new_play_session)

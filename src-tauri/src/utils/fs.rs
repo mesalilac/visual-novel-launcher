@@ -1,5 +1,4 @@
 use crate::APP_NAME;
-use nanoid::nanoid;
 use std::path::PathBuf;
 
 #[allow(dead_code)]
@@ -56,13 +55,13 @@ pub fn resolve_cover_path(cover_path: Option<String>, vn_dir_path: String) -> Op
     let ext = source_path
         .extension()
         .and_then(|s| s.to_str())
-        .unwrap_or("png");
+        .unwrap_or("jpg");
 
-    let new_file_name = format!("{}.{}", nanoid!(), ext);
+    let new_file_name = format!("cover.{}", ext);
 
     let dest_path = vn_dir_path.join(new_file_name);
 
-    if dest_path.exists() {
+    if dest_path.exists() && std::fs::remove_file(&dest_path).is_err() {
         return cover_path;
     }
 

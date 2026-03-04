@@ -10,3 +10,12 @@ pub struct VisualNovelTagEntity {
     pub visual_novel_id: String,
     pub tag_id: String,
 }
+
+impl VisualNovelTagEntity {
+    pub fn new(visual_novel_id: String, tag_id: String) -> Self {
+        Self {
+            visual_novel_id,
+            tag_id,
+        }
+    }
+}

@@ -74,11 +74,8 @@ pub async fn update_visual_novel(
         delete(visual_novels_tags::table.filter(visual_novels_tags::visual_novel_id.eq(&id)))
             .execute(&mut conn)?;
 
-        for tag in tags {
-            let new_tag_junction = VisualNovelTagEntity {
-                visual_novel_id: id.clone(),
-                tag_id: tag,
-            };
+        for tag_id in tags {
+            let new_tag_junction = VisualNovelTagEntity::new(id.clone(), tag_id);
 
             insert_into(visual_novels_tags::table)
                 .values(&new_tag_junction)

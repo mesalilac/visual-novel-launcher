@@ -6,8 +6,7 @@ mod events;
 mod schema;
 mod services;
 mod utils;
-
-use std::path::Path;
+mod vndb;
 
 use clap::Parser;
 use cli::Cli;
@@ -16,10 +15,15 @@ use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use specta_typescript::{BigIntExportBehavior, Typescript};
 use std::io;
 use std::process::Command;
-use tauri::Manager;
+use std::{path::Path, time::Duration};
+use tauri::{async_runtime, Manager};
+use tauri_specta::Event;
 use tauri_specta::{collect_commands, collect_events, Builder};
+use vndb_api::client::VndbApiClient;
 
-use crate::events::GameClosed;
+use crate::bridge::dto::VisualNovel;
+use crate::commands::prelude::{TagEntity, VisualNovelTagEntity};
+use crate::events::{GameClosed, MetadataUpdated};
 
 const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 const APP_NAME: &str = "com.mesalilac.visual-novel-launcher";
@@ -83,45 +87,6 @@ pub fn run() {
 
     let pool = database::connection::get_connection_pool();
 
-    if let Ok(mut conn) = pool.get() {
-        match conn.run_pending_migrations(MIGRATIONS) {
-            Ok(_) => {}
-            Err(e) => panic!("Failed to run migrations: {e}"),
-        };
-
-        use database::entities::SettingEntity;
-        use diesel::prelude::*;
-        use schema::settings::dsl as settings_dsl;
-
-        match settings_dsl::settings
-            .filter(settings_dsl::id.eq(APP_SETTINGS_ID))
-            .get_result::<SettingEntity>(&mut conn)
-        {
-            Ok(settings) => match settings.library_path {
-                Some(library_path) => {
-                    match services::scanner::scan_library(&mut conn, library_path.clone()) {
-                        Ok(vns) => {
-                            log::info!(
-                                "Startup library scan: Found {} new visual novels at {:?}",
-                                vns.len(),
-                                library_path
-                            );
-                        }
-                        Err(err) => {
-                            log::error!("Startup library scan: Failed to scan library: {err}");
-                        }
-                    };
-                }
-                None => {
-                    log::warn!("Startup scan: No library path configured yet");
-                }
-            },
-            Err(db_err) => log::error!("Database error during startup scan: {db_err}"),
-        }
-
-        _ = services::scanner::sync_library(&mut conn);
-    }
-
     // TODO: Go back to `specta_collect_commands!()` after https://github.com/RiadYan/tauri-helper/issues/1 is fixed
     // let specta_builder = Builder::<tauri::Wry>::new().commands(specta_collect_commands!());
     let specta_builder = Builder::<tauri::Wry>::new()
@@ -148,7 +113,7 @@ pub fn run() {
             util_launch_visual_novel,
             util_close_visual_novel
         ])
-        .events(collect_events![GameClosed]);
+        .events(collect_events![GameClosed, MetadataUpdated]);
 
     #[cfg(debug_assertions)]
     specta_builder
@@ -174,6 +139,84 @@ pub fn run() {
         .invoke_handler(specta_builder.invoke_handler())
         .setup(move |app| {
             specta_builder.mount_events(app);
+
+            let pool = app.state::<AppState>().pool.clone();
+            let app_handle = app.handle().clone();
+
+            if let Ok(mut conn) = pool.get() {
+                match conn.run_pending_migrations(MIGRATIONS) {
+                    Ok(_) => {}
+                    Err(e) => panic!("Failed to run migrations: {e}"),
+                };
+
+                use database::entities::SettingEntity;
+                use diesel::prelude::*;
+                use schema::settings::dsl as settings_dsl;
+
+                match settings_dsl::settings
+                    .filter(settings_dsl::id.eq(APP_SETTINGS_ID))
+                    .get_result::<SettingEntity>(&mut conn)
+                {
+                    Ok(settings) => match settings.library_path {
+                        Some(library_path) => {
+                            match services::scanner::scan_library(&mut conn, library_path.clone()) {
+                                Ok(vns) => {
+                                    log::info!(
+                                        "Startup library scan: Found {} new visual novels at {:?}",
+                                        vns.len(),
+                                        library_path
+                                    );
+                                    async_runtime::spawn(async move {
+                                        let vndb_client = VndbApiClient::new(&String::new());
+                                        let vns_count = vns.len();
+                                        for (index, vn) in vns.into_iter().enumerate() {
+                                            if let Ok(updated_vn_entity) =
+                                                vndb::update_metadata(&mut conn, &vndb_client, vn)
+                                                    .await
+                                            {
+                                                let tags = VisualNovelTagEntity::belonging_to(
+                                                    &updated_vn_entity,
+                                                )
+                                                .inner_join(schema::tags::table)
+                                                .select(TagEntity::as_select())
+                                                .load::<TagEntity>(&mut conn)
+                                                .unwrap_or(Vec::new());
+
+                                                let updated_vn =
+                                                    VisualNovel::from_db(updated_vn_entity, tags);
+
+                                                _ = MetadataUpdated {
+                                                    message: format!(
+                                                        "Metadata updated, {} left",
+                                                        vns_count - (index + 1)
+                                                    ),
+                                                    vn: updated_vn,
+                                                }
+                                                .emit(&app_handle);
+                                            }
+
+                                            std::thread::sleep(Duration::from_secs(2));
+                                        }
+                                    });
+                                }
+                                Err(err) => {
+                                    log::error!(
+                                        "Startup library scan: Failed to scan library: {err}"
+                                    );
+                                }
+                            };
+                        }
+                        None => {
+                            log::warn!("Startup scan: No library path configured yet");
+                        }
+                    },
+                    Err(db_err) => log::error!("Database error during startup scan: {db_err}"),
+                }
+            }
+
+            if let Ok(mut conn) = pool.get() {
+                _ = services::scanner::sync_library(&mut conn);
+            }
 
             Ok(())
         })

@@ -2,6 +2,8 @@ pub mod prelude {
     pub use crate::database::types::*;
     pub use crate::schema::*;
     pub use diesel::prelude::*;
+    pub use nanoid::nanoid;
+    pub use titlecase::Titlecase;
 }
 
 mod play_session;

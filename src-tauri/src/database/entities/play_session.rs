@@ -11,3 +11,20 @@ pub struct PlaySessionEntity {
     pub ended_time: Timestamp,
     pub duration_seconds: i64,
 }
+
+impl PlaySessionEntity {
+    pub fn new(
+        visual_novel_id: String,
+        started_time: Timestamp,
+        ended_time: Timestamp,
+        duration_seconds: i64,
+    ) -> Self {
+        Self {
+            id: nanoid!(),
+            visual_novel_id,
+            started_time,
+            ended_time,
+            duration_seconds,
+        }
+    }
+}

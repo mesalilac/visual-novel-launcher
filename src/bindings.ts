@@ -264,8 +264,10 @@ export const commands = {
 
 export const events = __makeEvents__<{
     gameClosed: GameClosed;
+    metadataUpdated: MetadataUpdated;
 }>({
     gameClosed: 'game-closed',
+    metadataUpdated: 'metadata-updated',
 });
 
 /** user-defined constants **/
@@ -309,6 +311,7 @@ export type GeneralStats = {
     backlogCount: number;
     droppedCount: number;
 };
+export type MetadataUpdated = { message: string; vn: VisualNovel };
 export type PlaySession = {
     id: string;
     visualNovelId: string;
