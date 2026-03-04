@@ -12,5 +12,6 @@ pub struct GameClosed {
 
 #[derive(Debug, Clone, Serialize, Deserialize, specta::Type, tauri_specta::Event)]
 pub struct MetadataUpdated {
+    pub message: String,
     pub vn: VisualNovel,
 }

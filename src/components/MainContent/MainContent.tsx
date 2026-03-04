@@ -13,6 +13,7 @@ import { LoadingDots, VisualNovelCard } from '@/components';
 import { useGlobalData } from '@/store';
 import './MainContent.css';
 import gsap from 'gsap';
+import toast from 'solid-toast';
 
 export const MainContent = () => {
     let gridRef: HTMLDivElement | undefined;
@@ -46,6 +47,8 @@ export const MainContent = () => {
         });
 
         events.metadataUpdated.listen((e) => {
+            toast.success(e.payload.message);
+
             globalData.resources.vns.mutate((prev) => {
                 if (!prev) return;
 

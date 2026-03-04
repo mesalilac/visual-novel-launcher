@@ -311,7 +311,7 @@ export type GeneralStats = {
     backlogCount: number;
     droppedCount: number;
 };
-export type MetadataUpdated = { vn: VisualNovel };
+export type MetadataUpdated = { message: string; vn: VisualNovel };
 export type PlaySession = {
     id: string;
     visualNovelId: string;

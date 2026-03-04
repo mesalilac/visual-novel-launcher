@@ -38,7 +38,8 @@ pub async fn util_scan_library(
         let vns = vn_entities.clone();
         async_runtime::spawn(async move {
             let vndb_client = VndbApiClient::new(&String::new());
-            for vn in vns {
+            let vns_count = vns.len();
+            for (index, vn) in vns.into_iter().enumerate() {
                 if let Ok(updated_vn_entity) =
                     vndb::update_metadata(&mut vndb_conn, &vndb_client, vn).await
                 {
@@ -50,7 +51,11 @@ pub async fn util_scan_library(
 
                     let updated_vn = VisualNovel::from_db(updated_vn_entity, tags);
 
-                    _ = MetadataUpdated { vn: updated_vn }.emit(&app_handle);
+                    _ = MetadataUpdated {
+                        message: format!("Metadata updated, {} left", vns_count - (index + 1)),
+                        vn: updated_vn,
+                    }
+                    .emit(&app_handle);
                 }
 
                 std::thread::sleep(Duration::from_secs(2));
