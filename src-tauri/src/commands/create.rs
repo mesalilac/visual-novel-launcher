@@ -1,6 +1,7 @@
 use super::prelude::*;
-use crate::utils::fs::resolve_cover_path;
+use crate::{utils::fs::resolve_cover_path, vndb::update_metadata};
 use diesel::insert_into;
+use vndb_api::client::VndbApiClient;
 
 #[tauri::command]
 #[auto_collect_command]
@@ -9,6 +10,7 @@ pub async fn create_visual_novel(
     state: AppState<'_>,
     payload: CreateVisualNovelRequest,
 ) -> CommandResult<VisualNovel> {
+    let vndb_client = VndbApiClient::new(&String::new());
     let mut conn = state.pool.get()?;
 
     let dir_path: String = payload.dir_path.trim().into();
@@ -38,6 +40,17 @@ pub async fn create_visual_novel(
                 visual_novels_tags::tag_id.eq(&tag_id),
             ))
             .execute(&mut conn)?;
+    }
+
+    if let Ok(updated_vn_entity) = update_metadata(&mut conn, &vndb_client, new_vn.clone()).await {
+        let tags = VisualNovelTagEntity::belonging_to(&updated_vn_entity)
+            .inner_join(tags::table)
+            .select(TagEntity::as_select())
+            .load::<TagEntity>(&mut conn)?;
+
+        let vn = VisualNovel::from_db(updated_vn_entity, tags);
+
+        return Ok(vn);
     }
 
     let tags = VisualNovelTagEntity::belonging_to(&new_vn)
