@@ -1,5 +1,4 @@
 use crate::APP_NAME;
-use nanoid::nanoid;
 use std::path::PathBuf;
 
 #[allow(dead_code)]
