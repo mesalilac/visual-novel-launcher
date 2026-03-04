@@ -1,10 +1,8 @@
-use std::path::Path;
-
 use crate::database::entities::{TagEntity, VisualNovelEntity};
 use crate::schema::{tags, visual_novels, visual_novels_tags};
 use diesel::prelude::*;
 use diesel::SqliteConnection;
-use nanoid::nanoid;
+use std::path::Path;
 use titlecase::Titlecase;
 use vndb_api::client::VndbApiClient;
 use vndb_api::format::schema::Language;
@@ -101,7 +99,11 @@ pub async fn update_metadata(
 
                     let bytes = res.bytes().await.map_err(|_| ())?;
 
-                    let cover_path = Path::new(&vn.dir_path).join(format!("{}.jpg", nanoid!()));
+                    let cover_path = Path::new(&vn.dir_path).join("vndb-image.jpg");
+
+                    if cover_path.exists() {
+                        std::fs::remove_file(&cover_path).map_err(|_| ())?;
+                    }
 
                     std::fs::write(&cover_path, bytes).map_err(|_| ())?;
 
