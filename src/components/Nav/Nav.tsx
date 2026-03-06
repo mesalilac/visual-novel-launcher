@@ -2,7 +2,6 @@ import { gsap } from 'gsap';
 import { createEffect, createSignal, onCleanup, Show } from 'solid-js';
 import { commands } from '@/bindings';
 import {
-    CreateVisualNovelModal,
     IconAddPlus,
     IconArrowReload02,
     IconSettings,
@@ -11,6 +10,7 @@ import {
 } from '@/components';
 import { useGlobalData } from '@/store';
 import { handleIpcError, reportIpcError } from '@/utils';
+import { CreateVisualNovelModal } from './CreateVisualNovelModal';
 import './Nav.css';
 
 export const Nav = () => {

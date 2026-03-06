@@ -15,7 +15,6 @@ import defaultCover from '@/assets/cover-image-placeholder.svg';
 import { commands, type VisualNovel } from '@/bindings';
 import {
     Divider,
-    EditVisualNovelModal,
     IconCalendar,
     IconClock,
     IconEditPencilLine01,
@@ -31,6 +30,7 @@ import {
 } from '@/components';
 import { useGlobalData } from '@/store';
 import { handleIpcError, reportIpcError } from '@/utils';
+import { EditVisualNovelModal } from './EditVisualNovelModal';
 
 export const VisualNovelCard = (props: { vn: VisualNovel }) => {
     const globalData = useGlobalData();
